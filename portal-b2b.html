@@ -175,16 +175,27 @@
         <!-- Company & Cart Tools -->
         <div class="flex items-center gap-2 sm:gap-4 shrink-0">
           
-          <!-- CNPJ / Account Badge -->
-          <div class="hidden lg:flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-stone-50 border border-stone-200">
-            <div class="w-8 h-8 rounded-lg bg-burgundy-900 text-white flex items-center justify-center font-bold text-xs shrink-0">
-              PJ
-            </div>
-            <div class="flex flex-col text-left">
-              <span id="header-company-name" class="text-xs font-bold text-stone-900 leading-tight truncate max-w-[150px]">Restaurante Santa Fé</span>
-              <span id="header-cnpj-num" class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> CNPJ Habilitado
-              </span>
+          <!-- CNPJ / Account Badge & Logout Container -->
+          <div id="header-account-container" class="hidden sm:flex items-center">
+            <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-stone-50 border border-stone-200">
+              <div class="w-8 h-8 rounded-lg bg-burgundy-900 text-white flex items-center justify-center font-bold text-xs shrink-0">
+                PJ
+              </div>
+              <div class="flex flex-col text-left">
+                <span id="header-company-name" class="text-xs font-bold text-stone-900 leading-tight truncate max-w-[140px]">Restaurante Santa Fé</span>
+                <span id="header-cnpj-num" class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> CNPJ Habilitado
+                </span>
+              </div>
+              <button 
+                type="button" 
+                onclick="handleLogout()" 
+                title="Deslogar e sair desta conta" 
+                class="ml-1 text-stone-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-colors flex items-center gap-1 text-[11px] font-bold cursor-pointer"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                <span>Sair</span>
+              </button>
             </div>
           </div>
 
@@ -682,8 +693,10 @@
     <div class="p-5 sm:p-6 border-b border-stone-200 bg-stone-50 flex items-center justify-between">
       <div>
         <span class="text-[10px] font-extrabold uppercase tracking-widest text-burgundy-900 block mb-0.5">Pedido Faturado Direto</span>
-        <h3 class="font-bold text-xl text-stone-950">Seu Pedido B2B</h3>
-        <p class="text-xs text-stone-500 mt-0.5" id="drawer-company-indicator">Restaurante Santa Fé • 12.345.678/0001-90</p>
+        <div class="flex items-center gap-2 mt-0.5">
+          <p class="text-xs text-stone-500 truncate max-w-[200px]" id="drawer-company-indicator">Restaurante Santa Fé • 12.345.678/0001-90</p>
+          <button id="drawer-logout-btn" type="button" onclick="handleLogout()" class="text-[11px] text-red-600 hover:text-red-700 font-bold underline cursor-pointer">Sair</button>
+        </div>
       </div>
       <button type="button" onclick="closeCartDrawer()" class="w-9 h-9 rounded-full bg-stone-200/80 hover:bg-stone-300 text-stone-800 flex items-center justify-center font-bold transition-colors cursor-pointer" aria-label="Fechar">
         ✕
@@ -749,6 +762,72 @@
       </button>
     </div>
   </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 6.5. LOGIN / IDENTIFICAÇÃO CORPORATIVA MODAL -->
+  <!-- ========================================================================= -->
+  <div id="login-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true">
+    <div class="relative w-full max-w-md bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden text-stone-900 my-auto animate-fade-in">
+      
+      <!-- Header -->
+      <div class="p-6 border-b border-stone-200 bg-stone-50 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] uppercase font-black tracking-widest text-burgundy-900 block mb-0.5">Portal Toro Negro B2B</span>
+          <h3 class="font-bold text-xl text-stone-950">Acessar Conta Corporativa</h3>
+        </div>
+        <button type="button" onclick="closeLoginModal()" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-700 flex items-center justify-center font-bold transition-colors cursor-pointer">✕</button>
+      </div>
+
+      <!-- Form -->
+      <form onsubmit="handleLoginSubmit(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block font-bold text-stone-700 mb-1 text-xs">CNPJ ou E-mail da Empresa *</label>
+          <input 
+            type="text" 
+            id="login-input" 
+            required 
+            placeholder="00.000.000/0000-00 ou compras@restaurantesantafe.com.br" 
+            class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900 font-medium"
+          />
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="block font-bold text-stone-700 text-xs">Senha de Acesso *</label>
+            <span class="text-[10px] text-stone-500 font-mono">Demo: 123456</span>
+          </div>
+          <input 
+            type="password" 
+            id="login-password" 
+            required 
+            placeholder="••••••••" 
+            class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"
+          />
+        </div>
+
+        <div id="login-feedback" class="text-[11px] text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-200 hidden font-medium"></div>
+
+        <button 
+          type="submit" 
+          id="login-submit-btn"
+          class="w-full py-3.5 rounded-xl bg-burgundy-950 hover:bg-burgundy-900 text-white text-xs uppercase tracking-luxury font-bold transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span>Entrar na Conta</span>
+        </button>
+
+        <div class="pt-3 border-t border-stone-100 text-center">
+          <p class="text-[11px] text-stone-500 mb-1.5">Deseja apenas identificar o CNPJ sem senha?</p>
+          <button 
+            type="button" 
+            onclick="quickIdentifyWithCNPJ()"
+            class="text-xs text-burgundy-900 hover:text-burgundy-950 font-bold underline cursor-pointer"
+          >
+            Buscar CNPJ na Receita Federal ↗
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- ========================================================================= -->
   <!-- 7. CHECKOUT MODAL: FAST B2B ORDER CONFIRMATION -->
@@ -1215,12 +1294,59 @@
         }
       } catch (e) {}
 
-      const nameEl = document.getElementById('header-company-name');
-      const cnpjEl = document.getElementById('header-cnpj-num');
-      const drawerComp = document.getElementById('drawer-company-indicator');
-      if (nameEl) nameEl.textContent = currentCompany.nomeFantasia || currentCompany.razaoSocial;
-      if (cnpjEl) cnpjEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> ${currentCompany.cnpj}`;
-      if (drawerComp) drawerComp.textContent = (currentCompany.nomeFantasia || 'Empresa') + ' • ' + currentCompany.cnpj;
+      const containerEl = document.getElementById('header-account-container');
+      const drawerIndicator = document.getElementById('drawer-company-indicator');
+      const drawerLogoutBtn = document.getElementById('drawer-logout-btn');
+
+      if (containerEl) {
+        if (currentCompany && (currentCompany.razaoSocial || currentCompany.nomeFantasia)) {
+          containerEl.innerHTML = `
+            <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-stone-50 border border-stone-200">
+              <div class="w-8 h-8 rounded-lg bg-burgundy-900 text-white flex items-center justify-center font-bold text-xs shrink-0">
+                PJ
+              </div>
+              <div class="flex flex-col text-left">
+                <span id="header-company-name" class="text-xs font-bold text-stone-900 leading-tight truncate max-w-[140px]">
+                  ${currentCompany.nomeFantasia || currentCompany.razaoSocial}
+                </span>
+                <span id="header-cnpj-num" class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> ${currentCompany.cnpj || 'CNPJ Habilitado'}
+                </span>
+              </div>
+              <button 
+                type="button" 
+                onclick="handleLogout()" 
+                title="Deslogar e trocar de conta corporativa" 
+                class="ml-1 text-stone-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-colors flex items-center gap-1 text-[11px] font-bold cursor-pointer"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                <span>Sair</span>
+              </button>
+            </div>
+          `;
+        } else {
+          containerEl.innerHTML = `
+            <button 
+              type="button" 
+              onclick="openLoginModal()" 
+              class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-burgundy-50 border border-stone-200 hover:border-burgundy-200 text-stone-800 hover:text-burgundy-950 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+            >
+              <svg class="w-4 h-4 text-burgundy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              <span>Identificar CNPJ / Entrar</span>
+            </button>
+          `;
+        }
+      }
+
+      if (drawerIndicator) {
+        if (currentCompany && (currentCompany.razaoSocial || currentCompany.nomeFantasia)) {
+          drawerIndicator.textContent = `${currentCompany.nomeFantasia || currentCompany.razaoSocial} • ${currentCompany.cnpj || ''}`;
+          if (drawerLogoutBtn) drawerLogoutBtn.classList.remove('hidden');
+        } else {
+          drawerIndicator.textContent = `Visitante • CNPJ não identificado`;
+          if (drawerLogoutBtn) drawerLogoutBtn.classList.add('hidden');
+        }
+      }
     }
 
     // Filter Toggles
@@ -1921,6 +2047,20 @@
         if (chkResp) chkResp.value = currentCompany.responsavel || '';
         if (chkWhats) chkWhats.value = currentCompany.whatsapp || '';
         if (chkCid) chkCid.value = currentCompany.cidade || '';
+        if (chkCnpj && chkCnpj.value) {
+          handleCNPJLookupInput(chkCnpj.value, true);
+        }
+      } else {
+        if (chkRazao) chkRazao.value = '';
+        if (chkCnpj) chkCnpj.value = '';
+        if (chkResp) chkResp.value = '';
+        if (chkWhats) chkWhats.value = '';
+        if (chkCid) chkCid.value = '';
+        const feedbackEl = document.getElementById('chk-cnpj-feedback');
+        if (feedbackEl) {
+          feedbackEl.classList.add('hidden');
+          feedbackEl.innerHTML = '';
+        }
       }
 
       const totalBoxes = b2bCart.reduce((sum, item) => sum + item.boxes, 0);
@@ -1935,6 +2075,118 @@
     function closeCheckoutModal() {
       const modal = document.getElementById('checkout-modal');
       if (modal) modal.classList.add('hidden');
+    }
+
+    // Login & Logout Management
+    function handleLogout() {
+      if (confirm('Deseja realmente sair da conta corporativa e deslogar?')) {
+        currentCompany = null;
+        localStorage.removeItem(STORAGE_USER);
+        localStorage.removeItem('tn_b2b_token');
+        loadSession();
+        showToast('Você saiu da conta corporativa.');
+      }
+    }
+
+    function openLoginModal() {
+      const modal = document.getElementById('login-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById('login-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const loginVal = document.getElementById('login-input').value.trim();
+      const passVal = document.getElementById('login-password').value.trim();
+      const feedback = document.getElementById('login-feedback');
+      const submitBtn = document.getElementById('login-submit-btn');
+
+      if (feedback) feedback.classList.add('hidden');
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Verificando credenciais...</span>';
+      }
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ login: loginVal, senha: passVal })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.token) {
+          localStorage.setItem('tn_b2b_token', data.token);
+          currentCompany = {
+            razaoSocial: data.company.razao_social,
+            nomeFantasia: data.company.nome_fantasia,
+            cnpj: data.company.cnpj,
+            responsavel: data.user.nome,
+            cidade: `${data.company.cidade || ''} / ${data.company.uf || ''}`,
+            whatsapp: data.user.telefone_whatsapp || ''
+          };
+          localStorage.setItem(STORAGE_USER, JSON.stringify(currentCompany));
+          loadSession();
+          closeLoginModal();
+          showToast(`Bem-vindo, ${data.company.nome_fantasia || data.company.razao_social}!`);
+        } else {
+          if (feedback) {
+            feedback.textContent = data.error || 'Credenciais inválidas. Tente novamente.';
+            feedback.classList.remove('hidden');
+          }
+        }
+      } catch (err) {
+        if (feedback) {
+          feedback.textContent = 'Erro ao conectar ao servidor. Tente novamente.';
+          feedback.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Entrar na Conta</span>';
+        }
+      }
+    }
+
+    async function quickIdentifyWithCNPJ() {
+      const cnpjPrompt = prompt('Digite o CNPJ da sua empresa (apenas números ou com pontos):');
+      if (!cnpjPrompt) return;
+      const clean = cnpjPrompt.replace(/\D/g, '');
+      if (clean.length !== 14) {
+        alert('CNPJ deve conter 14 dígitos.');
+        return;
+      }
+
+      showToast('Consultando Receita Federal...');
+      try {
+        const res = await fetch(`/api/cnpj/${clean}`);
+        const data = await res.json();
+        const c = data.company || data;
+        if (res.ok && data.success) {
+          currentCompany = {
+            razaoSocial: c.razao_social,
+            nomeFantasia: c.nome_fantasia || c.razao_social,
+            cnpj: c.cnpj || clean,
+            responsavel: '',
+            cidade: `${c.municipio || c.cidade || ''} / ${c.uf || ''}`,
+            whatsapp: ''
+          };
+          localStorage.setItem(STORAGE_USER, JSON.stringify(currentCompany));
+          loadSession();
+          closeLoginModal();
+          showToast(`CNPJ identificado: ${currentCompany.nomeFantasia}`);
+        } else {
+          alert('CNPJ não localizado na Receita Federal.');
+        }
+      } catch (e) {
+        alert('Erro ao consultar CNPJ.');
+      }
     }
 
     // CNPJ Realtime Lookup via BrasilAPI & Local Cache
