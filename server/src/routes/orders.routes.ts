@@ -11,7 +11,7 @@ ordersRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Resp
     const {
       company,
       items,
-      paymentMethod = 'BOLETO_28D',
+      paymentMethod = 'BOLETO_07_14_21',
       deliveryAddress,
       observations
     } = req.body;
@@ -187,7 +187,7 @@ ordersRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Resp
     wsMsg += `*Número do Pedido:* ${orderNumber}\n`;
     wsMsg += `*Empresa:* ${compData?.nome_fantasia || compData?.razao_social || 'Cliente PJ'}\n`;
     wsMsg += `*CNPJ:* ${compData?.cnpj || 'Informado na plataforma'}\n`;
-    wsMsg += `*Condição de Pagamento:* ${paymentMethod === 'BOLETO_28D' ? 'Boleto Bancário 28 Dias (Faturado)' : paymentMethod === 'PIX_A_VISTA' ? 'Pix à Vista (3% OFF aplicado)' : 'Cartão Corporativo'}\n`;
+    wsMsg += `*Condição de Pagamento:* ${paymentMethod === 'BOLETO_07_14_21' || paymentMethod === 'BOLETO_28D' ? 'Boleto Faturado (07/14/21 Dias)' : paymentMethod === 'PIX_A_VISTA' ? 'Pix à Vista (3% OFF aplicado)' : 'Cartão Corporativo'}\n`;
     wsMsg += `*Logística & Entrega:* Frota Própria MUFS (Direta e Climatizada)\n`;
     wsMsg += `----------------------------------------\n`;
     wsMsg += `*ITENS DO PEDIDO (CAIXAS COM 6 GARRAFAS):*\n`;

@@ -109,7 +109,7 @@
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2">
         <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="tracking-wide">Canal Direto B2B Toro Negro • Faturamento 28D com CNPJ Verificado</span>
+        <span class="tracking-wide">Canal Direto B2B Toro Negro • Faturamento 07/14/21 Dias com CNPJ Verificado</span>
       </div>
       <div class="hidden md:flex items-center gap-6 text-stone-300 text-[11px]">
         <span class="flex items-center gap-1.5">
@@ -739,7 +739,7 @@
         </div>
         <div class="text-[11px] text-emerald-700 bg-emerald-50 rounded-lg p-2 border border-emerald-200/60 flex items-center gap-1.5">
           <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-          <span>Condição: Faturamento Boleto 28D ou Pix com 3% de desconto.</span>
+          <span>Condição: Faturamento Boleto 07/14/21 Dias ou Pix com 3% de desconto.</span>
         </div>
       </div>
 
@@ -887,8 +887,8 @@
           <label class="block font-bold text-stone-700 mb-1.5">Condição Comercial Desejada</label>
           <div class="grid grid-cols-3 gap-2">
             <label class="border border-stone-200 rounded-xl p-2.5 flex flex-col text-center cursor-pointer hover:border-burgundy-900 transition-colors bg-stone-50 has-[:checked]:bg-burgundy-50 has-[:checked]:border-burgundy-900 has-[:checked]:text-burgundy-950">
-              <input type="radio" name="chk-payment" value="Boleto 28D Faturado" checked class="sr-only"/>
-              <span class="font-bold text-xs">Boleto 28D</span>
+              <input type="radio" name="chk-payment" value="Boleto 07/14/21 Dias Faturado" checked class="sr-only"/>
+              <span class="font-bold text-xs">Boleto 07/14/21</span>
               <span class="text-[10px] text-stone-500 mt-0.5">Prazo Faturado</span>
             </label>
             <label class="border border-stone-200 rounded-xl p-2.5 flex flex-col text-center cursor-pointer hover:border-burgundy-900 transition-colors bg-stone-50 has-[:checked]:bg-burgundy-50 has-[:checked]:border-burgundy-900 has-[:checked]:text-burgundy-950">
@@ -2312,9 +2312,9 @@
       const whats = document.getElementById('chk-whatsapp').value.trim();
       const cid = document.getElementById('chk-cidade').value.trim();
       const paymentInput = document.querySelector('input[name="chk-payment"]:checked');
-      const paymentMethodText = paymentInput ? paymentInput.value : 'Boleto 28D Faturado';
+      const paymentMethodText = paymentInput ? paymentInput.value : 'Boleto 07/14/21 Dias Faturado';
 
-      let paymentMethodCode = 'BOLETO_28D';
+      let paymentMethodCode = 'BOLETO_07_14_21';
       if (paymentMethodText.includes('Pix')) paymentMethodCode = 'PIX_A_VISTA';
       if (paymentMethodText.includes('Cartão')) paymentMethodCode = 'CARTAO_3X';
 
