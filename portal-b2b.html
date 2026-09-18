@@ -1273,26 +1273,23 @@
 
     function loadSession() {
       try {
-        const savedUser = localStorage.getItem(STORAGE_USER);
+        const savedUser = localStorage.getItem(STORAGE_USER) || localStorage.getItem('tn_b2b_user');
         if (savedUser) {
           currentCompany = JSON.parse(savedUser);
         } else {
-          currentCompany = {
-            razaoSocial: 'Restaurante e Adega Santa Fé Ltda',
-            nomeFantasia: 'Restaurante Santa Fé',
-            cnpj: '12.345.678/0001-90',
-            responsavel: 'Carlos Mendonça',
-            cidade: 'Curitiba / PR',
-            whatsapp: '(41) 99882-3411'
-          };
-          localStorage.setItem(STORAGE_USER, JSON.stringify(currentCompany));
+          // Bloqueio de Acesso: Redireciona imediatamente para a aba de login/identificação antes da página de compra
+          window.location.href = 'login-b2b.html';
+          return;
         }
 
         const savedCart = localStorage.getItem(STORAGE_CART);
         if (savedCart) {
           b2bCart = JSON.parse(savedCart);
         }
-      } catch (e) {}
+      } catch (e) {
+        window.location.href = 'login-b2b.html';
+        return;
+      }
 
       const containerEl = document.getElementById('header-account-container');
       const drawerIndicator = document.getElementById('drawer-company-indicator');
@@ -2082,6 +2079,8 @@
       if (confirm('Deseja realmente sair da conta corporativa e deslogar?')) {
         currentCompany = null;
         localStorage.removeItem(STORAGE_USER);
+        localStorage.removeItem('tn_b2b_user');
+        localStorage.removeItem('toro_negro_b2b_user');
         localStorage.removeItem('tn_b2b_token');
         window.location.href = 'index.html';
       }

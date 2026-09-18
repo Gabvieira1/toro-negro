@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Corporativo B2B | Toro Negro Wines</title>
+  
+  <!-- Tailwind CSS CDN v3 -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            burgundy: {
+              950: '#1A040A',
+              900: '#2A0812',
+              800: '#3D0E1B',
+              700: '#541526',
+              600: '#6E1B32',
+              50: '#FDF7F8',
+            },
+            gold: {
+              300: '#E5C768',
+              400: '#D4AF37',
+              500: '#BA9225',
+              600: '#947214',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Cormorant Garamond"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #120307;
+    }
+    .bg-vignette {
+      background: radial-gradient(circle at center, rgba(42, 8, 18, 0.85) 0%, rgba(18, 3, 7, 0.98) 100%);
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col justify-between text-stone-100 bg-vignette selection:bg-gold-500 selection:text-burgundy-950">
+
+  <!-- Top Navigation Header -->
+  <header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between z-10">
+    <a href="index.html" class="flex items-center gap-2 group">
+      <img src="./assets/toro-negro-logo-oficial.png" alt="Toro Negro" class="h-10 sm:h-12 w-auto object-contain drop-shadow-md group-hover:scale-102 transition-transform"/>
+    </a>
+    
+    <a href="index.html" class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-gold-300 transition-colors py-2 px-3 rounded-full hover:bg-white/5 border border-transparent hover:border-white/10">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+      <span>Voltar ao Site Institucional</span>
+    </a>
+  </header>
+
+  <!-- Center Card Area -->
+  <main class="flex-1 flex items-center justify-center px-4 py-8 z-10">
+    <div class="w-full max-w-lg bg-white border border-stone-200/80 rounded-3xl shadow-2xl overflow-hidden text-stone-900 animate-fade-in my-auto">
+      
+      <!-- Card Header Banner -->
+      <div class="bg-stone-50 border-b border-stone-200 px-7 py-6 text-center">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-burgundy-950 text-gold-400 text-[10px] font-black uppercase tracking-widest mb-2 shadow-2xs">
+          Venda Direta de Vinícola
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-stone-950 tracking-tight">Portal Corporativo B2B</h1>
+        <p class="text-xs sm:text-sm text-stone-500 mt-1 max-w-sm mx-auto">
+          Ambiente exclusivo para restaurantes, empórios, adegas e clientes corporativos com CNPJ.
+        </p>
+
+        <!-- Active Session Shortcut Banner (Hidden by default) -->
+        <div id="already-logged-banner" class="hidden mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-2xl text-left">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <div>
+                <span class="text-[10px] text-emerald-800 uppercase font-bold tracking-wider block">Sessão Ativa Detectada</span>
+                <span id="already-logged-name" class="text-xs font-bold text-stone-900 truncate max-w-[220px] block"></span>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <a href="portal-b2b.html" class="px-3 py-1.5 rounded-lg bg-burgundy-950 text-gold-300 text-[11px] font-bold hover:bg-burgundy-900 transition-colors shadow-xs">
+                Ir ao Catálogo →
+              </a>
+              <button type="button" onclick="clearCurrentSession()" title="Entrar com outro CNPJ" class="text-stone-400 hover:text-red-600 p-1 text-[11px] font-bold">
+                Trocar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="grid grid-cols-2 gap-1.5 p-1 bg-stone-200/70 rounded-2xl mt-5">
+          <button 
+            type="button" 
+            id="tab-btn-cnpj" 
+            onclick="switchTab('cnpj')"
+            class="py-2.5 px-3 rounded-xl text-xs font-bold transition-all shadow-xs bg-white text-burgundy-950 cursor-pointer"
+          >
+            Acesso com CNPJ
+          </button>
+          <button 
+            type="button" 
+            id="tab-btn-auth" 
+            onclick="switchTab('auth')"
+            class="py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-stone-600 hover:text-stone-900 cursor-pointer"
+          >
+            Login com Senha
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 1: IDENTIFICAÇÃO RÁPIDA COM CNPJ -->
+      <div id="tab-content-cnpj" class="p-7 space-y-4">
+        <form onsubmit="handleCNPJDirectAccess(event)" class="space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-xs font-bold text-stone-800">CNPJ da Empresa Compradora *</label>
+              <span class="text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Receita Federal Automática</span>
+            </div>
+            
+            <div class="relative">
+              <input 
+                type="text" 
+                id="cnpj-input" 
+                required 
+                placeholder="00.000.000/0000-00" 
+                oninput="handleCNPJTyping(this.value)"
+                class="w-full bg-stone-50 border border-stone-300 rounded-xl pl-3.5 pr-24 py-3 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900 font-medium"
+              />
+              <button 
+                type="button" 
+                onclick="searchCNPJNow()"
+                class="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-burgundy-950 hover:bg-burgundy-900 text-gold-300 rounded-lg text-[10px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1 cursor-pointer"
+              >
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <span>Buscar</span>
+              </button>
+            </div>
+            
+            <div id="cnpj-feedback" class="text-[11px] text-stone-500 mt-1.5 hidden"></div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-stone-800 mb-1">Razão Social / Nome Fantasia *</label>
+            <input 
+              type="text" 
+              id="razao-input" 
+              required 
+              placeholder="Preenchido automaticamente ao digitar o CNPJ" 
+              class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-stone-800 mb-1">Nome do Comprador / Sommelier</label>
+              <input 
+                type="text" 
+                id="resp-input" 
+                placeholder="Ex: Carlos Silva" 
+                class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-stone-800 mb-1">WhatsApp de Contato</label>
+              <input 
+                type="tel" 
+                id="whats-input" 
+                placeholder="(41) 99999-9999" 
+                class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"
+              />
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            id="btn-enter-catalog"
+            class="w-full py-4 rounded-xl bg-burgundy-950 hover:bg-burgundy-900 text-white text-xs uppercase tracking-luxury font-bold transition-all shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 group"
+          >
+            <span>Acessar Catálogo & Preços B2B</span>
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </form>
+
+        <div class="pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
+          <span>CNPJ de Teste / Demo:</span>
+          <button type="button" onclick="fillDemoCNPJ()" class="text-burgundy-900 font-bold hover:underline cursor-pointer">
+            12.345.678/0001-90 (Restaurante Santa Fé)
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 2: LOGIN COM SENHA -->
+      <div id="tab-content-auth" class="p-7 space-y-4 hidden">
+        <form onsubmit="handleAccountLogin(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-stone-800 mb-1">CNPJ ou E-mail Cadastrado *</label>
+            <input 
+              type="text" 
+              id="auth-login-input" 
+              required 
+              placeholder="compras@restaurantesantafe.com.br" 
+              class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-3 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900 font-medium"
+            />
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-xs font-bold text-stone-800">Senha de Acesso *</label>
+              <span class="text-[10px] text-stone-400 font-mono">Demo: 123456</span>
+            </div>
+            <input 
+              type="password" 
+              id="auth-password-input" 
+              required 
+              placeholder="••••••••" 
+              class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-3 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"
+            />
+          </div>
+
+          <div id="auth-feedback" class="text-[11px] text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-200 hidden font-medium"></div>
+
+          <button 
+            type="submit" 
+            id="auth-submit-btn"
+            class="w-full py-4 rounded-xl bg-burgundy-950 hover:bg-burgundy-900 text-white text-xs uppercase tracking-luxury font-bold transition-all shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2 group"
+          >
+            <span>Entrar na Conta Corporativa</span>
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </form>
+
+        <div class="pt-3 border-t border-stone-100 text-center">
+          <p class="text-[11px] text-stone-500">
+            Ainda não possui senha cadastrada?
+            <button type="button" onclick="switchTab('cnpj')" class="text-burgundy-900 font-bold hover:underline ml-1 cursor-pointer">
+              Acessar com validação rápida de CNPJ ↗
+            </button>
+          </p>
+        </div>
+      </div>
+
+      <!-- Trust Badges Footer inside card -->
+      <div class="bg-stone-50 border-t border-stone-200 px-7 py-4">
+        <div class="grid grid-cols-3 gap-2 text-center text-[10px] text-stone-500 font-medium">
+          <div class="flex flex-col items-center gap-1">
+            <span class="font-bold text-stone-800">📦 Caixa Fechada</span>
+            <span>6 garrafas por caixa</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 border-x border-stone-200">
+            <span class="font-bold text-stone-800">🚚 Frota Própria</span>
+            <span>Logística direta MUFS</span>
+          </div>
+          <div class="flex flex-col items-center gap-1">
+            <span class="font-bold text-stone-800">💳 Faturamento PJ</span>
+            <span>Boleto 28D ou Pix -3%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full max-w-7xl mx-auto px-6 py-6 text-center text-xs text-white/50 z-10">
+    <p>© 2026 Toro Negro Wines • Vinícola TerrAustral • Distribuição Exclusiva MUFS</p>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-stone-900 text-white text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 border border-white/10 font-medium">
+      <span id="toast-message">Mensagem</span>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_USER = 'toro_negro_b2b_user';
+    let lookupTimeout = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check query param for tab selection
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam === 'auth' || tabParam === 'login' || tabParam === 'senha') {
+        switchTab('auth');
+      }
+
+      // Check if already authenticated and show banner
+      try {
+        const savedUser = localStorage.getItem(STORAGE_USER) || localStorage.getItem('tn_b2b_user');
+        if (savedUser) {
+          const comp = JSON.parse(savedUser);
+          if (comp && (comp.razaoSocial || comp.nomeFantasia)) {
+            const banner = document.getElementById('already-logged-banner');
+            const nameSpan = document.getElementById('already-logged-name');
+            if (banner && nameSpan) {
+              nameSpan.textContent = `${comp.nomeFantasia || comp.razaoSocial} (${comp.cnpj || ''})`;
+              banner.classList.remove('hidden');
+            }
+          }
+        }
+      } catch (e) {}
+    });
+
+    // Switch between CNPJ and Auth tabs
+    function switchTab(tab) {
+      const tabBtnCnpj = document.getElementById('tab-btn-cnpj');
+      const tabBtnAuth = document.getElementById('tab-btn-auth');
+      const contentCnpj = document.getElementById('tab-content-cnpj');
+      const contentAuth = document.getElementById('tab-content-auth');
+
+      if (tab === 'cnpj') {
+        tabBtnCnpj.className = 'py-2.5 px-3 rounded-xl text-xs font-bold transition-all shadow-xs bg-white text-burgundy-950 cursor-pointer';
+        tabBtnAuth.className = 'py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-stone-600 hover:text-stone-900 cursor-pointer';
+        contentCnpj.classList.remove('hidden');
+        contentAuth.classList.add('hidden');
+      } else {
+        tabBtnAuth.className = 'py-2.5 px-3 rounded-xl text-xs font-bold transition-all shadow-xs bg-white text-burgundy-950 cursor-pointer';
+        tabBtnCnpj.className = 'py-2.5 px-3 rounded-xl text-xs font-bold transition-all text-stone-600 hover:text-stone-900 cursor-pointer';
+        contentAuth.classList.remove('hidden');
+        contentCnpj.classList.add('hidden');
+      }
+    }
+
+    function formatCNPJ(val) {
+      const v = (val || '').replace(/\D/g, '').slice(0, 14);
+      if (v.length <= 2) return v;
+      if (v.length <= 5) return `${v.slice(0, 2)}.${v.slice(2)}`;
+      if (v.length <= 8) return `${v.slice(0, 2)}.${v.slice(2, 5)}.${v.slice(5)}`;
+      if (v.length <= 12) return `${v.slice(0, 2)}.${v.slice(2, 5)}.${v.slice(5, 8)}/${v.slice(8)}`;
+      return `${v.slice(0, 2)}.${v.slice(2, 5)}.${v.slice(5, 8)}/${v.slice(8, 12)}-${v.slice(12, 14)}`;
+    }
+
+    function handleCNPJTyping(rawVal) {
+      const input = document.getElementById('cnpj-input');
+      const formatted = formatCNPJ(rawVal);
+      if (input && input.value !== formatted) {
+        input.value = formatted;
+      }
+
+      const clean = (rawVal || '').replace(/\D/g, '');
+      const feedback = document.getElementById('cnpj-feedback');
+
+      if (clean.length < 14) {
+        if (feedback) {
+          feedback.classList.add('hidden');
+          feedback.innerHTML = '';
+        }
+        return;
+      }
+
+      if (clean.length === 14) {
+        executeCNPJLookup(clean, false);
+      }
+    }
+
+    function searchCNPJNow() {
+      const input = document.getElementById('cnpj-input');
+      if (input) {
+        const clean = (input.value || '').replace(/\D/g, '');
+        if (clean.length === 14) {
+          executeCNPJLookup(clean, true);
+        } else {
+          showToast('Digite um CNPJ com 14 números.');
+        }
+      }
+    }
+
+    function executeCNPJLookup(cleanCnpj, immediate = false) {
+      const feedback = document.getElementById('cnpj-feedback');
+      if (feedback) {
+        feedback.className = 'text-[11px] text-burgundy-900 font-medium mt-1.5 flex items-center gap-1.5';
+        feedback.innerHTML = `
+          <svg class="animate-spin h-3.5 w-3.5 text-burgundy-900 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span>Consultando Receita Federal...</span>
+        `;
+        feedback.classList.remove('hidden');
+      }
+
+      clearTimeout(lookupTimeout);
+      const delay = immediate ? 0 : 250;
+
+      lookupTimeout = setTimeout(async () => {
+        try {
+          const res = await fetch(`/api/cnpj/${cleanCnpj}`);
+          const data = await res.json();
+          const c = data.company || data;
+
+          if (res.ok && data.success && (c.razao_social || c.nome_fantasia || c.razaoSocial)) {
+            const razaoInput = document.getElementById('razao-input');
+            const razaoNome = c.razao_social || c.nome_fantasia || c.razaoSocial;
+            const cidadeNome = c.municipio || c.cidade || '';
+            const ufSigla = c.uf || '';
+
+            if (razaoInput) {
+              razaoInput.value = razaoNome;
+              razaoInput.classList.add('bg-emerald-50', 'border-emerald-400');
+              setTimeout(() => razaoInput.classList.remove('bg-emerald-50', 'border-emerald-400'), 1500);
+            }
+
+            if (feedback) {
+              feedback.className = 'text-[11px] text-emerald-800 font-medium mt-1.5 flex items-center gap-1.5 bg-emerald-50 p-2 rounded-xl border border-emerald-200';
+              feedback.innerHTML = `
+                <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <span><strong>CNPJ Ativo na Receita:</strong> ${razaoNome} ${cidadeNome ? `• ${cidadeNome}/${ufSigla}` : ''}</span>
+              `;
+              feedback.classList.remove('hidden');
+            }
+          } else {
+            if (feedback) {
+              feedback.className = 'text-[11px] text-amber-800 font-medium mt-1.5 flex items-center gap-1.5 bg-amber-50 p-2 rounded-xl border border-amber-200';
+              feedback.innerHTML = `
+                <span>ℹ️ ${data.message || 'CNPJ não encontrado na base pública. Preencha a Razão Social manualmente.'}</span>
+              `;
+              feedback.classList.remove('hidden');
+            }
+          }
+        } catch (err) {
+          if (feedback) {
+            feedback.className = 'text-[11px] text-stone-500 mt-1';
+            feedback.textContent = 'Preencha a Razão Social manualmente.';
+          }
+        }
+      }, delay);
+    }
+
+    // Submit Tab 1: Direct CNPJ Access
+    function handleCNPJDirectAccess(e) {
+      e.preventDefault();
+      const cnpjVal = document.getElementById('cnpj-input').value.trim();
+      const razaoVal = document.getElementById('razao-input').value.trim();
+      const respVal = document.getElementById('resp-input').value.trim();
+      const whatsVal = document.getElementById('whats-input').value.trim();
+
+      const cleanCnpj = cnpjVal.replace(/\D/g, '');
+      if (cleanCnpj.length !== 14) {
+        showToast('Informe um CNPJ válido com 14 dígitos.');
+        return;
+      }
+
+      if (!razaoVal) {
+        showToast('Informe a Razão Social da empresa.');
+        return;
+      }
+
+      const companyData = {
+        cnpj: cnpjVal,
+        razaoSocial: razaoVal,
+        nomeFantasia: razaoVal,
+        responsavel: respVal || 'Comprador',
+        whatsapp: whatsVal || '(41) 99863-2724',
+        cidade: 'Curitiba / PR'
+      };
+
+      localStorage.setItem(STORAGE_USER, JSON.stringify(companyData));
+      localStorage.setItem('tn_b2b_user', JSON.stringify(companyData));
+      showToast(`Acesso liberado para ${razaoVal}! Entrando no catálogo...`);
+
+      setTimeout(() => {
+        window.location.href = 'portal-b2b.html';
+      }, 700);
+    }
+
+    // Submit Tab 2: Account Login with Password
+    async function handleAccountLogin(e) {
+      e.preventDefault();
+      const loginVal = document.getElementById('auth-login-input').value.trim();
+      const passVal = document.getElementById('auth-password-input').value.trim();
+      const feedback = document.getElementById('auth-feedback');
+      const submitBtn = document.getElementById('auth-submit-btn');
+
+      if (feedback) feedback.classList.add('hidden');
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Verificando credenciais...</span>';
+      }
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ login: loginVal, senha: passVal })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.token) {
+          localStorage.setItem('tn_b2b_token', data.token);
+          const companyData = {
+            razaoSocial: data.company.razao_social,
+            nomeFantasia: data.company.nome_fantasia || data.company.razao_social,
+            cnpj: data.company.cnpj,
+            responsavel: data.user.nome,
+            cidade: `${data.company.cidade || ''} / ${data.company.uf || ''}`,
+            whatsapp: data.user.telefone_whatsapp || '(41) 99863-2724'
+          };
+          localStorage.setItem(STORAGE_USER, JSON.stringify(companyData));
+          localStorage.setItem('tn_b2b_user', JSON.stringify(companyData));
+          showToast(`Bem-vindo, ${companyData.nomeFantasia}!`);
+
+          setTimeout(() => {
+            window.location.href = 'portal-b2b.html';
+          }, 700);
+        } else {
+          if (feedback) {
+            feedback.textContent = data.error || 'Credenciais inválidas. Verifique os dados digitados.';
+            feedback.classList.remove('hidden');
+          }
+        }
+      } catch (err) {
+        if (feedback) {
+          feedback.textContent = 'Erro ao conectar com o servidor.';
+          feedback.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `
+            <span>Entrar na Conta Corporativa</span>
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          `;
+        }
+      }
+    }
+
+    function clearCurrentSession() {
+      localStorage.removeItem(STORAGE_USER);
+      localStorage.removeItem('tn_b2b_user');
+      localStorage.removeItem('toro_negro_b2b_user');
+      localStorage.removeItem('tn_b2b_token');
+      const banner = document.getElementById('already-logged-banner');
+      if (banner) banner.classList.add('hidden');
+      showToast('Sessão encerrada. Identifique a empresa compradora.');
+    }
+
+    function fillDemoCNPJ() {
+      const input = document.getElementById('cnpj-input');
+      if (input) {
+        input.value = '12.345.678/0001-90';
+        handleCNPJTyping(input.value);
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-message');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
