@@ -135,11 +135,31 @@ authRouter.post('/login', async (req: Request, res: Response) => {
       // Login por E-mail
       user = query.get('SELECT * FROM users WHERE email = ?', cleanInput.toLowerCase());
     } else {
-      // Login por CNPJ
+      // Login por CNPJ (com ou sem pontuação)
       const cleanCnpj = cleanInput.replace(/\D/g, '');
-      const company = query.get('SELECT id FROM companies WHERE cnpj = ?', cleanCnpj);
-      if (company) {
-        user = query.get('SELECT * FROM users WHERE company_id = ? LIMIT 1', company.id);
+      const companies: any[] = query.all(`
+        SELECT id FROM companies 
+        WHERE REPLACE(REPLACE(REPLACE(cnpj, '.', ''), '/', ''), '-', '') = ? 
+           OR cnpj = ?
+      `, cleanCnpj, cleanInput);
+
+      if (companies && companies.length > 0) {
+        for (const comp of companies) {
+          const candidates: any[] = query.all('SELECT * FROM users WHERE company_id = ?', comp.id);
+          for (const cand of candidates) {
+            const isMatch = await bcrypt.compare(senha, cand.senha_hash);
+            if (isMatch) {
+              user = cand;
+              break;
+            }
+          }
+          if (user) break;
+        }
+
+        // Se nenhum bateu a senha, pega o primeiro para o fluxo de erro padrão
+        if (!user) {
+          user = query.get('SELECT * FROM users WHERE company_id = ? LIMIT 1', companies[0].id);
+        }
       }
     }
 
