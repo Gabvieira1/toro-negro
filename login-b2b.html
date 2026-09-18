@@ -397,11 +397,35 @@
 
       lookupTimeout = setTimeout(async () => {
         try {
-          const res = await fetch(`/api/cnpj/${cleanCnpj}`);
-          const data = await res.json();
-          const c = data.company || data;
+          let c = null;
+          try {
+            const res = await fetch(`/api/cnpj/${cleanCnpj}`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data.success && (data.company || data.razao_social)) {
+                c = data.company || data;
+              }
+            }
+          } catch (apiErr) {}
 
-          if (res.ok && data.success && (c.razao_social || c.nome_fantasia || c.razaoSocial)) {
+          // Fallback para BrasilAPI pública (caso em GitHub Pages sem backend local)
+          if (!c) {
+            try {
+              const bRes = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCnpj}`);
+              if (bRes.ok) {
+                const bData = await bRes.json();
+                c = {
+                  razao_social: bData.razao_social,
+                  nome_fantasia: bData.nome_fantasia || bData.razao_social,
+                  municipio: bData.municipio,
+                  uf: bData.uf,
+                  cnpj: cleanCnpj
+                };
+              }
+            } catch (bErr) {}
+          }
+
+          if (c && (c.razao_social || c.nome_fantasia || c.razaoSocial)) {
             const razaoInput = document.getElementById('razao-input');
             const razaoNome = c.razao_social || c.nome_fantasia || c.razaoSocial;
             const cidadeNome = c.municipio || c.cidade || '';
@@ -425,7 +449,7 @@
             if (feedback) {
               feedback.className = 'text-[11px] text-amber-800 font-medium mt-1.5 flex items-center gap-1.5 bg-amber-50 p-2 rounded-xl border border-amber-200';
               feedback.innerHTML = `
-                <span>ℹ️ ${data.message || 'CNPJ não encontrado na base pública. Preencha a Razão Social manualmente.'}</span>
+                <span>ℹ️ CNPJ não encontrado na base pública. Preencha a Razão Social manualmente.</span>
               `;
               feedback.classList.remove('hidden');
             }
@@ -524,6 +548,29 @@
           }
         }
       } catch (err) {
+        // Fallback para visualização no GitHub Pages sem backend Node.js ativo
+        const cleanLogin = loginVal.toLowerCase().replace(/\D/g, '');
+        if (
+          (loginVal.toLowerCase() === 'compras@restaurantesantafe.com.br' || cleanLogin === '12345678000190') &&
+          passVal === '123456'
+        ) {
+          const companyData = {
+            razaoSocial: 'Restaurante e Adega Santa Fé Ltda',
+            nomeFantasia: 'Restaurante Santa Fé',
+            cnpj: '12.345.678/0001-90',
+            responsavel: 'Carlos Mendonça',
+            cidade: 'Curitiba / PR',
+            whatsapp: '(41) 99876-5432'
+          };
+          localStorage.setItem(STORAGE_USER, JSON.stringify(companyData));
+          localStorage.setItem('tn_b2b_user', JSON.stringify(companyData));
+          showToast(`Bem-vindo, ${companyData.nomeFantasia}!`);
+          setTimeout(() => {
+            window.location.href = 'portal-b2b.html';
+          }, 700);
+          return;
+        }
+
         if (feedback) {
           feedback.textContent = 'Erro ao conectar com o servidor.';
           feedback.classList.remove('hidden');

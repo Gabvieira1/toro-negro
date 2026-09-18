@@ -2323,11 +2323,35 @@
         
         cnpjLookupTimeout = setTimeout(async () => {
           try {
-            const res = await fetch(`/api/cnpj/${clean}`);
-            const data = await res.json();
-            const c = data.company || data;
+            let c = null;
+            try {
+              const res = await fetch(`/api/cnpj/${clean}`);
+              if (res.ok) {
+                const data = await res.json();
+                if (data.success && (data.company || data.razao_social)) {
+                  c = data.company || data;
+                }
+              }
+            } catch (apiErr) {}
 
-            if (res.ok && data.success && (c.razao_social || c.nome_fantasia || c.razaoSocial)) {
+            // Fallback para BrasilAPI pública no GitHub Pages
+            if (!c) {
+              try {
+                const bRes = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${clean}`);
+                if (bRes.ok) {
+                  const bData = await bRes.json();
+                  c = {
+                    razao_social: bData.razao_social,
+                    nome_fantasia: bData.nome_fantasia || bData.razao_social,
+                    municipio: bData.municipio,
+                    uf: bData.uf,
+                    cnpj: clean
+                  };
+                }
+              } catch (bErr) {}
+            }
+
+            if (c && (c.razao_social || c.nome_fantasia || c.razaoSocial)) {
               const chkRazao = document.getElementById('chk-razao');
               const chkCidade = document.getElementById('chk-cidade');
               const razaoNome = c.razao_social || c.nome_fantasia || c.razaoSocial || '';
