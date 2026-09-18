@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Toro Negro Wines | Catálogo Corporativo B2B &amp; E-commerce</title>
+  
+  <!-- Tailwind CSS CDN v3 -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            burgundy: {
+              950: '#1A040A',
+              900: '#2A0812',
+              800: '#3D0E1B',
+              700: '#541526',
+              600: '#6E1B32',
+              50: '#FDF7F8',
+            },
+            wine: {
+              accent: '#8B1832',
+              soft: '#F4ECEE',
+            },
+            stone: {
+              25: '#FCFCFD',
+              50: '#F9F9FB',
+              100: '#F3F3F5',
+              200: '#E5E5EA',
+              300: '#D1D1D8',
+              400: '#9E9EA7',
+              700: '#44444D',
+              800: '#27272A',
+              900: '#18181B',
+            },
+            gold: {
+              400: '#D4AF37',
+              500: '#BA9225',
+              600: '#947214',
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.03)',
+            'card-hover': '0 12px 24px -4px rgba(42, 8, 18, 0.08), 0 4px 8px -2px rgba(0, 0, 0, 0.04)',
+            'drawer': '-10px 0 35px -5px rgba(0, 0, 0, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .font-serif-italic {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+    }
+    .tracking-luxury {
+      letter-spacing: 0.16em;
+    }
+    .bottle-contact-shadow {
+      filter: drop-shadow(0 14px 18px rgba(35, 15, 10, 0.14)) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.06));
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+    }
+    .group:hover .bottle-contact-shadow {
+      transform: translateY(-6px) scale(1.03);
+      filter: drop-shadow(0 20px 24px rgba(35, 15, 10, 0.22)) drop-shadow(0 8px 10px rgba(0, 0, 0, 0.1));
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F3F3F5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D1D1D8;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9E9EA7;
+    }
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="bg-[#F8F8FA] text-stone-800 font-sans antialiased selection:bg-burgundy-900 selection:text-white min-h-screen flex flex-col">
+
+  <!-- ========================================================================= -->
+  <!-- 1. TOP CORPORATE ANNOUNCEMENT STRIP (WINE.COM.BR STYLE) -->
+  <!-- ========================================================================= -->
+  <div class="bg-burgundy-950 text-white text-[11px] font-medium py-1.5 px-4 border-b border-burgundy-900">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="tracking-wide">Canal Direto B2B Toro Negro • Faturamento 28D com CNPJ Verificado</span>
+      </div>
+      <div class="hidden md:flex items-center gap-6 text-stone-300 text-[11px]">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          Pedido mínimo: 3 caixas
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Pix à vista: -3% desconto
+        </span>
+        <span class="flex items-center gap-1.5 text-gold-300 font-semibold">
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          Entrega com Frota Própria MUFS (Frete cortesia a partir de 15 caixas)
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN E-COMMERCE HEADER (INSPIRADO NA WINE.COM.BR) -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-white border-b border-stone-200 shadow-xs transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-20 flex items-center justify-between gap-3 sm:gap-6">
+        
+        <!-- Brand Logo -->
+        <div class="flex items-center gap-3 shrink-0">
+          <a href="portal-b2b.html" class="flex items-center gap-2 group">
+            <img src="./assets/toro-negro-logo-oficial.png" alt="Toro Negro Logo" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-102"/>
+            <div class="hidden sm:flex flex-col border-l border-stone-200 pl-3">
+              <span class="text-[11px] font-extrabold tracking-[0.2em] uppercase text-burgundy-950 leading-tight">E-Commerce B2B</span>
+              <span class="text-[9px] tracking-wider text-stone-500 uppercase">Preços Direto da Adega</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Wine.com.br Search Bar -->
+        <div class="flex-1 max-w-xl mx-1 sm:mx-4">
+          <div class="relative">
+            <input 
+              id="search-input" 
+              type="text" 
+              placeholder="Qual vinho ou uva você procura para o seu cardápio?" 
+              class="w-full bg-stone-50 hover:bg-white focus:bg-white border border-stone-200 hover:border-stone-300 rounded-full py-2.5 pl-11 pr-10 text-xs sm:text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:border-burgundy-900 focus:ring-2 focus:ring-burgundy-900/10 transition-all shadow-xs"
+              oninput="handleSearch(this.value)"
+            />
+            <div class="absolute left-3.5 top-3 text-stone-400 pointer-events-none">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+            <button 
+              id="search-clear-btn" 
+              type="button" 
+              onclick="clearSearch()" 
+              class="hidden absolute right-3 top-2.5 text-stone-400 hover:text-stone-700 p-0.5 rounded-full hover:bg-stone-100"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Company & Cart Tools -->
+        <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+          
+          <!-- CNPJ / Account Badge -->
+          <div class="hidden lg:flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-stone-50 border border-stone-200">
+            <div class="w-8 h-8 rounded-lg bg-burgundy-900 text-white flex items-center justify-center font-bold text-xs shrink-0">
+              PJ
+            </div>
+            <div class="flex flex-col text-left">
+              <span id="header-company-name" class="text-xs font-bold text-stone-900 leading-tight truncate max-w-[150px]">Restaurante Santa Fé</span>
+              <span id="header-cnpj-num" class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> CNPJ Habilitado
+              </span>
+            </div>
+          </div>
+
+          <!-- Institutional Link -->
+          <a href="index.html" class="hidden md:inline-flex text-xs font-semibold text-stone-600 hover:text-burgundy-900 transition-colors py-2 px-1">
+            Site Institucional ↗
+          </a>
+
+          <!-- Cart Drawer Button (Wine.com.br Style) -->
+          <button 
+            type="button" 
+            onclick="openCartDrawer()" 
+            class="relative flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-burgundy-950 hover:bg-burgundy-900 text-white text-xs font-bold tracking-wide transition-all shadow-sm active:scale-98 cursor-pointer"
+          >
+            <div class="relative">
+              <svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+              </svg>
+              <span id="header-cart-badge" class="absolute -top-1.5 -right-2 bg-emerald-500 text-white text-[10px] font-black rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 border-2 border-burgundy-950">
+                0
+              </span>
+            </div>
+            <span class="hidden sm:inline font-bold">Meu Pedido</span>
+            <span id="header-cart-total-amount" class="hidden xl:inline text-gold-400 text-xs border-l border-white/20 pl-2">
+              R$ 0,00
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 3. BREADCRUMBS, PAGE TITLE & SORTING BAR -->
+  <!-- ========================================================================= -->
+  <div class="bg-white border-b border-stone-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        
+        <!-- Breadcrumb & Found Count -->
+        <div class="flex flex-col gap-1">
+          <nav class="flex items-center gap-1.5 text-xs text-stone-500 font-medium">
+            <a href="index.html" class="hover:text-burgundy-900 transition-colors">Início</a>
+            <span>/</span>
+            <a href="portal-b2b.html" class="hover:text-burgundy-900 transition-colors">Catálogo B2B</a>
+            <span>/</span>
+            <span class="text-stone-900 font-semibold" id="breadcrumb-current">Todos os Vinhos</span>
+          </nav>
+          <div class="flex items-baseline gap-2">
+            <h1 class="text-xl sm:text-2xl font-bold text-stone-950 tracking-tight" id="page-heading">
+              Vinhos &amp; Espumantes Selecionados
+            </h1>
+            <span id="results-count" class="text-xs text-stone-500 font-medium">
+              (14 produtos)
+            </span>
+          </div>
+        </div>
+
+        <!-- Sorting & Mobile Filter Toggle -->
+        <div class="flex items-center gap-3 self-end md:self-center">
+          
+          <!-- Mobile Filter Button (Wine.com.br Style) -->
+          <button 
+            type="button" 
+            onclick="openMobileFilters()" 
+            class="lg:hidden flex items-center gap-2 px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-full text-xs font-bold border border-stone-200 transition-colors cursor-pointer"
+          >
+            <svg class="w-4 h-4 text-burgundy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+            </svg>
+            <span>Filtros</span>
+            <span id="mobile-filter-badge" class="hidden px-1.5 py-0.2 rounded-full bg-burgundy-900 text-white text-[10px] font-bold">0</span>
+          </button>
+
+          <!-- Order by Select -->
+          <div class="flex items-center gap-2 text-xs text-stone-600">
+            <label for="sort-select" class="hidden sm:inline font-medium">Ordenar por:</label>
+            <div class="relative">
+              <select 
+                id="sort-select" 
+                onchange="handleSort(this.value)" 
+                class="appearance-none bg-stone-50 hover:bg-white border border-stone-200 rounded-full pl-3.5 pr-8 py-2 text-xs font-semibold text-stone-900 focus:outline-none focus:border-burgundy-900 cursor-pointer shadow-2xs"
+              >
+                <option value="popular">Mais Vendidos / Destaques</option>
+                <option value="price-asc">Menor Preço da Garrafa</option>
+                <option value="price-desc">Maior Preço da Garrafa</option>
+                <option value="rating">Melhores Avaliados ★</option>
+                <option value="name-asc">Ordem Alfabética (A-Z)</option>
+              </select>
+              <div class="absolute right-3 top-2.5 text-stone-400 pointer-events-none">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- View Mode: Grid vs Table -->
+          <div class="hidden sm:flex items-center bg-stone-100 border border-stone-200 rounded-full p-0.5">
+            <button 
+              type="button" 
+              onclick="switchViewMode('grid')" 
+              id="view-grid-btn" 
+              title="Visualização em Cards E-commerce" 
+              class="p-1.5 rounded-full text-xs transition-all bg-white text-burgundy-950 shadow-xs cursor-pointer"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+            </button>
+            <button 
+              type="button" 
+              onclick="switchViewMode('table')" 
+              id="view-table-btn" 
+              title="Visualização em Lista / Tabela Rápida" 
+              class="p-1.5 rounded-full text-xs transition-all text-stone-500 hover:text-stone-900 cursor-pointer"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Active Filter Tags (Chips like Wine.com.br) -->
+      <div id="active-filter-chips-container" class="hidden flex-wrap items-center gap-2 pt-3 mt-2 border-t border-stone-100">
+        <span class="text-[11px] font-bold text-stone-500 uppercase tracking-wider">Filtros ativos:</span>
+        <div id="active-filter-chips" class="flex flex-wrap items-center gap-1.5">
+          <!-- Chips injected by JS -->
+        </div>
+        <button 
+          type="button" 
+          onclick="clearAllFilters()" 
+          class="text-[11px] font-bold text-burgundy-900 hover:text-burgundy-700 underline ml-2 cursor-pointer"
+        >
+          Limpar todos
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 4. TWO-COLUMN LAYOUT: SIDEBAR FILTERS (LEFT) + PRODUCTS GRID (RIGHT) -->
+  <!-- ========================================================================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <div class="flex items-start gap-8">
+      
+      <!-- ===================================================================== -->
+      <!-- 4A. LEFT SIDEBAR FILTERS (DESKTOP WINE.COM.BR STYLE) -->
+      <!-- ===================================================================== -->
+      <aside class="hidden lg:block w-64 shrink-0 space-y-6">
+        
+        <!-- Sidebar Box Header -->
+        <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-xs">
+          <div class="flex items-center justify-between pb-3 border-b border-stone-100 mb-4">
+            <h2 class="text-sm font-extrabold uppercase tracking-wider text-stone-900 flex items-center gap-2">
+              <svg class="w-4 h-4 text-burgundy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+              </svg>
+              Filtrar Catálogo
+            </h2>
+            <button 
+              type="button" 
+              onclick="clearAllFilters()" 
+              class="text-xs font-semibold text-stone-400 hover:text-burgundy-900 transition-colors cursor-pointer"
+            >
+              Limpar
+            </button>
+          </div>
+
+          <!-- Filter Section 1: Tipo de Vinho -->
+          <div class="mb-6">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-stone-700 mb-3 flex items-center justify-between">
+              <span>Tipo de Vinho</span>
+            </h3>
+            <div class="space-y-2 text-xs">
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="tinto" onchange="toggleFilter('type', 'tinto', this.checked)" class="filter-type-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Vinho Tinto</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(8)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="branco" onchange="toggleFilter('type', 'branco', this.checked)" class="filter-type-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Vinho Branco</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(3)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="rose" onchange="toggleFilter('type', 'rose', this.checked)" class="filter-type-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Vinho Rosé</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="espumante" onchange="toggleFilter('type', 'espumante', this.checked)" class="filter-type-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Espumante Brut</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(2)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Filter Section 2: País / Terroir -->
+          <div class="mb-6 pt-5 border-t border-stone-100">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-stone-700 mb-3 flex items-center justify-between">
+              <span>País / Origem</span>
+            </h3>
+            <div class="space-y-2 text-xs">
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="chile" onchange="toggleFilter('country', 'chile', this.checked)" class="filter-country-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="flex items-center gap-1.5 text-stone-700 group-hover:text-burgundy-900 font-medium">
+                    <img src="./assets/flag-chile.png" alt="Chile" class="w-3.5 h-2.5 object-cover rounded-xs"/>
+                    Chile (Valle Central / Limarí)
+                  </span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(9)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="argentina" onchange="toggleFilter('country', 'argentina', this.checked)" class="filter-country-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="flex items-center gap-1.5 text-stone-700 group-hover:text-burgundy-900 font-medium">
+                    <img src="./assets/flag-argentina.png" alt="Argentina" class="w-3.5 h-2.5 object-cover rounded-xs"/>
+                    Argentina (Mendoza)
+                  </span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(5)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Filter Section 3: Faixa de Preço Unitário -->
+          <div class="mb-6 pt-5 border-t border-stone-100">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-stone-700 mb-3 flex items-center justify-between">
+              <span>Preço por Garrafa</span>
+            </h3>
+            <div class="space-y-2 text-xs">
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="ate-35" onchange="toggleFilter('price', 'ate-35', this.checked)" class="filter-price-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Até R$ 35,00</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(2)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="35-40" onchange="toggleFilter('price', '35-40', this.checked)" class="filter-price-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">R$ 35,00 a R$ 40,00</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(7)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="acima-40" onchange="toggleFilter('price', 'acima-40', this.checked)" class="filter-price-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Acima de R$ 40,00</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(5)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Filter Section 4: Uvas Mais Procuradas -->
+          <div class="mb-6 pt-5 border-t border-stone-100">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-stone-700 mb-3 flex items-center justify-between">
+              <span>Uvas &amp; Castas</span>
+            </h3>
+            <div class="space-y-2 text-xs max-h-48 overflow-y-auto pr-1">
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Carménère" onchange="toggleFilter('grape', 'Carménère', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Carménère</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Cabernet Sauvignon" onchange="toggleFilter('grape', 'Cabernet Sauvignon', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Cabernet Sauvignon</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Malbec" onchange="toggleFilter('grape', 'Malbec', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Malbec</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Merlot" onchange="toggleFilter('grape', 'Merlot', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Merlot</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Bonarda" onchange="toggleFilter('grape', 'Bonarda', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Bonarda</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Sauvignon Blanc" onchange="toggleFilter('grape', 'Sauvignon Blanc', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Sauvignon Blanc</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Chardonnay" onchange="toggleFilter('grape', 'Chardonnay', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Chardonnay</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Torrontés" onchange="toggleFilter('grape', 'Torrontés', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Torrontés</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Pedro Jimenez" onchange="toggleFilter('grape', 'Pedro Jimenez', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Pedro Jimenez</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+
+              <label class="flex items-center justify-between group cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" value="Syrah Rosé" onchange="toggleFilter('grape', 'Syrah Rosé', this.checked)" class="filter-grape-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Syrah Rosé</span>
+                </div>
+                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Direct B2B Help Card -->
+          <div class="pt-5 border-t border-stone-100">
+            <div class="bg-stone-50 rounded-xl p-3.5 border border-stone-200/70 text-center">
+              <span class="text-[10px] font-extrabold uppercase tracking-wider text-burgundy-900 block mb-1">Precisa de Apoio?</span>
+              <p class="text-[11px] text-stone-600 mb-2.5 leading-snug">Nosso sommelier corporativo monta a carta ideal para o seu restaurante.</p>
+              <a href="https://wa.me/5541998632724?text=Ol%C3%A1%2C%20gostaria%20de%20consultoria%20para%20a%20carta%20de%20vinhos%20do%20meu%20restaurante." target="_blank" class="inline-flex items-center justify-center gap-1.5 w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-colors">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.299.144.347.491 1.2.534 1.288.043.088.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086.159.058 1.011.477 1.184.564.173.087.289.13.332.203.043.072.043.419-.101.824z"/></svg>
+                Falar c/ Sommelier
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- ===================================================================== -->
+      <!-- 4B. RIGHT COLUMN: PRODUCT SHOWCASE (CARDS & QUICK ORDER) -->
+      <!-- ===================================================================== -->
+      <main class="flex-1 w-full min-w-0">
+        
+        <!-- GRID VIEW: Wine.com.br Inspired Luxury E-Commerce Cards -->
+        <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- TABLE VIEW: Fast Bulk Matrix for Buyers -->
+        <div id="catalog-table-container" class="hidden">
+          <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-xs">
+            <div class="p-4 sm:p-5 border-b border-stone-200 bg-stone-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div>
+                <h3 class="font-bold text-stone-900 text-base">Pedido Rápido em Matriz</h3>
+                <p class="text-xs text-stone-500">Informe a quantidade de caixas fechadas para os rótulos desejados.</p>
+              </div>
+              <button 
+                type="button" 
+                onclick="addAllTableSelections()" 
+                class="px-5 py-2.5 rounded-full bg-burgundy-950 hover:bg-burgundy-900 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-xs cursor-pointer"
+              >
+                Adicionar Selecionados ao Pedido
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="border-b border-stone-200 text-[11px] font-extrabold uppercase tracking-wider text-stone-500 bg-stone-100/60">
+                    <th class="py-3 px-4">Rótulo / Vinho</th>
+                    <th class="py-3 px-4">Origem &amp; Casta</th>
+                    <th class="py-3 px-4">Preço Garrafa</th>
+                    <th class="py-3 px-4">Preço Caixa (6 un)</th>
+                    <th class="py-3 px-4 text-center w-36">Quantidade (Cx)</th>
+                  </tr>
+                </thead>
+                <tbody id="catalog-table-body" class="divide-y divide-stone-100">
+                  <!-- Dynamically populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty Results Message -->
+        <div id="catalog-empty" class="hidden py-16 text-center bg-white border border-stone-200 rounded-2xl p-8">
+          <div class="w-16 h-16 rounded-full bg-burgundy-50 text-burgundy-900 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-stone-900 mb-1">Nenhum rótulo encontrado</h3>
+          <p class="text-xs text-stone-500 max-w-sm mx-auto mb-6">Não encontramos vinhos com os filtros selecionados. Tente limpar os filtros ou buscar por outra uva.</p>
+          <button 
+            type="button" 
+            onclick="clearAllFilters()" 
+            class="px-6 py-2.5 rounded-full bg-burgundy-950 text-white text-xs font-bold uppercase tracking-wider hover:bg-burgundy-900 transition-colors shadow-xs cursor-pointer"
+          >
+            Limpar Todos os Filtros
+          </button>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 5. MOBILE FILTER DRAWER / MODAL (WINE.COM.BR STYLE) -->
+  <!-- ========================================================================= -->
+  <div id="mobile-filter-backdrop" onclick="closeMobileFilters()" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs hidden transition-opacity"></div>
+  <aside id="mobile-filter-drawer" class="fixed inset-y-0 left-0 z-50 w-full max-w-xs bg-white text-stone-800 shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-300 ease-in-out">
+    <div class="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-50">
+      <h3 class="font-bold text-base text-stone-900 flex items-center gap-2">
+        <svg class="w-4 h-4 text-burgundy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+        </svg>
+        Filtros de Vinhos
+      </h3>
+      <button type="button" onclick="closeMobileFilters()" class="w-8 h-8 rounded-full bg-stone-200/70 text-stone-700 flex items-center justify-center font-bold text-sm">✕</button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto p-5 space-y-6 text-xs">
+      <!-- Mobile Filter Content (Replicated for easy touch) -->
+      <div>
+        <h4 class="font-bold uppercase tracking-wider text-stone-700 mb-2">Tipo de Vinho</h4>
+        <div class="space-y-2" id="mobile-filter-types">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-stone-100">
+        <h4 class="font-bold uppercase tracking-wider text-stone-700 mb-2">País / Origem</h4>
+        <div class="space-y-2" id="mobile-filter-countries">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-stone-100">
+        <h4 class="font-bold uppercase tracking-wider text-stone-700 mb-2">Preço Garrafa</h4>
+        <div class="space-y-2" id="mobile-filter-prices">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 border-t border-stone-200 bg-stone-50 flex gap-2">
+      <button type="button" onclick="clearAllFilters(); closeMobileFilters();" class="w-1/2 py-2.5 rounded-xl border border-stone-300 text-stone-700 text-xs font-bold">
+        Limpar
+      </button>
+      <button type="button" onclick="closeMobileFilters()" class="w-1/2 py-2.5 rounded-xl bg-burgundy-950 text-white text-xs font-bold uppercase">
+        Ver Resultados
+      </button>
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 6. SLIDE-OUT CART DRAWER (MINIMALIST & FRICTIONLESS B2B ORDER) -->
+  <!-- ========================================================================= -->
+  <div id="cart-drawer-backdrop" onclick="closeCartDrawer()" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-2xs hidden transition-opacity duration-300"></div>
+  <aside id="cart-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white text-stone-900 border-l border-stone-200 shadow-drawer flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+    
+    <!-- Drawer Header -->
+    <div class="p-5 sm:p-6 border-b border-stone-200 bg-stone-50 flex items-center justify-between">
+      <div>
+        <span class="text-[10px] font-extrabold uppercase tracking-widest text-burgundy-900 block mb-0.5">Pedido Faturado Direto</span>
+        <h3 class="font-bold text-xl text-stone-950">Seu Pedido B2B</h3>
+        <p class="text-xs text-stone-500 mt-0.5" id="drawer-company-indicator">Restaurante Santa Fé • 12.345.678/0001-90</p>
+      </div>
+      <button type="button" onclick="closeCartDrawer()" class="w-9 h-9 rounded-full bg-stone-200/80 hover:bg-stone-300 text-stone-800 flex items-center justify-center font-bold transition-colors cursor-pointer" aria-label="Fechar">
+        ✕
+      </button>
+    </div>
+
+    <!-- Shipping Goal Progress Bar (Wine.com.br Style) -->
+    <div class="px-6 py-3.5 bg-burgundy-50/70 border-b border-burgundy-100">
+      <div class="flex justify-between text-xs text-burgundy-950 font-medium mb-1.5">
+        <span id="shipping-progress-text" class="flex items-center gap-1.5 font-bold">
+          <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          Frota Própria MUFS: Frete cortesia a partir de 15 caixas
+        </span>
+        <span id="shipping-progress-count" class="font-black font-mono">0/15 cx</span>
+      </div>
+      <div class="w-full bg-stone-200 rounded-full h-2 overflow-hidden">
+        <div id="shipping-progress-bar" class="bg-burgundy-900 h-full w-0 transition-all duration-300"></div>
+      </div>
+    </div>
+
+    <!-- Cart Items Scroll Area -->
+    <div id="drawer-cart-items" class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4">
+      <!-- Injected via JS -->
+    </div>
+
+    <!-- Drawer Summary & Checkout -->
+    <div class="p-5 sm:p-6 border-t border-stone-200 bg-stone-50 space-y-4">
+      <div class="space-y-2 text-xs text-stone-600">
+        <div class="flex justify-between">
+          <span>Total de Caixas (6 garrafas cada):</span>
+          <strong id="drawer-boxes-total" class="text-stone-900 font-bold">0 cx</strong>
+        </div>
+        <div class="flex justify-between">
+          <span>Total de Garrafas:</span>
+          <strong id="drawer-bottles-total" class="text-stone-900 font-bold">0 un</strong>
+        </div>
+        <div class="flex justify-between text-sm pt-2.5 border-t border-stone-200 text-stone-900">
+          <span class="font-bold text-base text-stone-950">Total Faturado CNPJ:</span>
+          <strong id="drawer-amount-total" class="text-2xl font-black text-burgundy-950">R$ 0,00</strong>
+        </div>
+        <div class="text-[11px] text-emerald-700 bg-emerald-50 rounded-lg p-2 border border-emerald-200/60 flex items-center gap-1.5">
+          <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+          <span>Condição: Faturamento Boleto 28D ou Pix com 3% de desconto.</span>
+        </div>
+      </div>
+
+      <button 
+        id="checkout-action-btn" 
+        type="button" 
+        onclick="openCheckoutModal()" 
+        class="w-full py-3.5 rounded-xl bg-burgundy-950 hover:bg-burgundy-900 text-white text-xs uppercase tracking-luxury font-bold transition-all shadow-md cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      >
+        <span>Fechar Pedido Faturado</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+      </button>
+
+      <button 
+        type="button" 
+        onclick="clearCart()" 
+        class="w-full text-center text-xs text-stone-400 hover:text-red-600 transition-colors py-1 cursor-pointer font-medium"
+      >
+        Limpar carrinho
+      </button>
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 7. CHECKOUT MODAL: FAST B2B ORDER CONFIRMATION -->
+  <!-- ========================================================================= -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true">
+    <div class="relative w-full max-w-lg bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden text-stone-900 my-auto">
+      
+      <!-- Header -->
+      <div class="p-6 border-b border-stone-200 bg-stone-50 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] uppercase font-black tracking-widest text-burgundy-900 block mb-0.5">Venda Direta de Vinícola</span>
+          <h3 class="font-bold text-xl text-stone-950">Finalizar Pedido Corporativo</h3>
+        </div>
+        <button type="button" onclick="closeCheckoutModal()" class="w-8 h-8 rounded-full bg-stone-200 text-stone-700 flex items-center justify-center font-bold">✕</button>
+      </div>
+
+      <!-- Form -->
+      <form onsubmit="handleFinishOrder(event)" class="p-6 space-y-4">
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block font-bold text-stone-700">CNPJ da Empresa Compradora *</label>
+            <span class="text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Receita Federal Automática</span>
+          </div>
+          <div class="relative">
+            <input type="text" id="chk-cnpj" required placeholder="00.000.000/0000-00" oninput="handleCNPJLookupInput(this.value)" onblur="handleCNPJLookupInput(this.value)" class="w-full bg-stone-50 border border-stone-300 rounded-xl pl-3.5 pr-24 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900 font-medium"/>
+            <button type="button" onclick="triggerManualCNPJLookup()" class="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-burgundy-950 hover:bg-burgundy-900 text-gold-300 rounded-lg text-[10px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1 shadow-2xs cursor-pointer" title="Consultar dados cadastrais na Receita Federal">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              <span>Buscar</span>
+            </button>
+          </div>
+          <div id="chk-cnpj-feedback" class="text-[11px] text-stone-500 mt-1 hidden"></div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-stone-700 mb-1">Razão Social / Nome do Estabelecimento *</label>
+          <input type="text" id="chk-razao" required placeholder="Nome empresarial" class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"/>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-stone-700 mb-1">Nome do Comprador / Sommelier *</label>
+            <input type="text" id="chk-resp" required placeholder="Seu nome" class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"/>
+          </div>
+          <div>
+            <label class="block font-bold text-stone-700 mb-1">WhatsApp Corporativo *</label>
+            <input type="tel" id="chk-whatsapp" required placeholder="(41) 99999-9999" class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-stone-700 mb-1">Cidade / UF de Entrega</label>
+          <input type="text" id="chk-cidade" required placeholder="Curitiba / PR" class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"/>
+        </div>
+
+        <!-- Payment Condition Selector -->
+        <div>
+          <label class="block font-bold text-stone-700 mb-1.5">Condição Comercial Desejada</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="border border-stone-200 rounded-xl p-2.5 flex flex-col text-center cursor-pointer hover:border-burgundy-900 transition-colors bg-stone-50 has-[:checked]:bg-burgundy-50 has-[:checked]:border-burgundy-900 has-[:checked]:text-burgundy-950">
+              <input type="radio" name="chk-payment" value="Boleto 28D Faturado" checked class="sr-only"/>
+              <span class="font-bold text-xs">Boleto 28D</span>
+              <span class="text-[10px] text-stone-500 mt-0.5">Prazo Faturado</span>
+            </label>
+            <label class="border border-stone-200 rounded-xl p-2.5 flex flex-col text-center cursor-pointer hover:border-burgundy-900 transition-colors bg-stone-50 has-[:checked]:bg-burgundy-50 has-[:checked]:border-burgundy-900 has-[:checked]:text-burgundy-950">
+              <input type="radio" name="chk-payment" value="Pix Antecipado (-3% Desconto)" class="sr-only"/>
+              <span class="font-bold text-xs text-emerald-700">Pix (-3% OFF)</span>
+              <span class="text-[10px] text-stone-500 mt-0.5">À Vista</span>
+            </label>
+            <label class="border border-stone-200 rounded-xl p-2.5 flex flex-col text-center cursor-pointer hover:border-burgundy-900 transition-colors bg-stone-50 has-[:checked]:bg-burgundy-50 has-[:checked]:border-burgundy-900 has-[:checked]:text-burgundy-950">
+              <input type="radio" name="chk-payment" value="Cartão Corporativo PJ (em até 3x)" class="sr-only"/>
+              <span class="font-bold text-xs">Cartão PJ</span>
+              <span class="text-[10px] text-stone-500 mt-0.5">Em até 3x</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Summary in Checkout -->
+        <div class="bg-stone-100/70 rounded-xl p-3.5 border border-stone-200 space-y-1.5">
+          <div class="flex justify-between text-xs text-stone-600">
+            <span>Resumo:</span>
+            <span id="chk-summary-boxes" class="font-bold text-stone-900">0 caixas</span>
+          </div>
+          <div class="flex justify-between text-xs text-stone-600">
+            <span>Logística & Frete:</span>
+            <span class="font-semibold text-emerald-800 flex items-center gap-1">
+              <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              Frota Própria MUFS
+            </span>
+          </div>
+          <div class="flex justify-between text-sm font-bold text-stone-900 pt-1.5 border-t border-stone-200">
+            <span>Total a Faturar:</span>
+            <span id="chk-summary-amount" class="text-burgundy-950 text-base font-black">R$ 0,00</span>
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3.5 rounded-xl bg-burgundy-950 hover:bg-burgundy-900 text-white text-xs uppercase tracking-luxury font-bold transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span>Transmitir Pedido ao Comercial</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 8. TOAST NOTIFICATION -->
+  <!-- ========================================================================= -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-stone-950 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-xs font-semibold transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+    <span id="toast-message">Produto adicionado</span>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 9. FOOTER CORPORATIVO (MINIMALISTA) -->
+  <!-- ========================================================================= -->
+  <footer class="bg-white border-t border-stone-200 mt-16 py-10 text-xs text-stone-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+      <div class="flex items-center gap-3">
+        <img src="./assets/toro-negro-logo-oficial.png" alt="Toro Negro" class="h-8 w-auto grayscale opacity-60"/>
+        <span>Toro Negro Wines • Canal Exclusivo B2B para Estabelecimentos &amp; Restaurantes</span>
+      </div>
+      <div>
+        <span>Venda proibida para menores de 18 anos. Beba com moderação.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- 10. JAVASCRIPT CONTROLLER (WINE.COM.BR EXPERIENCE) -->
+  <!-- ========================================================================= -->
+  <script>
+    // 14 Real Master Wines from Toro Negro with full metadata
+    const WINES_DATABASE = [
+      {
+        id: 'carmenere',
+        name: 'Vinho Toro Negro Carménère Reservado 750ml',
+        shortName: 'Carménère Reservado',
+        type: 'tinto',
+        category: 'reservado',
+        country: 'chile',
+        origin: 'Valle Central • Chile',
+        flag: './assets/flag-chile.png',
+        grape: 'Carménère',
+        alcohol: '13.0%',
+        retailPrice: 59.90,
+        unitPrice: 38.90,
+        boxPrice: 233.40,
+        rating: 4.9,
+        reviewsCount: 142,
+        badge: 'MAIS VENDIDO',
+        image: './assets/bottles/web/toro-negro-carmenere.png',
+        notes: 'Vermelho cereja profundo. Taninos redondos, aveludados e notas sedutoras de amoras pretas e especiarias.'
+      },
+      {
+        id: 'cabernet',
+        name: 'Vinho Toro Negro Cabernet Sauvignon Reservado 750ml',
+        shortName: 'Cabernet Sauvignon Reservado',
+        type: 'tinto',
+        category: 'reservado',
+        country: 'chile',
+        origin: 'Valle Central • Chile',
+        flag: './assets/flag-chile.png',
+        grape: 'Cabernet Sauvignon',
+        alcohol: '13.0%',
+        retailPrice: 59.90,
+        unitPrice: 38.90,
+        boxPrice: 233.40,
+        rating: 4.8,
+        reviewsCount: 118,
+        badge: 'CLÁSSICO',
+        image: './assets/bottles/web/toro-negro-cabernet.png',
+        notes: 'Rubi intenso. Aromas de ameixas maduras, notas sutis de carvalho tostado e corpo harmonioso.'
+      },
+      {
+        id: 'merlot',
+        name: 'Vinho Toro Negro Merlot Reservado 750ml',
+        shortName: 'Merlot Reservado',
+        type: 'tinto',
+        category: 'reservado',
+        country: 'chile',
+        origin: 'Valle Central • Chile',
+        flag: './assets/flag-chile.png',
+        grape: 'Merlot',
+        alcohol: '13.0%',
+        retailPrice: 59.90,
+        unitPrice: 38.90,
+        boxPrice: 233.40,
+        rating: 4.7,
+        reviewsCount: 86,
+        badge: 'EQUILIBRADO',
+        image: './assets/bottles/web/toro-negro-merlot.png',
+        notes: 'Sedoso e envolvente. Frutas vermelhas frescas, notas doces de cacau e taninos macios.'
+      },
+      {
+        id: 'sauvignon-blanc',
+        name: 'Vinho Toro Negro Sauvignon Blanc Reservado 750ml',
+        shortName: 'Sauvignon Blanc Reservado',
+        type: 'branco',
+        category: 'reservado',
+        country: 'chile',
+        origin: 'Valle Central • Chile',
+        flag: './assets/flag-chile.png',
+        grape: 'Sauvignon Blanc',
+        alcohol: '13.0%',
+        retailPrice: 56.90,
+        unitPrice: 36.90,
+        boxPrice: 221.40,
+        rating: 4.9,
+        reviewsCount: 94,
+        badge: 'FRESCO & VIBRANTE',
+        image: './assets/bottles/web/toro-negro-sauvignon-blanc.png',
+        notes: 'Amarelo palha com reflexos esverdeados. Cítricos vibrantes, maracujá e acidez mineral cristalina.'
+      },
+      {
+        id: 'chardonnay',
+        name: 'Vinho Toro Negro Chardonnay Reservado 750ml',
+        shortName: 'Chardonnay Reservado',
+        type: 'branco',
+        category: 'reservado',
+        country: 'chile',
+        origin: 'Valle Central • Chile',
+        flag: './assets/flag-chile.png',
+        grape: 'Chardonnay',
+        alcohol: '13.0%',
+        retailPrice: 56.90,
+        unitPrice: 36.90,
+        boxPrice: 221.40,
+        rating: 4.7,
+        reviewsCount: 65,
+        badge: 'UNTUOSO',
+        image: './assets/bottles/web/toro-negro-chardonnay.png',
+        notes: 'Dourado brilhante. Aromas tropicais de abacaxi maduro, pêssego e toques florais refinados.'
+      },
+      {
+        id: 'rose',
+        name: 'Vinho Toro Negro Rosé Syrah Reservado 750ml',
+        shortName: 'Rosé Syrah Reservado',
+        type: 'rose',
+        category: 'reservado',
+        country: 'chile',
+        origin: 'Valle Central • Chile',
+        flag: './assets/flag-chile.png',
+        grape: 'Syrah Rosé',
+        alcohol: '13.0%',
+        retailPrice: 56.90,
+        unitPrice: 36.90,
+        boxPrice: 221.40,
+        rating: 4.8,
+        reviewsCount: 72,
+        badge: 'GASTRONÔMICO',
+        image: './assets/bottles/web/toro-negro-rose.png',
+        notes: 'Coloração rosa salmão tênue. Frutas vermelhas frescas, framboesa e final límpido e seco.'
+      },
+      {
+        id: 'el-secreto',
+        name: 'Vinho Toro Negro El Secreto Gran Seleção 750ml',
+        shortName: 'Toro Negro El Secreto',
+        type: 'tinto',
+        category: 'destaques',
+        country: 'chile',
+        origin: 'Valle Central • Chile',
+        flag: './assets/flag-chile.png',
+        grape: 'Blend Nobre Ícone',
+        alcohol: '13.5%',
+        retailPrice: 89.90,
+        unitPrice: 49.90,
+        boxPrice: 299.40,
+        rating: 5.0,
+        reviewsCount: 164,
+        badge: 'ÍCONE DA CASA',
+        image: './assets/bottles/web/toro-negro-el-secreto.png',
+        notes: 'Edição especial de vinhedos selecionados. Encorpado, nobre, com notas complexas de cassis, cedro e baunilha.'
+      },
+      {
+        id: 'verano',
+        name: 'Vinho Branco Toro Negro Verano Pedro Jimenez 750ml',
+        shortName: 'Pedro Jimenez Verano',
+        type: 'branco',
+        category: 'destaques',
+        country: 'chile',
+        origin: 'Valle del Limarí • Chile',
+        flag: './assets/flag-chile.png',
+        grape: 'Pedro Jimenez',
+        alcohol: '12.0%',
+        retailPrice: 54.90,
+        unitPrice: 34.90,
+        boxPrice: 209.40,
+        rating: 4.9,
+        reviewsCount: 88,
+        badge: 'VALE DO LIMARÍ',
+        image: './assets/bottles/web/toro-negro-verano.png',
+        notes: 'Uvas colhidas na brisa fresca do Vale do Limarí. Aromas de mel de flor de laranjeira, maçã verde e final mineral.'
+      },
+      {
+        id: 'suave-sweet',
+        name: 'Vinho Toro Negro Suave Sweet Tinto Vinífera 750ml',
+        shortName: 'Toro Negro Suave Tinto',
+        type: 'tinto',
+        category: 'destaques',
+        country: 'chile',
+        origin: 'Valle Central • Chile',
+        flag: './assets/flag-chile.png',
+        grape: 'Vitis Vinifera Suave',
+        alcohol: '12.5%',
+        retailPrice: 49.90,
+        unitPrice: 32.90,
+        boxPrice: 197.40,
+        rating: 4.8,
+        reviewsCount: 110,
+        badge: 'SUAVE FINO',
+        image: './assets/bottles/web/toro-negro-suave.png',
+        notes: 'Elaborado 100% com uvas viníferas nobres. Aveludado, doçura equilibrada e notas de geleia de amoras.'
+      },
+      {
+        id: 'malbec',
+        name: 'Vinho Toro Negro Malbec Mendoza Argentina 750ml',
+        shortName: 'Toro Negro Malbec Mendoza',
+        type: 'tinto',
+        category: 'argentina',
+        country: 'argentina',
+        origin: 'Mendoza • Argentina',
+        flag: './assets/flag-argentina.png',
+        grape: 'Malbec',
+        alcohol: '13.0%',
+        retailPrice: 68.00,
+        unitPrice: 42.90,
+        boxPrice: 257.40,
+        rating: 4.9,
+        reviewsCount: 153,
+        badge: 'TERROIR ANDINO',
+        image: './assets/bottles/web/toro-negro-malbec.png',
+        notes: 'A expressão máxima dos Andes. Frutas vermelhas maduras, violetas, notas de ameixa e taninos carnudos.'
+      },
+      {
+        id: 'bonarda',
+        name: 'Vinho Toro Negro Bonarda Mendoza Argentina 750ml',
+        shortName: 'Toro Negro Bonarda Mendoza',
+        type: 'tinto',
+        category: 'argentina',
+        country: 'argentina',
+        origin: 'Mendoza • Argentina',
+        flag: './assets/flag-argentina.png',
+        grape: 'Bonarda',
+        alcohol: '13.0%',
+        retailPrice: 68.00,
+        unitPrice: 42.90,
+        boxPrice: 257.40,
+        rating: 4.8,
+        reviewsCount: 76,
+        badge: 'CASTAS CLÁSSICAS',
+        image: './assets/bottles/web/toro-negro-bonarda.png',
+        notes: 'Cor rubi profunda com reflexos granada. Notas de figo seco, especiarias doces e textura envolvente.'
+      },
+      {
+        id: 'torrontes',
+        name: 'Vinho Toro Negro Torrontés Mendoza Argentina 750ml',
+        shortName: 'Toro Negro Torrontés Mendoza',
+        type: 'branco',
+        category: 'argentina',
+        country: 'argentina',
+        origin: 'Mendoza • Argentina',
+        flag: './assets/flag-argentina.png',
+        grape: 'Torrontés',
+        alcohol: '13.0%',
+        retailPrice: 62.00,
+        unitPrice: 39.90,
+        boxPrice: 239.40,
+        rating: 4.8,
+        reviewsCount: 59,
+        badge: 'AROMÁTICO',
+        image: './assets/bottles/web/toro-negro-torrontes.png',
+        notes: 'Perfume floral arrebatador, casca de limão siciliano e pêssegos brancos com acidez crocante.'
+      },
+      {
+        id: 'brut',
+        name: 'Espumante Toro Negro Sparkling Brut 750ml',
+        shortName: 'Espumante Brut Sparkling',
+        type: 'espumante',
+        category: 'espumantes',
+        country: 'argentina',
+        origin: 'Mendoza • Argentina',
+        flag: './assets/flag-argentina.png',
+        grape: 'Charmat Brut',
+        alcohol: '12.0%',
+        retailPrice: 72.00,
+        unitPrice: 44.90,
+        boxPrice: 269.40,
+        rating: 4.9,
+        reviewsCount: 98,
+        badge: 'CELEBRAÇÃO',
+        image: './assets/bottles/web/toro-negro-brut.png',
+        notes: 'Perlage fina e persistente. Elegância cítrica com notas de maçã verde fresca, brioche e final refrescante.'
+      },
+      {
+        id: 'brut-rose',
+        name: 'Espumante Toro Negro Sparkling Brut Rosé 750ml',
+        shortName: 'Espumante Brut Rosé Sparkling',
+        type: 'espumante',
+        category: 'espumantes',
+        country: 'argentina',
+        origin: 'Mendoza • Argentina',
+        flag: './assets/flag-argentina.png',
+        grape: 'Charmat Brut Rosé',
+        alcohol: '12.0%',
+        retailPrice: 72.00,
+        unitPrice: 44.90,
+        boxPrice: 269.40,
+        rating: 4.9,
+        reviewsCount: 84,
+        badge: 'ELEGANTE',
+        image: './assets/bottles/web/toro-negro-brut-rose.png',
+        notes: 'Coloração salmão brilhante. Borbulhas finas com notas de morango silvestre, cereja ácida e cremosidade no paladar.'
+      }
+    ];
+
+    // State Constants & Variables
+    const STORAGE_USER = 'toro_negro_b2b_user';
+    const STORAGE_CART = 'toro_negro_b2b_cart';
+
+    let currentCompany = null;
+    let b2bCart = [];
+
+    // Filter State
+    let filterState = {
+      types: new Set(),
+      countries: new Set(),
+      prices: new Set(),
+      grapes: new Set(),
+      search: '',
+      sort: 'popular',
+      viewMode: 'grid'
+    };
+
+    // On Load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSession();
+      populateMobileFilters();
+      renderCatalog();
+      renderCart();
+    });
+
+    function loadSession() {
+      try {
+        const savedUser = localStorage.getItem(STORAGE_USER);
+        if (savedUser) {
+          currentCompany = JSON.parse(savedUser);
+        } else {
+          currentCompany = {
+            razaoSocial: 'Restaurante e Adega Santa Fé Ltda',
+            nomeFantasia: 'Restaurante Santa Fé',
+            cnpj: '12.345.678/0001-90',
+            responsavel: 'Carlos Mendonça',
+            cidade: 'Curitiba / PR',
+            whatsapp: '(41) 99882-3411'
+          };
+          localStorage.setItem(STORAGE_USER, JSON.stringify(currentCompany));
+        }
+
+        const savedCart = localStorage.getItem(STORAGE_CART);
+        if (savedCart) {
+          b2bCart = JSON.parse(savedCart);
+        }
+      } catch (e) {}
+
+      const nameEl = document.getElementById('header-company-name');
+      const cnpjEl = document.getElementById('header-cnpj-num');
+      const drawerComp = document.getElementById('drawer-company-indicator');
+      if (nameEl) nameEl.textContent = currentCompany.nomeFantasia || currentCompany.razaoSocial;
+      if (cnpjEl) cnpjEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> ${currentCompany.cnpj}`;
+      if (drawerComp) drawerComp.textContent = (currentCompany.nomeFantasia || 'Empresa') + ' • ' + currentCompany.cnpj;
+    }
+
+    // Filter Toggles
+    function toggleFilter(filterKey, value, isChecked) {
+      const set = filterState[filterKey === 'type' ? 'types' : filterKey === 'country' ? 'countries' : filterKey === 'price' ? 'prices' : 'grapes'];
+      if (isChecked) {
+        set.add(value);
+      } else {
+        set.delete(value);
+      }
+      syncFilterInputs();
+      renderCatalog();
+    }
+
+    function clearAllFilters() {
+      filterState.types.clear();
+      filterState.countries.clear();
+      filterState.prices.clear();
+      filterState.grapes.clear();
+      filterState.search = '';
+      const sInput = document.getElementById('search-input');
+      if (sInput) sInput.value = '';
+      const sClear = document.getElementById('search-clear-btn');
+      if (sClear) sClear.classList.add('hidden');
+
+      // Uncheck checkboxes
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      renderCatalog();
+    }
+
+    function removeSingleFilter(type, value) {
+      if (type === 'type') filterState.types.delete(value);
+      if (type === 'country') filterState.countries.delete(value);
+      if (type === 'price') filterState.prices.delete(value);
+      if (type === 'grape') filterState.grapes.delete(value);
+      if (type === 'search') {
+        filterState.search = '';
+        const sInput = document.getElementById('search-input');
+        if (sInput) sInput.value = '';
+      }
+      syncFilterInputs();
+      renderCatalog();
+    }
+
+    function syncFilterInputs() {
+      // Sync desktop & mobile checkboxes
+      document.querySelectorAll('.filter-type-checkbox').forEach(cb => {
+        cb.checked = filterState.types.has(cb.value);
+      });
+      document.querySelectorAll('.filter-country-checkbox').forEach(cb => {
+        cb.checked = filterState.countries.has(cb.value);
+      });
+      document.querySelectorAll('.filter-price-checkbox').forEach(cb => {
+        cb.checked = filterState.prices.has(cb.value);
+      });
+      document.querySelectorAll('.filter-grape-checkbox').forEach(cb => {
+        cb.checked = filterState.grapes.has(cb.value);
+      });
+
+      // Update mobile badge
+      const totalActive = filterState.types.size + filterState.countries.size + filterState.prices.size + filterState.grapes.size + (filterState.search ? 1 : 0);
+      const mBadge = document.getElementById('mobile-filter-badge');
+      if (mBadge) {
+        if (totalActive > 0) {
+          mBadge.textContent = totalActive;
+          mBadge.classList.remove('hidden');
+        } else {
+          mBadge.classList.add('hidden');
+        }
+      }
+    }
+
+    function handleSearch(q) {
+      filterState.search = q.toLowerCase().trim();
+      const clearBtn = document.getElementById('search-clear-btn');
+      if (clearBtn) {
+        if (filterState.search) clearBtn.classList.remove('hidden');
+        else clearBtn.classList.add('hidden');
+      }
+      renderCatalog();
+    }
+
+    function clearSearch() {
+      const sInput = document.getElementById('search-input');
+      if (sInput) sInput.value = '';
+      handleSearch('');
+    }
+
+    function handleSort(val) {
+      filterState.sort = val;
+      renderCatalog();
+    }
+
+    function switchViewMode(mode) {
+      filterState.viewMode = mode;
+      const gridBtn = document.getElementById('view-grid-btn');
+      const tableBtn = document.getElementById('view-table-btn');
+      const gridBox = document.getElementById('catalog-grid');
+      const tableBox = document.getElementById('catalog-table-container');
+
+      if (mode === 'grid') {
+        gridBtn.className = 'p-1.5 rounded-full text-xs transition-all bg-white text-burgundy-950 shadow-xs cursor-pointer';
+        tableBtn.className = 'p-1.5 rounded-full text-xs transition-all text-stone-500 hover:text-stone-900 cursor-pointer';
+        gridBox.classList.remove('hidden');
+        tableBox.classList.add('hidden');
+      } else {
+        tableBtn.className = 'p-1.5 rounded-full text-xs transition-all bg-white text-burgundy-950 shadow-xs cursor-pointer';
+        gridBtn.className = 'p-1.5 rounded-full text-xs transition-all text-stone-500 hover:text-stone-900 cursor-pointer';
+        tableBox.classList.remove('hidden');
+        gridBox.classList.add('hidden');
+      }
+      renderCatalog();
+    }
+
+    // Filter Logic
+    function getFilteredWines() {
+      let list = WINES_DATABASE.filter(wine => {
+        // Type filter
+        if (filterState.types.size > 0 && !filterState.types.has(wine.type)) {
+          return false;
+        }
+        // Country filter
+        if (filterState.countries.size > 0 && !filterState.countries.has(wine.country)) {
+          return false;
+        }
+        // Price bracket filter
+        if (filterState.prices.size > 0) {
+          let matchesPrice = false;
+          if (filterState.prices.has('ate-35') && wine.unitPrice <= 35) matchesPrice = true;
+          if (filterState.prices.has('35-40') && wine.unitPrice > 35 && wine.unitPrice <= 40) matchesPrice = true;
+          if (filterState.prices.has('acima-40') && wine.unitPrice > 40) matchesPrice = true;
+          if (!matchesPrice) return false;
+        }
+        // Grape filter
+        if (filterState.grapes.size > 0 && !filterState.grapes.has(wine.grape)) {
+          return false;
+        }
+        // Search text
+        if (filterState.search) {
+          const q = filterState.search;
+          const matches = wine.name.toLowerCase().includes(q) || 
+                          wine.grape.toLowerCase().includes(q) || 
+                          wine.origin.toLowerCase().includes(q) ||
+                          wine.notes.toLowerCase().includes(q);
+          if (!matches) return false;
+        }
+        return true;
+      });
+
+      // Sorting
+      if (filterState.sort === 'price-asc') {
+        list.sort((a, b) => a.unitPrice - b.unitPrice);
+      } else if (filterState.sort === 'price-desc') {
+        list.sort((a, b) => b.unitPrice - a.unitPrice);
+      } else if (filterState.sort === 'rating') {
+        list.sort((a, b) => b.rating - a.rating || b.reviewsCount - a.reviewsCount);
+      } else if (filterState.sort === 'name-asc') {
+        list.sort((a, b) => a.name.localeCompare(b.name));
+      } else {
+        // popular
+        list.sort((a, b) => b.reviewsCount - a.reviewsCount);
+      }
+
+      return list;
+    }
+
+    // Render Active Filter Chips (Wine.com.br Style)
+    function renderActiveChips() {
+      const container = document.getElementById('active-filter-chips-container');
+      const chipsBox = document.getElementById('active-filter-chips');
+      if (!container || !chipsBox) return;
+
+      const chips = [];
+
+      filterState.types.forEach(t => {
+        const label = t === 'tinto' ? 'Tinto' : t === 'branco' ? 'Branco' : t === 'rose' ? 'Rosé' : 'Espumante';
+        chips.push({ label: `Tipo: ${label}`, type: 'type', value: t });
+      });
+
+      filterState.countries.forEach(c => {
+        const label = c === 'chile' ? 'Chile' : 'Argentina';
+        chips.push({ label: `Origem: ${label}`, type: 'country', value: c });
+      });
+
+      filterState.prices.forEach(p => {
+        const label = p === 'ate-35' ? 'Até R$ 35' : p === '35-40' ? 'R$ 35 a R$ 40' : 'Acima de R$ 40';
+        chips.push({ label: `Preço: ${label}`, type: 'price', value: p });
+      });
+
+      filterState.grapes.forEach(g => {
+        chips.push({ label: `Uva: ${g}`, type: 'grape', value: g });
+      });
+
+      if (filterState.search) {
+        chips.push({ label: `Busca: "${filterState.search}"`, type: 'search', value: '' });
+      }
+
+      if (chips.length > 0) {
+        chipsBox.innerHTML = chips.map(chip => `
+          <button 
+            type="button" 
+            onclick="removeSingleFilter('${chip.type}', '${chip.value}')" 
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-800 text-[11px] font-semibold border border-stone-200 transition-colors cursor-pointer"
+          >
+            <span>${chip.label}</span>
+            <span class="text-stone-400 hover:text-burgundy-900">✕</span>
+          </button>
+        `).join('');
+        container.classList.remove('hidden');
+      } else {
+        chipsBox.innerHTML = '';
+        container.classList.add('hidden');
+      }
+    }
+
+    // Populate Mobile Filters Drawer
+    function populateMobileFilters() {
+      const typesBox = document.getElementById('mobile-filter-types');
+      const countriesBox = document.getElementById('mobile-filter-countries');
+      const pricesBox = document.getElementById('mobile-filter-prices');
+
+      if (typesBox) {
+        typesBox.innerHTML = `
+          <label class="flex items-center justify-between py-1 cursor-pointer">
+            <span class="flex items-center gap-2"><input type="checkbox" value="tinto" onchange="toggleFilter('type', 'tinto', this.checked)" class="filter-type-checkbox rounded text-burgundy-900"/> Vinho Tinto</span>
+            <span class="text-stone-400 font-mono text-[11px]">(8)</span>
+          </label>
+          <label class="flex items-center justify-between py-1 cursor-pointer">
+            <span class="flex items-center gap-2"><input type="checkbox" value="branco" onchange="toggleFilter('type', 'branco', this.checked)" class="filter-type-checkbox rounded text-burgundy-900"/> Vinho Branco</span>
+            <span class="text-stone-400 font-mono text-[11px]">(3)</span>
+          </label>
+          <label class="flex items-center justify-between py-1 cursor-pointer">
+            <span class="flex items-center gap-2"><input type="checkbox" value="rose" onchange="toggleFilter('type', 'rose', this.checked)" class="filter-type-checkbox rounded text-burgundy-900"/> Vinho Rosé</span>
+            <span class="text-stone-400 font-mono text-[11px]">(1)</span>
+          </label>
+          <label class="flex items-center justify-between py-1 cursor-pointer">
+            <span class="flex items-center gap-2"><input type="checkbox" value="espumante" onchange="toggleFilter('type', 'espumante', this.checked)" class="filter-type-checkbox rounded text-burgundy-900"/> Espumante Brut</span>
+            <span class="text-stone-400 font-mono text-[11px]">(2)</span>
+          </label>
+        `;
+      }
+
+      if (countriesBox) {
+        countriesBox.innerHTML = `
+          <label class="flex items-center justify-between py-1 cursor-pointer">
+            <span class="flex items-center gap-2"><input type="checkbox" value="chile" onchange="toggleFilter('country', 'chile', this.checked)" class="filter-country-checkbox rounded text-burgundy-900"/> 🇨🇱 Chile</span>
+            <span class="text-stone-400 font-mono text-[11px]">(9)</span>
+          </label>
+          <label class="flex items-center justify-between py-1 cursor-pointer">
+            <span class="flex items-center gap-2"><input type="checkbox" value="argentina" onchange="toggleFilter('country', 'argentina', this.checked)" class="filter-country-checkbox rounded text-burgundy-900"/> 🇦🇷 Argentina</span>
+            <span class="text-stone-400 font-mono text-[11px]">(5)</span>
+          </label>
+        `;
+      }
+
+      if (pricesBox) {
+        pricesBox.innerHTML = `
+          <label class="flex items-center justify-between py-1 cursor-pointer">
+            <span class="flex items-center gap-2"><input type="checkbox" value="ate-35" onchange="toggleFilter('price', 'ate-35', this.checked)" class="filter-price-checkbox rounded text-burgundy-900"/> Até R$ 35,00</span>
+            <span class="text-stone-400 font-mono text-[11px]">(2)</span>
+          </label>
+          <label class="flex items-center justify-between py-1 cursor-pointer">
+            <span class="flex items-center gap-2"><input type="checkbox" value="35-40" onchange="toggleFilter('price', '35-40', this.checked)" class="filter-price-checkbox rounded text-burgundy-900"/> R$ 35,00 a R$ 40,00</span>
+            <span class="text-stone-400 font-mono text-[11px]">(7)</span>
+          </label>
+          <label class="flex items-center justify-between py-1 cursor-pointer">
+            <span class="flex items-center gap-2"><input type="checkbox" value="acima-40" onchange="toggleFilter('price', 'acima-40', this.checked)" class="filter-price-checkbox rounded text-burgundy-900"/> Acima de R$ 40,00</span>
+            <span class="text-stone-400 font-mono text-[11px]">(5)</span>
+          </label>
+        `;
+      }
+    }
+
+    // Render Master Catalog
+    function renderCatalog() {
+      const wines = getFilteredWines();
+      const grid = document.getElementById('catalog-grid');
+      const tbody = document.getElementById('catalog-table-body');
+      const empty = document.getElementById('catalog-empty');
+      const countEl = document.getElementById('results-count');
+
+      if (countEl) countEl.textContent = `(${wines.length} produto${wines.length === 1 ? '' : 's'})`;
+      renderActiveChips();
+
+      if (wines.length === 0) {
+        if (grid) grid.innerHTML = '';
+        if (tbody) tbody.innerHTML = '';
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+      if (empty) empty.classList.add('hidden');
+
+      // 1. Grid Cards Render (Identical Architecture to Wine.com.br Product Cards)
+      if (grid) {
+        grid.innerHTML = wines.map(wine => {
+          // Calculate retail discount percentage
+          const discountPct = Math.round(((wine.retailPrice - wine.unitPrice) / wine.retailPrice) * 100);
+
+          return `
+            <article class="group bg-white rounded-2xl border border-stone-200/90 hover:border-burgundy-900/30 p-4 sm:p-5 flex flex-col justify-between transition-all duration-300 shadow-card hover:shadow-card-hover relative">
+              
+              <!-- Top Badges & Discount -->
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <span class="bg-burgundy-950 text-gold-400 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md">
+                    EXCLUSIVO CNPJ
+                  </span>
+                  <span class="bg-emerald-50 text-emerald-700 border border-emerald-200/70 text-[10px] font-black px-2 py-0.5 rounded-md">
+                    -${discountPct}% OFF
+                  </span>
+                </div>
+
+                <!-- Bottle Display Stage (Clean & Minimalist Canvas) -->
+                <div class="bg-[#FAF9F6] rounded-xl h-64 flex items-center justify-center p-3 relative overflow-hidden mb-4 group-hover:bg-[#F5F2EB] transition-colors">
+                  <img 
+                    src="${wine.image}" 
+                    alt="${wine.name}" 
+                    class="h-56 w-auto object-contain bottle-contact-shadow select-none pointer-events-none" 
+                    loading="lazy"
+                  />
+                </div>
+
+                <!-- Country Flag + Terroir Region (Wine.com.br Pattern) -->
+                <div class="flex items-center gap-1.5 mb-1.5 text-xs text-stone-500 font-medium">
+                  <img src="${wine.flag}" alt="" class="w-3.5 h-2.5 object-cover rounded-xs shrink-0" />
+                  <span class="uppercase tracking-wider text-[11px] font-semibold text-stone-600">${wine.origin}</span>
+                </div>
+
+                <!-- Wine Title -->
+                <h3 class="font-bold text-stone-900 text-sm leading-snug group-hover:text-burgundy-900 transition-colors line-clamp-2 min-h-[38px]">
+                  ${wine.name}
+                </h3>
+
+                <!-- Rating Stars & Reviews -->
+                <div class="flex items-center gap-1.5 mt-2">
+                  <div class="flex text-gold-500 text-xs">
+                    ★★★★★
+                  </div>
+                  <span class="text-[11px] font-bold text-stone-800">${wine.rating}</span>
+                  <span class="text-[10px] text-stone-400">(${wine.reviewsCount})</span>
+                </div>
+              </div>
+
+              <!-- Price Box & Commercial CTAs (Wine.com.br Signature Hierarchy) -->
+              <div class="mt-5 pt-4 border-t border-stone-100 space-y-3.5">
+                
+                <!-- Pricing Structure: Retail Sug. vs Wholesale B2B -->
+                <div class="space-y-1">
+                  <div class="text-[11px] text-stone-400">
+                    Ref. Varejo: <span class="line-through">R$ ${wine.retailPrice.toFixed(2).replace('.', ',')}</span>
+                  </div>
+
+                  <div class="flex items-baseline gap-1 whitespace-nowrap">
+                    <span class="text-xs sm:text-sm font-extrabold text-burgundy-950">R$</span>
+                    <span class="text-2xl sm:text-3xl font-black text-burgundy-950 tracking-tight leading-none whitespace-nowrap">
+                      ${wine.unitPrice.toFixed(2).replace('.', ',')}
+                    </span>
+                    <span class="text-xs text-stone-500 font-semibold ml-0.5">/un</span>
+                  </div>
+
+                  <div class="flex items-center justify-between text-xs text-stone-600 bg-stone-50 px-2.5 py-1.5 rounded-lg border border-stone-200/60 font-medium mt-1">
+                    <span>Caixa c/ 6 unidades:</span>
+                    <strong class="text-stone-900 font-black whitespace-nowrap">R$ ${wine.boxPrice.toFixed(2).replace('.', ',')}</strong>
+                  </div>
+                </div>
+
+                <!-- Quantity Stepper & Add Button -->
+                <div class="flex items-center gap-2">
+                  <div class="flex items-center border border-stone-300 rounded-xl bg-stone-50 overflow-hidden shrink-0 shadow-2xs">
+                    <button 
+                      type="button" 
+                      onclick="adjustQty('${wine.id}', -1)" 
+                      class="w-8 h-10 text-sm font-bold text-stone-700 hover:bg-stone-200 transition-colors flex items-center justify-center cursor-pointer"
+                      aria-label="Diminuir"
+                    >-</button>
+                    <input 
+                      type="text" 
+                      id="qty-${wine.id}" 
+                      value="1" 
+                      readonly 
+                      class="w-9 h-10 text-center bg-transparent border-none text-xs font-black text-stone-900 p-0 focus:ring-0" 
+                    />
+                    <button 
+                      type="button" 
+                      onclick="adjustQty('${wine.id}', 1)" 
+                      class="w-8 h-10 text-sm font-bold text-stone-700 hover:bg-stone-200 transition-colors flex items-center justify-center cursor-pointer"
+                      aria-label="Aumentar"
+                    >+</button>
+                  </div>
+
+                  <button 
+                    type="button" 
+                    onclick="addToCart('${wine.id}')" 
+                    class="flex-1 py-3 px-3 rounded-xl bg-burgundy-950 hover:bg-burgundy-900 text-white text-xs uppercase tracking-wider font-extrabold transition-all shadow-sm active:scale-97 cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    <span>Adicionar Caixa</span>
+                  </button>
+                </div>
+
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      // 2. Table Mode Render (for bulk ordering)
+      if (tbody) {
+        tbody.innerHTML = wines.map(wine => {
+          return `
+            <tr class="hover:bg-stone-50/80 transition-colors">
+              <td class="py-3 px-4 flex items-center gap-3">
+                <img src="${wine.image}" alt="" class="w-8 h-14 object-contain shrink-0" />
+                <div>
+                  <strong class="text-stone-900 font-bold block">${wine.name}</strong>
+                  <span class="text-[10px] text-stone-400">Ref. Varejo: R$ ${wine.retailPrice.toFixed(2).replace('.', ',')}</span>
+                </div>
+              </td>
+              <td class="py-3 px-4 text-stone-700">
+                <span class="font-medium">${wine.origin}</span>
+                <span class="text-[11px] text-stone-400 block">${wine.grape} • ${wine.alcohol}</span>
+              </td>
+              <td class="py-3 px-4 text-stone-900 font-bold">
+                R$ ${wine.unitPrice.toFixed(2).replace('.', ',')}
+              </td>
+              <td class="py-3 px-4 font-bold text-burgundy-950 text-sm">
+                R$ ${wine.boxPrice.toFixed(2).replace('.', ',')}
+              </td>
+              <td class="py-3 px-4 text-center">
+                <div class="flex items-center justify-center gap-1">
+                  <input type="number" id="tbl-qty-${wine.id}" min="0" max="99" value="0" class="w-16 bg-stone-50 border border-stone-300 rounded-lg px-2 py-1.5 text-center text-xs text-stone-900 focus:border-burgundy-900 focus:outline-none font-bold" />
+                  <span class="text-[11px] text-stone-500">cx</span>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+    }
+
+    function adjustQty(id, delta) {
+      const el = document.getElementById(`qty-${id}`);
+      if (!el) return;
+      let val = parseInt(el.value) || 1;
+      val = Math.max(1, Math.min(50, val + delta));
+      el.value = val;
+    }
+
+    function addToCart(wineId) {
+      const qtyEl = document.getElementById(`qty-${wineId}`);
+      const qty = qtyEl ? parseInt(qtyEl.value) || 1 : 1;
+      const wine = WINES_DATABASE.find(w => w.id === wineId);
+      if (!wine) return;
+
+      addItem(wine.shortName, wine.unitPrice, wine.image, qty);
+      showToast(`${qty}x Caixa${qty > 1 ? 's' : ''} de ${wine.shortName} adicionada!`);
+      if (qtyEl) qtyEl.value = 1;
+      openCartDrawer();
+    }
+
+    function addAllTableSelections() {
+      let total = 0;
+      WINES_DATABASE.forEach(w => {
+        const input = document.getElementById(`tbl-qty-${w.id}`);
+        if (input) {
+          const val = parseInt(input.value) || 0;
+          if (val > 0) {
+            addItem(w.shortName, w.unitPrice, w.image, val);
+            total += val;
+            input.value = 0;
+          }
+        }
+      });
+      if (total > 0) {
+        showToast(`${total} caixas adicionadas ao seu pedido!`);
+        openCartDrawer();
+      } else {
+        alert('Por favor, digite a quantidade de caixas na tabela.');
+      }
+    }
+
+    // Cart Management
+    function addItem(name, unitPrice, image, boxes) {
+      const item = b2bCart.find(i => i.wineName === name);
+      if (item) {
+        item.boxes += boxes;
+      } else {
+        b2bCart.push({
+          wineName: name,
+          unitPrice: unitPrice,
+          boxPrice: unitPrice * 6,
+          image: image,
+          boxes: boxes
+        });
+      }
+      saveCart();
+      renderCart();
+    }
+
+    function updateCartItem(index, delta) {
+      if (!b2bCart[index]) return;
+      b2bCart[index].boxes += delta;
+      if (b2bCart[index].boxes <= 0) {
+        b2bCart.splice(index, 1);
+      }
+      saveCart();
+      renderCart();
+    }
+
+    function removeCartItem(index) {
+      b2bCart.splice(index, 1);
+      saveCart();
+      renderCart();
+    }
+
+    function clearCart() {
+      if (b2bCart.length === 0) return;
+      if (confirm('Deseja esvaziar todos os itens do pedido?')) {
+        b2bCart = [];
+        saveCart();
+        renderCart();
+      }
+    }
+
+    function saveCart() {
+      try {
+        localStorage.setItem(STORAGE_CART, JSON.stringify(b2bCart));
+      } catch (e) {}
+    }
+
+    function renderCart() {
+      const drawerList = document.getElementById('drawer-cart-items');
+      const headerCount = document.getElementById('header-cart-badge');
+      const headerAmount = document.getElementById('header-cart-total-amount');
+      const boxesTotalEl = document.getElementById('drawer-boxes-total');
+      const bottlesTotalEl = document.getElementById('drawer-bottles-total');
+      const amountTotalEl = document.getElementById('drawer-amount-total');
+      const checkoutBtn = document.getElementById('checkout-action-btn');
+
+      const totalBoxes = b2bCart.reduce((sum, item) => sum + item.boxes, 0);
+      const totalBottles = totalBoxes * 6;
+      const totalAmount = b2bCart.reduce((sum, item) => sum + (item.boxes * item.boxPrice), 0);
+
+      // Update Header Badges
+      if (headerCount) headerCount.textContent = totalBoxes;
+      if (headerAmount) headerAmount.textContent = `R$ ${totalAmount.toFixed(2).replace('.', ',')}`;
+
+      // Update Shipping Bar
+      const freeShippingGoal = 15;
+      const progressBar = document.getElementById('shipping-progress-bar');
+      const progressCount = document.getElementById('shipping-progress-count');
+      const progressText = document.getElementById('shipping-progress-text');
+
+      if (progressBar && progressCount && progressText) {
+        const pct = Math.min(100, Math.round((totalBoxes / freeShippingGoal) * 100));
+        progressBar.style.width = `${pct}%`;
+        progressCount.textContent = `${totalBoxes}/${freeShippingGoal} cx`;
+        if (totalBoxes >= freeShippingGoal) {
+          progressText.innerHTML = '<span class="text-emerald-700 font-bold flex items-center gap-1">✓ Frete Cortesia Frota Própria MUFS Garantido!</span>';
+          progressBar.className = 'bg-emerald-500 h-full transition-all duration-300';
+        } else {
+          const missing = freeShippingGoal - totalBoxes;
+          progressText.textContent = `Frota Própria MUFS: Faltam ${missing} cx p/ Frete Cortesia`;
+          progressBar.className = 'bg-burgundy-900 h-full transition-all duration-300';
+        }
+      }
+
+      // Update Drawer Summary
+      if (boxesTotalEl) boxesTotalEl.textContent = `${totalBoxes} cx`;
+      if (bottlesTotalEl) bottlesTotalEl.textContent = `${totalBottles} garrafas`;
+      if (amountTotalEl) amountTotalEl.textContent = `R$ ${totalAmount.toFixed(2).replace('.', ',')}`;
+
+      if (checkoutBtn) {
+        checkoutBtn.disabled = totalBoxes === 0;
+      }
+
+      // Render Drawer Item Cards
+      if (drawerList) {
+        if (b2bCart.length === 0) {
+          drawerList.innerHTML = `
+            <div class="py-16 text-center text-stone-400">
+              <svg class="w-12 h-12 mx-auto mb-3 opacity-40 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+              <p class="text-xs font-semibold text-stone-600">Seu pedido está vazio</p>
+              <p class="text-[11px] mt-1 text-stone-400">Selecione caixas no catálogo para faturamento.</p>
+            </div>
+          `;
+        } else {
+          drawerList.innerHTML = b2bCart.map((item, index) => {
+            const subtotal = item.boxes * item.boxPrice;
+            return `
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-stone-50 border border-stone-200">
+                <img src="${item.image}" alt="${item.wineName}" class="w-10 h-16 object-contain shrink-0" />
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-bold text-xs text-stone-900 truncate">${item.wineName}</h4>
+                  <div class="text-[11px] text-stone-500 mt-0.5">
+                    R$ ${item.unitPrice.toFixed(2).replace('.', ',')} /un • R$ ${item.boxPrice.toFixed(2).replace('.', ',')} /cx
+                  </div>
+                  <div class="text-xs font-black text-burgundy-950 mt-1">
+                    Subtotal: R$ ${subtotal.toFixed(2).replace('.', ',')}
+                  </div>
+                </div>
+                <div class="flex flex-col items-end gap-1.5 shrink-0">
+                  <div class="flex items-center border border-stone-300 rounded-lg bg-white overflow-hidden">
+                    <button type="button" onclick="updateCartItem(${index}, -1)" class="w-6 h-7 text-xs font-bold text-stone-700 hover:bg-stone-100 flex items-center justify-center cursor-pointer">-</button>
+                    <span class="w-7 h-7 text-center text-xs font-black text-stone-900 flex items-center justify-center">${item.boxes}</span>
+                    <button type="button" onclick="updateCartItem(${index}, 1)" class="w-6 h-7 text-xs font-bold text-stone-700 hover:bg-stone-100 flex items-center justify-center cursor-pointer">+</button>
+                  </div>
+                  <button type="button" onclick="removeCartItem(${index})" class="text-[10px] text-stone-400 hover:text-red-600 transition-colors cursor-pointer">
+                    Remover
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
+    // Drawer Controls
+    function openCartDrawer() {
+      const drawer = document.getElementById('cart-drawer');
+      const backdrop = document.getElementById('cart-drawer-backdrop');
+      if (drawer && backdrop) {
+        backdrop.classList.remove('hidden');
+        setTimeout(() => {
+          drawer.classList.remove('translate-x-full');
+        }, 10);
+      }
+    }
+
+    function closeCartDrawer() {
+      const drawer = document.getElementById('cart-drawer');
+      const backdrop = document.getElementById('cart-drawer-backdrop');
+      if (drawer && backdrop) {
+        drawer.classList.add('translate-x-full');
+        setTimeout(() => {
+          backdrop.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    // Mobile Filters Controls
+    function openMobileFilters() {
+      const drawer = document.getElementById('mobile-filter-drawer');
+      const backdrop = document.getElementById('mobile-filter-backdrop');
+      if (drawer && backdrop) {
+        backdrop.classList.remove('hidden');
+        setTimeout(() => {
+          drawer.classList.remove('-translate-x-full');
+        }, 10);
+      }
+    }
+
+    function closeMobileFilters() {
+      const drawer = document.getElementById('mobile-filter-drawer');
+      const backdrop = document.getElementById('mobile-filter-backdrop');
+      if (drawer && backdrop) {
+        drawer.classList.add('-translate-x-full');
+        setTimeout(() => {
+          backdrop.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    // Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const msgEl = document.getElementById('toast-message');
+      if (!toast || !msgEl) return;
+      msgEl.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3200);
+    }
+
+    // Checkout Modal
+    function openCheckoutModal() {
+      if (b2bCart.length === 0) {
+        alert('Seu carrinho está vazio.');
+        return;
+      }
+      closeCartDrawer();
+      const modal = document.getElementById('checkout-modal');
+      const chkRazao = document.getElementById('chk-razao');
+      const chkCnpj = document.getElementById('chk-cnpj');
+      const chkResp = document.getElementById('chk-resp');
+      const chkWhats = document.getElementById('chk-whatsapp');
+      const chkCid = document.getElementById('chk-cidade');
+      const chkBoxes = document.getElementById('chk-summary-boxes');
+      const chkAmount = document.getElementById('chk-summary-amount');
+
+      if (currentCompany) {
+        if (chkRazao) chkRazao.value = currentCompany.razaoSocial || currentCompany.nomeFantasia || '';
+        if (chkCnpj) chkCnpj.value = currentCompany.cnpj || '';
+        if (chkResp) chkResp.value = currentCompany.responsavel || '';
+        if (chkWhats) chkWhats.value = currentCompany.whatsapp || '';
+        if (chkCid) chkCid.value = currentCompany.cidade || '';
+      }
+
+      const totalBoxes = b2bCart.reduce((sum, item) => sum + item.boxes, 0);
+      const totalAmount = b2bCart.reduce((sum, item) => sum + (item.boxes * item.boxPrice), 0);
+
+      if (chkBoxes) chkBoxes.textContent = `${totalBoxes} caixas (${totalBoxes * 6} garrafas)`;
+      if (chkAmount) chkAmount.textContent = `R$ ${totalAmount.toFixed(2).replace('.', ',')}`;
+
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeCheckoutModal() {
+      const modal = document.getElementById('checkout-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // CNPJ Realtime Lookup via BrasilAPI & Local Cache
+    let cnpjLookupTimeout = null;
+
+    function formatCNPJ(value) {
+      const v = (value || '').replace(/\D/g, '').slice(0, 14);
+      if (v.length <= 2) return v;
+      if (v.length <= 5) return `${v.slice(0, 2)}.${v.slice(2)}`;
+      if (v.length <= 8) return `${v.slice(0, 2)}.${v.slice(2, 5)}.${v.slice(5)}`;
+      if (v.length <= 12) return `${v.slice(0, 2)}.${v.slice(2, 5)}.${v.slice(5, 8)}/${v.slice(8)}`;
+      return `${v.slice(0, 2)}.${v.slice(2, 5)}.${v.slice(5, 8)}/${v.slice(8, 12)}-${v.slice(12, 14)}`;
+    }
+
+    function triggerManualCNPJLookup() {
+      const input = document.getElementById('chk-cnpj');
+      if (input) {
+        handleCNPJLookupInput(input.value, true);
+      }
+    }
+
+    function handleCNPJLookupInput(rawValue, immediate = false) {
+      const input = document.getElementById('chk-cnpj');
+      const feedbackEl = document.getElementById('chk-cnpj-feedback');
+      const formatted = formatCNPJ(rawValue);
+      if (input && input.value !== formatted) {
+        input.value = formatted;
+      }
+
+      const clean = (rawValue || '').replace(/\D/g, '');
+
+      if (clean.length < 14) {
+        if (feedbackEl) {
+          feedbackEl.classList.add('hidden');
+          feedbackEl.innerHTML = '';
+        }
+        return;
+      }
+
+      if (clean.length === 14) {
+        if (feedbackEl) {
+          feedbackEl.className = 'text-[11px] text-burgundy-900 font-medium mt-1.5 flex items-center gap-1.5';
+          feedbackEl.innerHTML = `
+            <svg class="animate-spin h-3.5 w-3.5 text-burgundy-900 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>Consultando dados oficiais na Receita Federal...</span>
+          `;
+          feedbackEl.classList.remove('hidden');
+        }
+
+        clearTimeout(cnpjLookupTimeout);
+        const delay = immediate ? 0 : 250;
+        
+        cnpjLookupTimeout = setTimeout(async () => {
+          try {
+            const res = await fetch(`/api/cnpj/${clean}`);
+            const data = await res.json();
+            const c = data.company || data;
+
+            if (res.ok && data.success && (c.razao_social || c.nome_fantasia || c.razaoSocial)) {
+              const chkRazao = document.getElementById('chk-razao');
+              const chkCidade = document.getElementById('chk-cidade');
+              const razaoNome = c.razao_social || c.nome_fantasia || c.razaoSocial || '';
+              const cidadeNome = c.municipio || c.cidade || '';
+              const ufSigla = c.uf || '';
+              
+              if (chkRazao) {
+                chkRazao.value = razaoNome;
+                chkRazao.classList.add('bg-emerald-50', 'border-emerald-400');
+                setTimeout(() => chkRazao.classList.remove('bg-emerald-50', 'border-emerald-400'), 1500);
+              }
+
+              if (chkCidade && cidadeNome) {
+                chkCidade.value = `${cidadeNome}${ufSigla ? ' / ' + ufSigla : ''}`;
+                chkCidade.classList.add('bg-emerald-50', 'border-emerald-400');
+                setTimeout(() => chkCidade.classList.remove('bg-emerald-50', 'border-emerald-400'), 1500);
+              }
+
+              if (feedbackEl) {
+                feedbackEl.className = 'text-[11px] text-emerald-800 font-medium mt-1.5 flex items-center gap-1.5 bg-emerald-50 p-2 rounded-xl border border-emerald-200 shadow-2xs';
+                feedbackEl.innerHTML = `
+                  <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span><strong>CNPJ Ativo na Receita:</strong> ${razaoNome} ${cidadeNome ? `• ${cidadeNome}/${ufSigla}` : ''}</span>
+                `;
+                feedbackEl.classList.remove('hidden');
+              }
+
+              // Sincronizar cabeçalho da empresa
+              if (currentCompany) {
+                currentCompany.cnpj = formatted;
+                currentCompany.razaoSocial = razaoNome;
+                currentCompany.nomeFantasia = c.nome_fantasia || razaoNome;
+                if (cidadeNome) currentCompany.cidade = `${cidadeNome} / ${ufSigla}`;
+                localStorage.setItem(STORAGE_USER, JSON.stringify(currentCompany));
+                loadSession();
+              }
+            } else {
+              if (feedbackEl) {
+                feedbackEl.className = 'text-[11px] text-amber-800 font-medium mt-1.5 flex items-center gap-1.5 bg-amber-50 p-2 rounded-xl border border-amber-200';
+                feedbackEl.innerHTML = `
+                  <span>ℹ️ ${data.message || 'CNPJ não localizado na base pública da Receita Federal. Preencha os campos manualmente.'}</span>
+                `;
+                feedbackEl.classList.remove('hidden');
+              }
+            }
+          } catch (err) {
+            console.warn('Erro ao consultar CNPJ:', err);
+            if (feedbackEl) {
+              feedbackEl.className = 'text-[11px] text-stone-500 mt-1';
+              feedbackEl.textContent = 'Preencha a Razão Social manualmente caso necessário.';
+            }
+          }
+        }, delay);
+      }
+    }
+
+    // Finish Order: Saves to Database API & Triggers Commercial WhatsApp
+    async function handleFinishOrder(e) {
+      e.preventDefault();
+      const razao = document.getElementById('chk-razao').value.trim();
+      const cnpj = document.getElementById('chk-cnpj').value.trim();
+      const resp = document.getElementById('chk-resp').value.trim();
+      const whats = document.getElementById('chk-whatsapp').value.trim();
+      const cid = document.getElementById('chk-cidade').value.trim();
+      const paymentInput = document.querySelector('input[name="chk-payment"]:checked');
+      const paymentMethodText = paymentInput ? paymentInput.value : 'Boleto 28D Faturado';
+
+      let paymentMethodCode = 'BOLETO_28D';
+      if (paymentMethodText.includes('Pix')) paymentMethodCode = 'PIX_A_VISTA';
+      if (paymentMethodText.includes('Cartão')) paymentMethodCode = 'CARTAO_3X';
+
+      const totalBoxes = b2bCart.reduce((sum, item) => sum + item.boxes, 0);
+      const totalAmount = b2bCart.reduce((sum, item) => sum + (item.boxes * item.boxPrice), 0);
+
+      // Update stored profile
+      currentCompany = {
+        razaoSocial: razao,
+        nomeFantasia: razao,
+        cnpj: cnpj,
+        responsavel: resp,
+        whatsapp: whats,
+        cidade: cid
+      };
+      localStorage.setItem(STORAGE_USER, JSON.stringify(currentCompany));
+      loadSession();
+
+      // Submit Button Loading Feedback
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalBtnContent = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg class="animate-spin h-4 w-4 text-white inline-block mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+          <span>Registrando Pedido no Banco de Dados...</span>
+        `;
+      }
+
+      let finalOrderNumber = `#TN-${Math.floor(10000 + Math.random() * 90000)}`;
+
+      try {
+        const orderPayload = {
+          company: {
+            cnpj: cnpj,
+            razaoSocial: razao,
+            nomeFantasia: razao,
+            responsavel: resp,
+            whatsapp: whats,
+            cidade: cid
+          },
+          items: b2bCart.map(item => {
+            const wine = WINES_DATABASE.find(w => w.shortName === item.wineName || w.name === item.wineName);
+            return {
+              productId: wine ? wine.id : null,
+              wineName: item.wineName,
+              boxes: item.boxes,
+              unitPrice: item.unitPrice
+            };
+          }),
+          paymentMethod: paymentMethodCode,
+          observations: `Pedido emitido via Portal B2B Toro Negro. Condição: ${paymentMethodText}`
+        };
+
+        const res = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderPayload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.order?.order_number) {
+            finalOrderNumber = data.order.order_number;
+          }
+        }
+      } catch (apiErr) {
+        console.warn('Servidor offline ou erro ao gravar pedido no banco:', apiErr);
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnContent;
+        }
+      }
+
+      // Build Order Text for WhatsApp & Commercial Representative
+      let text = `🍷 *PEDIDO CORPORATIVO B2B REGISTRADO - TORO NEGRO WINES*\n`;
+      text += `📋 *Pedido N°:* ${finalOrderNumber}\n`;
+      text += `--------------------------------------------\n`;
+      text += `🏢 *Empresa:* ${razao}\n`;
+      text += `📋 *CNPJ:* ${cnpj}\n`;
+      text += `👤 *Comprador:* ${resp}\n`;
+      text += `📍 *Entrega:* ${cid}\n`;
+      text += `💳 *Condição:* ${paymentMethodText}\n`;
+      text += `--------------------------------------------\n`;
+      text += `📦 *ITENS DO PEDIDO (CAIXAS FECHADAS):*\n`;
+
+      b2bCart.forEach(i => {
+        text += `• ${i.boxes} cx (${i.boxes * 6} un) - ${i.wineName} | R$ ${i.unitPrice.toFixed(2).replace('.', ',')}/un (Subtotal: R$ ${(i.boxes * i.boxPrice).toFixed(2).replace('.', ',')})\n`;
+      });
+
+      text += `--------------------------------------------\n`;
+      text += `📦 *Total de Caixas:* ${totalBoxes} cx (${totalBoxes * 6} garrafas)\n`;
+      text += `💰 *TOTAL FATURADO:* R$ ${totalAmount.toFixed(2).replace('.', ',')}\n`;
+      text += `🚚 *Logística:* Frota Própria MUFS\n`;
+      if (totalBoxes >= 15) {
+        text += `📦 *Condição de Frete:* CORTESIA Frota Própria MUFS (Acima de 15 caixas)\n`;
+      } else {
+        text += `📦 *Condição de Frete:* Entrega Direta Frota Própria MUFS (A combinar rota/região)\n`;
+      }
+      text += `--------------------------------------------\n`;
+      text += `Por favor, confirmem o espelho de faturamento e a data de entrega para o pedido ${finalOrderNumber}.`;
+
+      const encoded = encodeURIComponent(text);
+      const waUrl = `https://wa.me/5541998632724?text=${encoded}`;
+
+      closeCheckoutModal();
+      b2bCart = [];
+      saveCart();
+      renderCart();
+
+      window.open(waUrl, '_blank');
+      showToast(`Pedido ${finalOrderNumber} registrado com sucesso! Notificando comercial...`);
+    }
+  </script>
+
+</body>
+</html>

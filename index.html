@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vinhos Toro Negro | Vinhos Chilenos &amp; Argentinos de Caráter</title>
+<!-- Tailwind CSS CDN v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Cormorant Garamond (Editorial Serif) & Plus Jakarta Sans (Clean Sans) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            burgundy: {
+              900: '#380E17',
+              800: '#4A1521',
+              700: '#581825',
+              600: '#631F2E',
+              500: '#752537',
+            },
+            cream: {
+              50: '#FDFBF7',
+              100: '#F9F6F0',
+              200: '#F4EFE6',
+              300: '#ECE5D8',
+              400: '#E4DAC7',
+            },
+            gold: {
+              300: '#E6CA92',
+              400: '#D4AF37',
+              500: '#C59B27',
+              600: '#9E7A1C',
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-typography">
+    .font-serif-italic {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+    }
+    .tracking-luxury {
+      letter-spacing: 0.18em;
+    }
+    .tracking-loose-caps {
+      letter-spacing: 0.25em;
+    }
+  </style>
+<style data-purpose="bottle-effects">
+    .bottle-drop-shadow {
+      filter: drop-shadow(0 20px 25px rgba(28, 15, 10, 0.28)) drop-shadow(0 8px 10px rgba(0, 0, 0, 0.12));
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s ease;
+    }
+    .group:hover .bottle-drop-shadow {
+      transform: translateY(-8px) scale(1.02);
+      filter: drop-shadow(0 28px 30px rgba(28, 15, 10, 0.34)) drop-shadow(0 12px 14px rgba(0, 0, 0, 0.18));
+    }
+    .hero-mask {
+      background: linear-gradient(90deg, rgba(18, 7, 10, 0.94) 0%, rgba(18, 7, 10, 0.85) 34%, rgba(18, 7, 10, 0.42) 52%, rgba(18, 7, 10, 0.05) 70%, transparent 100%),
+                  linear-gradient(180deg, rgba(18, 7, 10, 0.5) 0%, transparent 25%, rgba(18, 7, 10, 0.6) 100%);
+    }
+    .wine-card-bg {
+      background: radial-gradient(circle at 50% 40%, #FAF7F2 0%, #EFEAE0 100%);
+    }
+  </style>
+</head>
+<body class="bg-cream-100 text-[#2B2320] font-sans antialiased selection:bg-burgundy-700 selection:text-white">
+<!-- BEGIN: MainHeader -->
+<header class="absolute top-0 left-0 w-full z-50 text-white border-b border-white/15 backdrop-blur-[2px] transition-all">
+  <!-- Main Navigation Row -->
+  <div>
+    <div class="max-w-7xl mx-auto px-6 h-20 sm:h-24 flex items-center justify-between gap-6 lg:gap-10">
+      <!-- Left Group: Logo + Navigation Links -->
+      <div class="flex items-center gap-8 lg:gap-12">
+        <!-- Logo on the left -->
+        <a aria-label="Toro Negro Home" class="inline-block group shrink-0" href="#">
+          <div class="py-1.5 rounded-2xl hover:scale-105 transition-all duration-300">
+            <img alt="Logo Oficial Toro Negro" class="h-10 md:h-12 w-auto object-contain filter drop-shadow-md" src="./assets/toro-negro-logo-oficial.png"/>
+          </div>
+        </a>
+
+        <!-- Navigation Options on the left -->
+        <nav class="hidden md:flex items-center gap-7 lg:gap-8 text-xs tracking-luxury uppercase font-medium">
+          <a class="hover:text-gold-300 transition-colors" href="#catalogo">Reservado</a>
+          <a class="hover:text-gold-300 transition-colors" href="#producao">Vinificação</a>
+          <div class="relative group cursor-pointer flex items-center gap-1.5 hover:text-gold-300 transition-colors">
+            <a class="hover:text-gold-300 transition-colors" href="#especiais">Coleções</a>
+            <svg class="w-3.5 h-3.5 opacity-80 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+            <!-- Dropdown Menu -->
+            <div class="absolute top-full left-0 mt-3 w-60 bg-[#1A070D]/95 backdrop-blur-md border border-gold-400/25 rounded-xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <a class="flex items-center gap-2.5 px-4 py-2 text-[11px] tracking-wider text-white/80 hover:bg-burgundy-900 hover:text-gold-300 transition-colors" href="#catalogo">
+                <img alt="Chile" class="w-3.5 h-2.5 object-cover rounded-[2px] shadow-xs border border-white/20 shrink-0" src="./assets/flag-chile.png"/>
+                <span>Linha Reservado Chile</span>
+              </a>
+              <a class="flex items-center gap-2.5 px-4 py-2 text-[11px] tracking-wider text-white/80 hover:bg-burgundy-900 hover:text-gold-300 transition-colors" href="#argentina">
+                <img alt="Argentina" class="w-3.5 h-2.5 object-cover rounded-[2px] shadow-xs border border-white/20 shrink-0" src="./assets/flag-argentina.png"/>
+                <span>Linha Reservado Argentina</span>
+              </a>
+              <a class="flex items-center gap-2.5 px-4 py-2 text-[11px] tracking-wider text-white/80 hover:bg-burgundy-900 hover:text-gold-300 transition-colors" href="#especiais">
+                <span class="w-3.5 text-center text-[10px] text-gold-400">✦</span>
+                <span>Suave Sweet &amp; Verano</span>
+              </a>
+            </div>
+          </div>
+          <a class="hover:text-gold-300 transition-colors flex items-center gap-1" href="vinicola.html" target="_blank" title="Conheça a história e estrutura da vinícola TerrAustral">
+            <span>A Vinícola</span>
+            <span class="text-[10px] text-gold-400">↗</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Right: Institutional & Corporate Portal Link -->
+      <div class="flex items-center gap-4 text-xs tracking-luxury uppercase font-medium">
+        <a href="portal-b2b.html" class="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full border border-gold-400/50 hover:border-gold-400 bg-white/10 hover:bg-gold-400 hover:text-burgundy-950 text-gold-300 transition-all duration-300 shadow-sm text-xs font-semibold tracking-wider" title="Área exclusiva de compras para restaurantes, hotéis e estabelecimentos">
+          <svg class="w-3.5 h-3.5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          <span class="hidden sm:inline">Área B2B / Restaurantes</span>
+          <span class="sm:hidden">Área B2B</span>
+          <span class="text-[10px]">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: HeroSection -->
+<section class="relative min-h-[92vh] flex items-center justify-start text-left px-6 sm:px-12 md:px-20 lg:px-28 overflow-hidden pt-24" data-purpose="hero-banner">
+<!-- Hero Background Image (Vineyard atmospheric backdrop) -->
+<div class="absolute inset-0 z-0">
+<img alt="Vinhos Toro Negro Cabernet Sauvignon, El Secreto e Pedro Jimenez sobre mesa em frente ao vinhedo" class="w-full h-full object-cover object-center lg:object-[68%_center] filter brightness-95 contrast-105" src="./assets/hero-toro-negro.jpg"/>
+<div class="absolute inset-0 hero-mask"></div>
+</div>
+<!-- Hero Content (Left-aligned) -->
+<div class="relative z-10 max-w-2xl text-white mt-12 mb-16">
+<span class="inline-block text-xs uppercase tracking-[0.3em] text-gold-300 mb-5 font-semibold">
+        Coleção Exclusiva de Vinhos Nobres
+      </span>
+<h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-light leading-[1.05] tracking-tight mb-6">
+        Descubra a Força &amp; a Tradição <br class="hidden sm:inline"/>
+<span class="font-serif-italic font-normal">dos Vinhos Toro Negro</span>
+</h1>
+<p class="max-w-xl text-sm sm:text-base md:text-lg text-white/85 font-light leading-relaxed mb-10 text-left">
+        Criados a partir de vinhas históricas selecionadas, equilibrando intensidade, elegância e autenticidade incomparável.
+      </p>
+<!-- Pill Button (Left-aligned) -->
+<div class="flex flex-col sm:flex-row items-start justify-start gap-4">
+<a class="inline-block px-10 py-3.5 rounded-full bg-cream-100 text-burgundy-900 text-xs font-semibold tracking-loose-caps uppercase shadow-lg hover:bg-gold-300 hover:text-burgundy-900 transition-all transform hover:-translate-y-0.5" href="#catalogo">
+          Conheça a Coleção
+        </a>
+</div>
+<!-- Slider Arrows Minimalist Indicators (Left-aligned) -->
+<div class="mt-14 flex items-center justify-start gap-6 text-white/60">
+<button aria-label="Anterior" class="p-2 hover:text-white transition-colors">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
+</button>
+<div class="w-12 h-[1px] bg-white/30"></div>
+<button aria-label="Próximo" class="p-2 hover:text-white transition-colors">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
+</button>
+</div>
+</div>
+</section>
+<!-- END: HeroSection -->
+<!-- BEGIN: FeaturedProducts -->
+<section class="py-24 px-6 md:px-12 bg-cream-100" data-purpose="product-showcase" id="catalogo">
+<div class="max-w-7xl mx-auto">
+<!-- Section Header -->
+<div class="text-center mb-16">
+<span class="text-xs uppercase tracking-luxury text-burgundy-700 font-semibold block mb-2">Seleção Exclusiva de Vinhos Nobres</span>
+<h2 class="text-4xl md:text-5xl font-serif text-burgundy-900">Linha Toro Negro Reservado</h2>
+<p class="text-xs md:text-sm text-[#706660] max-w-2xl mx-auto mt-3 font-light">
+Elaborados a partir de vinhas nobres selecionadas, com parâmetros técnicos precisos de vinificação e maturação.
+</p>
+<div class="w-16 h-[1.5px] bg-gold-400 mx-auto mt-4"></div>
+</div>
+<!-- Product Carousel / Grid -->
+      <!-- Product Carousel Container with Continuous Infinite Looping -->
+      <div class="relative group/carousel max-w-7xl mx-auto px-1 sm:px-2" id="reservado-carousel-container">
+        <!-- Circular Prev Button (Left) -->
+        <button id="reservado-prev" aria-label="Vinho anterior" class="absolute -left-3 sm:-left-5 lg:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-cream-300 text-burgundy-900 flex items-center justify-center hover:bg-gold-300 hover:border-gold-400 hover:text-burgundy-950 transition-all z-30 cursor-pointer active:scale-95 group">
+          <svg class="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </button>
+
+        <!-- Carousel Viewport -->
+        <div id="reservado-viewport" class="overflow-hidden py-4 -my-4 rounded-3xl cursor-grab active:cursor-grabbing select-none">
+          <div id="reservado-track" class="flex gap-6 will-change-transform">
+            <!-- Product Card 1: Carménère -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] group flex flex-col justify-between bg-white/70 p-5 rounded-3xl border border-cream-300/80 hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none" data-purpose="product-card">
+              <div>
+                <div class="wine-card-bg rounded-2xl w-full h-[320px] flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Carménère Reservado Valle Central 750ml" class="h-[280px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-carmenere.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                  <span class="text-[10px] uppercase tracking-widest text-[#8C7A70] font-semibold">Valle Central • Chile</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 group-hover:text-burgundy-700 transition-colors font-medium">
+                  Carménère Reservado
+                </h3>
+                <p class="text-xs text-[#5A4E48] mt-2 leading-relaxed font-light line-clamp-3">
+                  Vermelho cereja com notas púrpura. Aromas de frutas e especiarias pretas. Na boca taninos frutados, aveludados e equilibrados.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Massas com molho vermelho, queijos e carnes magras.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 16° à 18°C • pH 3,7 • Acidez 5,6 g/l</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Product Card 2: Cabernet Sauvignon -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] group flex flex-col justify-between bg-white/70 p-5 rounded-3xl border border-cream-300/80 hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none" data-purpose="product-card">
+              <div>
+                <div class="wine-card-bg rounded-2xl w-full h-[320px] flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Cabernet Sauvignon Reservado 750ml" class="h-[280px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-cabernet.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                  <span class="text-[10px] uppercase tracking-widest text-[#8C7A70] font-semibold">Valle Central • Chile</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 group-hover:text-burgundy-700 transition-colors font-medium">
+                  Cabernet Sauvignon
+                </h3>
+                <p class="text-xs text-[#5A4E48] mt-2 leading-relaxed font-light line-clamp-3">
+                  Vermelho rubi profundo. Notas a cerejas vermelhas e ameixas com toques de chocolate. Taninos redondos, suaves e bem estruturados.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Churrascos, massas à bolonhesa e queijos maduros.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 16° à 18°C • pH 3,6 • Acidez 5,3 g/l</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Product Card 3: Merlot Reservado -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] group flex flex-col justify-between bg-white/70 p-5 rounded-3xl border border-cream-300/80 hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none" data-purpose="product-card">
+              <div>
+                <div class="wine-card-bg rounded-2xl w-full h-[320px] flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Merlot Reservado 750ml" class="h-[280px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-merlot.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                  <span class="text-[10px] uppercase tracking-widest text-[#8C7A70] font-semibold">Valle Central • Chile</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 group-hover:text-burgundy-700 transition-colors font-medium">
+                  Merlot Reservado
+                </h3>
+                <p class="text-xs text-[#5A4E48] mt-2 leading-relaxed font-light line-clamp-3">
+                  Vermelho rubi com reflexos violáceos. Aromas intensos de ameixas pretas, amoras e delicadas notas de especiarias doces. Taninos redondos e final sedoso.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Carnes assadas, risotos e massas com molhos ricos.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 16° à 18°C • pH 3,5 • Acidez 5,4 g/l</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Product Card 4: Sauvignon Blanc -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] group flex flex-col justify-between bg-white/70 p-5 rounded-3xl border border-cream-300/80 hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none" data-purpose="product-card">
+              <div>
+                <div class="wine-card-bg rounded-2xl w-full h-[320px] flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Sauvignon Blanc Reservado 750ml" class="h-[280px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-sauvignon-blanc.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                  <span class="text-[10px] uppercase tracking-widest text-[#8C7A70] font-semibold">Valle Central • Chile</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 group-hover:text-burgundy-700 transition-colors font-medium">
+                  Sauvignon Blanc
+                </h3>
+                <p class="text-xs text-[#5A4E48] mt-2 leading-relaxed font-light line-clamp-3">
+                  Amarelo palha com reflexos esverdeados. Aroma de maçã verde, cítricos e toranja. Paladar fresco, vivaz e equilibrado.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Ceviches, pratos frios, frutos do mar e salada caesar.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 10° à 12°C • pH 3,3 • Acidez 6,8%</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Product Card 5: Chardonnay Reservado -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] group flex flex-col justify-between bg-white/70 p-5 rounded-3xl border border-cream-300/80 hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none" data-purpose="product-card">
+              <div>
+                <div class="wine-card-bg rounded-2xl w-full h-[320px] flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Chardonnay Reservado 750ml" class="h-[280px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-chardonnay.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                  <span class="text-[10px] uppercase tracking-widest text-[#8C7A70] font-semibold">Valle Central • Chile</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 group-hover:text-burgundy-700 transition-colors font-medium">
+                  Chardonnay Reservado
+                </h3>
+                <p class="text-xs text-[#5A4E48] mt-2 leading-relaxed font-light line-clamp-3">
+                  Amarelo dourado brilhante. Aromas tropicais de abacaxi maduro, pêssego e toques florais delicados. Paladar untuoso com excelente frescor e persistência.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Salmão grelhado, aves ao molho branco e queijos cremosos.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 10° à 12°C • pH 3,3 • Acidez 6,2 g/l</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Product Card 6: Rosé Syrah -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] group flex flex-col justify-between bg-white/70 p-5 rounded-3xl border border-cream-300/80 hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none" data-purpose="product-card">
+              <div>
+                <div class="wine-card-bg rounded-2xl w-full h-[320px] flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Rosé Reservado 750ml" class="h-[280px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-rose.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                  <span class="text-[10px] uppercase tracking-widest text-[#8C7A70] font-semibold">Valle Central • Chile</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 group-hover:text-burgundy-700 transition-colors font-medium">
+                  Rosé Reservado
+                </h3>
+                <p class="text-xs text-[#5A4E48] mt-2 leading-relaxed font-light line-clamp-3">
+                  Rosa pálido sofisticado. Aromas florais com notas de framboesa, cereja ácida e groselha. Paladar equilibrado e aveludado no final.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Gazpachos, peixe, macarrão com molho branco e saladas.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 10° à 12°C • pH 3,3 • Acidez 6,7 g/l</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Circular Next Button (Right) - Exactly matching user screenshot -->
+        <button id="reservado-next" aria-label="Próximo vinho" class="absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-cream-300 text-burgundy-900 flex items-center justify-center hover:bg-gold-300 hover:border-gold-400 hover:text-burgundy-950 transition-all z-30 cursor-pointer active:scale-95 group">
+          <svg class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </div>
+
+      <!-- Carousel Pagination Dots & Continuous Loop Status -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+        <div class="flex items-center gap-2" id="reservado-dots"></div>
+        <div class="flex items-center gap-2 text-[11px] text-[#8C7A70] uppercase tracking-wider font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Giro contínuo em looping automático</span>
+        </div>
+      </div>
+<!-- Action Button -->
+<div class="text-center mt-16">
+<a class="inline-block px-8 py-3 border border-[#3E2723]/30 rounded-full text-xs font-semibold uppercase tracking-luxury text-[#3E2723] hover:border-burgundy-700 hover:bg-burgundy-700 hover:text-white transition-all duration-300" href="#especiais">
+          Explorar Mais Rótulos
+        </a>
+</div>
+</div>
+</section>
+<!-- END: FeaturedProducts -->
+<!-- BEGIN: FeaturedWineShowcase -->
+<section class="py-20 px-4 sm:px-6 md:px-12 bg-cream-100" data-purpose="wine-hero-card" id="destaques">
+  <div class="max-w-6xl mx-auto relative group/hero-carousel">
+    <!-- Circular Prev Button (Left) -->
+    <button id="hero-prev" aria-label="Destaque anterior" class="absolute -left-3 sm:-left-5 lg:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] border border-cream-300 text-burgundy-900 flex items-center justify-center hover:bg-gold-300 hover:border-gold-400 hover:text-burgundy-950 transition-all z-30 cursor-pointer active:scale-95 group">
+      <svg class="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    </button>
+
+    <!-- Carousel Viewport -->
+    <div id="hero-viewport" class="overflow-hidden rounded-3xl shadow-2xl select-none">
+      <div id="hero-track" class="flex will-change-transform">
+        <!-- Slide 1: Toro Negro El Secreto Tinto -->
+        <div class="w-full shrink-0 grid grid-cols-1 lg:grid-cols-2 bg-burgundy-800">
+          <!-- Left Side: Burgundy Info Panel -->
+          <div class="p-8 sm:p-12 lg:p-14 text-white flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-4">
+                <div class="flex text-gold-400 text-sm">
+                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <span class="text-xs text-white/80 font-medium">4.98 de 5 (280+ avaliações)</span>
+              </div>
+              <div class="flex items-center gap-2 mb-3">
+                <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-white/20 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                <span class="text-[11px] uppercase tracking-widest text-gold-300 font-semibold">Valle Central • Chile</span>
+              </div>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight font-light mb-5">
+                Toro Negro <br/>
+                <span class="font-serif-italic font-normal text-gold-300">El Secreto Tinto</span>
+              </h2>
+              <p class="text-sm sm:text-base text-white/80 leading-relaxed font-light mb-8">
+                Um blend misterioso e potente elaborado a partir de vinhedos nobres do Valle Central chileno. Apresenta notas intensas de ameixas negras maduras, toques sutis de pimenta doce, carvalho tostado e taninos aveludados de longa persistência.
+              </p>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/15 mb-10 text-center">
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Variedade</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block text-gold-300">100% Carménère</span>
+                </div>
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Álcool</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block">13.0% vol</span>
+                </div>
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Acidez / pH</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block">5.6 g/l • 3.7 pH</span>
+                </div>
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Serviço</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block">16° a 18°C</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-2 flex flex-wrap items-center gap-3">
+              <a href="#catalogo" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gold-400 hover:bg-gold-300 text-burgundy-950 text-xs uppercase tracking-loose-caps font-bold transition-all duration-300 shadow-md text-center flex items-center justify-center gap-2">
+                <span>Conhecer a Coleção</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </a>
+              <a href="vinicola.html" target="_blank" class="w-full sm:w-auto px-7 py-3.5 rounded-full border border-gold-400/60 hover:bg-white/10 text-gold-300 text-xs uppercase tracking-loose-caps font-medium transition-all duration-300 text-center flex items-center justify-center gap-1.5">
+                <span>A Vinícola TerrAustral</span>
+                <span class="text-xs">↗</span>
+              </a>
+            </div>
+          </div>
+          <!-- Right Side: Visual with Bottle -->
+          <div class="relative min-h-[380px] lg:min-h-full flex items-center justify-center p-6 overflow-hidden">
+            <img alt="Vinhedos Toro Negro no amanhecer com bruma" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.45] contrast-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnZUGQm1aUgEYGO-d51YESbugTqk4meeutemllXXWuZLGt2x8vTNY0Biuo8jFtkTgjmkJQsmnDVTjXi4neDW5QjagD-XmFSLy50odCC60mGdj1V8LeRineTKpM4CQQzPA0NNocxZKNZmunzuQtsdaHNg0aJUzDNEtxGEIjhK9wgbhXEWTeU8DXaKZzs3uBJRrAHHdrPV-OvRR0YZTWFwVgjjb9ul8BMQ07SAte4-iOYulOHJY_WF8k"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-burgundy-950/80 via-transparent to-burgundy-950/40"></div>
+            <img alt="Garrafa Oficial Toro Negro El Secreto" class="relative z-10 h-[300px] sm:h-[350px] lg:h-[400px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none transform hover:scale-105 transition-transform duration-500" draggable="false" src="./assets/bottles/web/toro-negro-el-secreto.png"/>
+            <div class="absolute bottom-6 right-6 bg-burgundy-900/90 backdrop-blur-sm border border-gold-400/40 text-cream-100 px-4 py-2 rounded-full text-xs tracking-wider uppercase font-serif flex items-center gap-2 z-20">
+              <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-white/20 inline-block shrink-0" src="./assets/flag-chile.png"/>
+              <span>The Best of Chile</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Toro Negro Pedro Jimenez Verano -->
+        <div class="w-full shrink-0 grid grid-cols-1 lg:grid-cols-2 bg-burgundy-800">
+          <!-- Left Side: Burgundy Info Panel -->
+          <div class="p-8 sm:p-12 lg:p-14 text-white flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-4">
+                <div class="flex text-gold-400 text-sm">
+                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <span class="text-xs text-white/80 font-medium">4.95 de 5 (190+ avaliações)</span>
+              </div>
+              <div class="flex items-center gap-2 mb-3">
+                <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-white/20 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                <span class="text-[11px] uppercase tracking-widest text-gold-300 font-semibold">Valle del Limarí • Chile</span>
+              </div>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight font-light mb-5">
+                Toro Negro <br/>
+                <span class="font-serif-italic font-normal text-gold-300">Pedro Jimenez Verano</span>
+              </h2>
+              <p class="text-sm sm:text-base text-white/80 leading-relaxed font-light mb-8">
+                Um branco fresco, vibrante e repleto de vivacidade, forjado sob a névoa marítima do Pacífico e a luminosidade dos Andes no prestigiado Valle del Limarí. Aromas finos de flor de laranjeira, mel silvestre e frutas cítricas crocantes com mineralidade única.
+              </p>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/15 mb-10 text-center">
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Variedade</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block text-gold-300">Pedro Jimenez</span>
+                </div>
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Álcool</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block">12.0% vol</span>
+                </div>
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Acidez / pH</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block">6.0 g/l • 3.37 pH</span>
+                </div>
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Serviço</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block">10° a 12°C</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-2 flex flex-wrap items-center gap-3">
+              <a href="#catalogo" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gold-400 hover:bg-gold-300 text-burgundy-950 text-xs uppercase tracking-loose-caps font-bold transition-all duration-300 shadow-md text-center flex items-center justify-center gap-2">
+                <span>Explorar Vinhos Brancos</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </a>
+              <a href="#producao" class="w-full sm:w-auto px-7 py-3.5 rounded-full border border-gold-400/60 hover:bg-white/10 text-gold-300 text-xs uppercase tracking-loose-caps font-medium transition-all duration-300 text-center flex items-center justify-center gap-1.5">
+                <span>O Terroir de Limarí</span>
+              </a>
+            </div>
+          </div>
+          <!-- Right Side: Visual with Bottle -->
+          <div class="relative min-h-[380px] lg:min-h-full flex items-center justify-center p-6 overflow-hidden">
+            <img alt="Vinhedos Toro Negro no Valle del Limarí" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.60] contrast-105" src="./assets/vineyard-limari.jpg"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-burgundy-950/80 via-transparent to-burgundy-950/30"></div>
+            <img alt="Garrafa Oficial Toro Negro Verano Pedro Jimenez" class="relative z-10 h-[300px] sm:h-[350px] lg:h-[400px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none transform hover:scale-105 transition-transform duration-500" draggable="false" src="./assets/bottles/web/toro-negro-verano.png"/>
+            <div class="absolute bottom-6 right-6 bg-burgundy-900/90 backdrop-blur-sm border border-gold-400/40 text-cream-100 px-4 py-2 rounded-full text-xs tracking-wider uppercase font-serif flex items-center gap-2 z-20">
+              <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-white/20 inline-block shrink-0" src="./assets/flag-chile.png"/>
+              <span>The Best of Limarí</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Toro Negro Suave Sweet Tinto -->
+        <div class="w-full shrink-0 grid grid-cols-1 lg:grid-cols-2 bg-burgundy-800">
+          <!-- Left Side: Burgundy Info Panel -->
+          <div class="p-8 sm:p-12 lg:p-14 text-white flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-4">
+                <div class="flex text-gold-400 text-sm">
+                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <span class="text-xs text-white/80 font-medium">4.96 de 5 (230+ avaliações)</span>
+              </div>
+              <div class="flex items-center gap-2 mb-3">
+                <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-white/20 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                <span class="text-[11px] uppercase tracking-widest text-gold-300 font-semibold">Valle Central • Chile</span>
+              </div>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif leading-tight font-light mb-5">
+                Toro Negro <br/>
+                <span class="font-serif-italic font-normal text-gold-300">Suave Sweet Tinto</span>
+              </h2>
+              <p class="text-sm sm:text-base text-white/80 leading-relaxed font-light mb-8">
+                O encontro harmônico entre a nobreza das uvas Vitis Vinifera e a doçura aveludada do Novo Mundo. De coloração rubi sedutora, exala notas ricas de geléia de amoras, cerejas maduras e toques de cacau, com taninos finos e macios.
+              </p>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/15 mb-10 text-center">
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Variedade</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block text-gold-300">Vitis Vinifera</span>
+                </div>
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Álcool</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block">12.5% vol</span>
+                </div>
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Acidez / pH</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block">4.46 g/l • 3.68 pH</span>
+                </div>
+                <div>
+                  <span class="block text-[10px] uppercase tracking-wider text-white/60">Serviço</span>
+                  <span class="text-sm sm:text-base font-serif font-medium mt-0.5 block">14° a 16°C</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-2 flex flex-wrap items-center gap-3">
+              <a href="#catalogo" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gold-400 hover:bg-gold-300 text-burgundy-950 text-xs uppercase tracking-loose-caps font-bold transition-all duration-300 shadow-md text-center flex items-center justify-center gap-2">
+                <span>Descobrir o Suave Fino</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </a>
+              <a href="vinicola.html" target="_blank" class="w-full sm:w-auto px-7 py-3.5 rounded-full border border-gold-400/60 hover:bg-white/10 text-gold-300 text-xs uppercase tracking-loose-caps font-medium transition-all duration-300 text-center flex items-center justify-center gap-1.5">
+                <span>Tradição Vinífera</span>
+                <span class="text-xs">↗</span>
+              </a>
+            </div>
+          </div>
+          <!-- Right Side: Visual with Bottle -->
+          <div class="relative min-h-[380px] lg:min-h-full flex items-center justify-center p-6 overflow-hidden">
+            <img alt="Vinhedos Toro Negro no crepúsculo do Valle Central" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.55] contrast-110" src="./assets/vineyard-suave.jpg"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-burgundy-950/80 via-transparent to-burgundy-950/40"></div>
+            <img alt="Garrafa Oficial Toro Negro Suave Sweet" class="relative z-10 h-[300px] sm:h-[350px] lg:h-[400px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none transform hover:scale-105 transition-transform duration-500" draggable="false" src="./assets/bottles/web/toro-negro-suave.png"/>
+            <div class="absolute bottom-6 right-6 bg-burgundy-900/90 backdrop-blur-sm border border-gold-400/40 text-cream-100 px-4 py-2 rounded-full text-xs tracking-wider uppercase font-serif flex items-center gap-2 z-20">
+              <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-white/20 inline-block shrink-0" src="./assets/flag-chile.png"/>
+              <span>The Best of Chile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Circular Next Button (Right) -->
+    <button id="hero-next" aria-label="Próximo destaque" class="absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] border border-cream-300 text-burgundy-900 flex items-center justify-center hover:bg-gold-300 hover:border-gold-400 hover:text-burgundy-950 transition-all z-30 cursor-pointer active:scale-95 group">
+      <svg class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+    </button>
+
+    <!-- Dots Indicators & Loop Status -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+      <div class="flex items-center gap-2" id="hero-dots"></div>
+      <div class="flex items-center gap-2 text-[11px] text-[#8C7A70] uppercase tracking-wider font-medium">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>Destaques em rotação contínua</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END: FeaturedWineShowcase -->
+<!-- BEGIN: ProductionProcess -->
+<section class="py-24 px-6 md:px-12 bg-burgundy-700 text-white" data-purpose="production-steps" id="producao">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<span class="text-xs uppercase tracking-luxury text-gold-300 font-semibold block mb-2">Processo Artesanal &amp; Tecnologia</span>
+<h2 class="text-4xl md:text-5xl font-serif font-light">A Arte da Nossa Vinificação</h2>
+<div class="w-16 h-[1.5px] bg-gold-400 mx-auto mt-4"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+<!-- Step 1: Select -->
+<div class="flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full border border-gold-400/40 flex items-center justify-center mb-6 text-gold-300">
+<!-- Hand-drawn style Grape Icon SVG -->
+<svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.2" viewbox="0 0 24 24">
+<circle cx="12" cy="7" r="2.5"></circle>
+<circle cx="9" cy="11.5" r="2.5"></circle>
+<circle cx="15" cy="11.5" r="2.5"></circle>
+<circle cx="12" cy="16" r="2.5"></circle>
+<path d="M12 4.5V2m0 0c1.5 0 2.5 1 3.5 1" stroke-linecap="round"></path>
+</svg>
+</div>
+<h3 class="font-serif text-2xl text-cream-100 mb-3">1. Seleção dos Terroirs</h3>
+<p class="text-sm text-white/75 font-light leading-relaxed">
+            Como uma vinícola focada em precisão, colhemos cachos selecionados à mão nas melhores altitudes do Valle Central e de Mendoza, garantindo maturação fenólica perfeita.
+          </p>
+</div>
+<!-- Step 2: Prepare / Barrel -->
+<div class="flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full border border-gold-400/40 flex items-center justify-center mb-6 text-gold-300">
+<!-- Barrel / Fermentation Icon SVG -->
+<svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.2" viewbox="0 0 24 24">
+<ellipse cx="12" cy="12" rx="7" ry="9"></ellipse>
+<path d="M5 8h14M5 16h14"></path>
+<path d="M12 3v18"></path>
+</svg>
+</div>
+<h3 class="font-serif text-2xl text-cream-100 mb-3">2. Maceração &amp; Maturação</h3>
+<p class="text-sm text-white/75 font-light leading-relaxed">
+            Controle termodinâmico preciso na fermentação, seguido de estágio em barricas nobres onde os taninos se harmonizam, conferindo aromas complexos e estrutura aveludada.
+          </p>
+</div>
+<!-- Step 3: Bottle -->
+<div class="flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full border border-gold-400/40 flex items-center justify-center mb-6 text-gold-300">
+<!-- Wine Bottles & Cork Icon SVG -->
+<svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.2" viewbox="0 0 24 24">
+<path d="M9 3h6v3H9zM10 6v3l-2 3v9h8v-9l-2-3V6" stroke-linecap="round" stroke-linejoin="round"></path>
+<line x1="8" x2="16" y1="15" y2="15"></line>
+</svg>
+</div>
+<h3 class="font-serif text-2xl text-cream-100 mb-3">3. Envase &amp; Identidade</h3>
+<p class="text-sm text-white/75 font-light leading-relaxed">
+            Engarrafamos e selamos cada rótulo com rigor técnico extremo, salvaguardando a vivacidade cromática e a potência aromática lendária que simboliza o Toro Negro.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: ProductionProcess -->
+<!-- BEGIN: StoryBehindTheName -->
+<section class="relative min-h-[640px] flex items-center py-24 px-6 md:px-12 overflow-hidden text-white" data-purpose="brand-story" id="historia">
+<!-- Cellar Backdrop with Aging Bottles -->
+<div class="absolute inset-0 z-0">
+<img alt="Adega histórica e barricas dos vinhos Toro Negro" class="w-full h-full object-cover filter brightness-[0.22] contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQouEnIJBgdAfvdz-rTb-NEKuJ52C5ttpmujq6XaWLa3viwAHETYlZKKxCCT3-Q8GRvMwemUVnVFMMaEot1ISzakFKOs9MFy2LOeWOPrqOboFNJFOjod2vASbFTD_VqO-_sh2pTWxXXkb3W7crT9SJRRHrgBicbN1wih1mxNoaLO1DUUp05VXQttgplAjDatqhyAkxcQSq3OhntUKYgVEnuWM5TAEh8rT38Fk3PKRdUyEaImaDJRl9"/>
+<div class="absolute inset-0 bg-gradient-to-r from-burgundy-950/95 via-burgundy-950/75 to-transparent"></div>
+</div>
+<!-- Content overlay -->
+<div class="relative z-10 max-w-2xl space-y-6">
+<span class="inline-block text-xs uppercase tracking-[0.25em] text-gold-400 font-semibold">
+A Lenda • O Nome • A Origem
+</span>
+<h2 class="text-4xl sm:text-5xl md:text-6xl font-serif font-light leading-tight">
+        A História por Trás <br/>
+<span class="font-serif-italic text-gold-300">do Nome Toro Negro</span>
+</h2>
+<p class="text-base sm:text-lg text-white/85 font-light leading-relaxed">
+        O <strong>Toro Negro</strong> nasceu da admiração pela imponência, bravura e dignidade silenciosa do touro que guarda as pastagens sob a sombra da Cordilheira dos Andes. Uma criatura de força indomável que não recua diante do vento sul e personifica o respeito reverente à terra.
+      </p>
+<p class="text-sm sm:text-base text-white/75 font-light leading-relaxed">
+        Criamos a marca para quem não se contenta com o comum: vinhos tintos encorpados com taninos sedosos e cor profunda, brancos de frescor vibrante e aromas puros de frutas maduras. Cada rótulo é produzido e envasado com rigor absoluto nos terroirs seculares da <em>TerrAustral</em> (desde 1910), unindo a alma corajosa do touro ao mais alto padrão enológico sul-americano.
+      </p>
+<div class="pt-4 border-t border-white/15 flex items-center gap-4 text-xs tracking-luxury uppercase text-gold-400 font-medium">
+<span class="w-2 h-2 rounded-full bg-gold-400"></span>
+<span>Forjado nos Vales do Chile e na Altitude dos Andes</span>
+</div>
+</div>
+</section>
+<!-- END: StoryBehindTheName -->
+<!-- BEGIN: AdditionalProductsSection -->
+<section class="py-24 px-6 md:px-12 bg-cream-50" data-purpose="sparkling-and-special-editions" id="especiais">
+<div class="max-w-7xl mx-auto" id="argentina">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+<div>
+<span class="text-xs uppercase tracking-luxury text-burgundy-700 font-semibold block mb-2">Seleções Únicas &amp; Edições Especiais</span>
+<h2 class="text-3xl md:text-4xl font-serif text-burgundy-900">Linha Argentina &amp; Seleções Únicas</h2>
+</div>
+<p class="text-xs uppercase tracking-wider text-[#706660] mt-3 md:mt-0 font-medium">Mendoza, Argentina &amp; Valle Central, Chile</p>
+</div>
+      <!-- Especiais Carousel Container with Continuous Infinite Looping -->
+      <div class="relative group/carousel max-w-7xl mx-auto px-1 sm:px-2" id="especiais-carousel-container">
+        <!-- Circular Prev Button (Left) -->
+        <button id="especiais-prev" aria-label="Vinho anterior" class="absolute -left-3 sm:-left-5 lg:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-cream-300 text-burgundy-900 flex items-center justify-center hover:bg-gold-300 hover:border-gold-400 hover:text-burgundy-950 transition-all z-30 cursor-pointer active:scale-95 group">
+          <svg class="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </button>
+
+        <!-- Carousel Viewport -->
+        <div id="especiais-viewport" class="overflow-hidden py-4 -my-4 rounded-3xl cursor-grab active:cursor-grabbing select-none">
+          <div id="especiais-track" class="flex gap-6 will-change-transform">
+            <!-- Malbec Mendoza (Argentina) -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] bg-white/80 p-6 rounded-3xl flex flex-col justify-between border border-cream-300/80 group hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none">
+              <div>
+                <div class="wine-card-bg rounded-2xl h-64 flex items-center justify-center mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Malbec Mendoza 750ml" class="h-56 w-auto object-contain bottle-drop-shadow pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-malbec.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Argentina" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-argentina.png"/>
+                  <span class="text-[10px] uppercase font-bold tracking-widest text-[#8C7A70]">Mendoza • Argentina</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 font-medium">Toro Negro Malbec</h3>
+                <p class="text-xs text-[#5A4E48] mt-2 font-light leading-relaxed line-clamp-3">
+                  Vermelho com tons enegrecidos e violeta. Aromas de groselhas negras e amoras. Sabor persistente de frutas vermelhas e taninos amigáveis.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Carnes vermelhas assadas em churrasqueira e queijos duros.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 14° à 16°C • pH 3,9</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Bonarda Mendoza (Argentina) -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] bg-white/80 p-6 rounded-3xl flex flex-col justify-between border border-cream-300/80 group hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none">
+              <div>
+                <div class="wine-card-bg rounded-2xl h-64 flex items-center justify-center mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Bonarda Mendoza 750ml" class="h-56 w-auto object-contain bottle-drop-shadow pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-bonarda.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Argentina" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-argentina.png"/>
+                  <span class="text-[10px] uppercase font-bold tracking-widest text-[#8C7A70]">Mendoza • Argentina</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 font-medium">Toro Negro Bonarda</h3>
+                <p class="text-xs text-[#5A4E48] mt-2 font-light leading-relaxed line-clamp-3">
+                  Cor rubi intensa com reflexos granada. Notas exuberantes de figos maduros, amoras e especiarias doces, com paladar aveludado e envolvente.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Risotos de funghi, massas recheadas e carnes de caça.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 15° à 17°C • Uvas de Altitude</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Torrontés (Argentina) -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] bg-white/80 p-6 rounded-3xl flex flex-col justify-between border border-cream-300/80 group hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none">
+              <div>
+                <div class="wine-card-bg rounded-2xl h-64 flex items-center justify-center mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Torrontés 750ml" class="h-56 w-auto object-contain bottle-drop-shadow pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-torrontes.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Argentina" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-argentina.png"/>
+                  <span class="text-[10px] uppercase font-bold tracking-widest text-[#8C7A70]">Argentina</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 font-medium">Toro Negro Torrontés</h3>
+                <p class="text-xs text-[#5A4E48] mt-2 font-light leading-relaxed line-clamp-3">
+                  Amarelo brilhante com reflexos dourados. Aromas florais inebriantes de jasmim e flor de laranjeira combinados a notas de pêssego branco.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Cozinha asiática, frutos do mar picantes e queijo de cabra.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 8° à 10°C • Aromático &amp; Seco</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Suave Sweet Tinto (Chile) -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] bg-white/80 p-6 rounded-3xl flex flex-col justify-between border border-cream-300/80 group hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none">
+              <div>
+                <div class="wine-card-bg rounded-2xl h-64 flex items-center justify-center mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Suave Sweet 750ml" class="h-56 w-auto object-contain bottle-drop-shadow pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-suave.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                  <span class="text-[10px] uppercase font-bold tracking-widest text-[#8C7A70]">Valle Central • Chile</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 font-medium">Toro Negro Suave</h3>
+                <p class="text-xs text-[#5A4E48] mt-2 font-light leading-relaxed line-clamp-3">
+                  Tinto rubi com notas de frutas vermelhas. No paladar é doce e persistente, sem perder os taninos nobres das uvas vitis vinifera.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Sobremesas finas, chocolates amargos e bolos.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 16° à 18°C • pH 3,68 • Acidez 4,46 g/l</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Pedro Jimenez Verano (Chile) -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] bg-white/80 p-6 rounded-3xl flex flex-col justify-between border border-cream-300/80 group hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none">
+              <div>
+                <div class="wine-card-bg rounded-2xl h-64 flex items-center justify-center mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Verano Pedro Jimenez Chile 750ml" class="h-56 w-auto object-contain bottle-drop-shadow pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-verano.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                  <span class="text-[10px] uppercase font-bold tracking-widest text-[#8C7A70]">Edição Verano • Chile</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 font-medium">Pedro Jimenez Verano</h3>
+                <p class="text-xs text-[#5A4E48] mt-2 font-light leading-relaxed line-clamp-3">
+                  Amarelo-palha com reflexos esverdeados. Delicado, com notas de mel e florais. Paladar suculento com ótima acidez e frescor incrível.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Aperitivos, frutos do mar e saladas frescas.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 12° à 14°C • pH 3,37 • Acidez 6,0 g/l</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Brut Sparkling (Mendoza) -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] bg-white/80 p-6 rounded-3xl flex flex-col justify-between border border-cream-300/80 group hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none">
+              <div>
+                <div class="wine-card-bg rounded-2xl h-64 flex items-center justify-center mb-4 relative overflow-hidden">
+                  <img alt="Espumante Toro Negro Brut Sparkling Mendoza 750ml" class="h-56 w-auto object-contain bottle-drop-shadow pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-brut.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Argentina" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-argentina.png"/>
+                  <span class="text-[10px] uppercase font-bold tracking-widest text-[#8C7A70]">Mendoza • Argentina</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 font-medium">Toro Negro Brut</h3>
+                <p class="text-xs text-[#5A4E48] mt-2 font-light leading-relaxed line-clamp-3">
+                  Perlage fino e constante, notas cítricas elegantes e frescor vibrante na taça, expressando o equilíbrio da altitude mendocina.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Entradas leves, canapés finos e celebrações.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 6° à 8°C • Método Charmat</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Brut Rosé Sparkling (Mendoza) -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] bg-white/80 p-6 rounded-3xl flex flex-col justify-between border border-cream-300/80 group hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none">
+              <div>
+                <div class="wine-card-bg rounded-2xl h-64 flex items-center justify-center mb-4 relative overflow-hidden">
+                  <img alt="Espumante Toro Negro Brut Rosé Sparkling Mendoza 750ml" class="h-56 w-auto object-contain bottle-drop-shadow pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-brut-rose.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Argentina" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-argentina.png"/>
+                  <span class="text-[10px] uppercase font-bold tracking-widest text-[#8C7A70]">Mendoza • Argentina</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 font-medium">Toro Negro Brut Rosé</h3>
+                <p class="text-xs text-[#5A4E48] mt-2 font-light leading-relaxed line-clamp-3">
+                  Coloração salmão suave com perlage delicado e persistente. Aromas sedutores de frutas vermelhas frescas e paladar cremoso.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Salmão grelhado, carpaccios e sobremesas com frutas.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 6° à 8°C • Método Charmat</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Toro Negro Sweet -->
+            <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] bg-white/80 p-6 rounded-3xl flex flex-col justify-between border border-cream-300/80 group hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none">
+              <div>
+                <div class="wine-card-bg rounded-2xl h-64 flex items-center justify-center mb-4 relative overflow-hidden">
+                  <img alt="Vinho Toro Negro Sweet Tinto 750ml" class="h-56 w-auto object-contain bottle-drop-shadow pointer-events-none" draggable="false" src="./assets/bottles/web/toro-negro-sweet.png"/>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1">
+                  <img alt="Chile" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="./assets/flag-chile.png"/>
+                  <span class="text-[10px] uppercase font-bold tracking-widest text-[#8C7A70]">Valle Central • Chile</span>
+                </div>
+                <h3 class="font-serif text-xl text-burgundy-900 font-medium">Toro Negro Sweet</h3>
+                <p class="text-xs text-[#5A4E48] mt-2 font-light leading-relaxed line-clamp-3">
+                  Intensidade aromática de geléia de amoras e cerejas com final doce, macio e aveludado, preservando a identidade clássica da casta.
+                </p>
+                <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+                  <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> Sobremesas à base de frutas vermelhas e queijos azuis.</div>
+                  <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> 14° à 16°C • Doçura Equilibrada</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Circular Next Button (Right) -->
+        <button id="especiais-next" aria-label="Próximo vinho" class="absolute -right-3 sm:-right-5 lg:-right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-cream-300 text-burgundy-900 flex items-center justify-center hover:bg-gold-300 hover:border-gold-400 hover:text-burgundy-950 transition-all z-30 cursor-pointer active:scale-95 group">
+          <svg class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </div>
+
+      <!-- Dots & Status -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+        <div class="flex items-center gap-2" id="especiais-dots"></div>
+        <div class="flex items-center gap-2 text-[11px] text-[#8C7A70] uppercase tracking-wider font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Giro contínuo em looping automático</span>
+        </div>
+      </div>
+</div>
+</section>
+<!-- END: AdditionalProductsSection -->
+
+<!-- BEGIN: Institutional Hospitality & Corporate Section -->
+<section class="py-20 px-6 md:px-12 bg-gradient-to-b from-[#18050C] to-[#250813] text-white border-t border-gold-400/20 relative overflow-hidden" id="corporativo">
+  <div class="absolute -right-24 -bottom-24 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -left-24 -top-24 w-80 h-80 bg-burgundy-600/15 rounded-full blur-3xl pointer-events-none"></div>
+  
+  <div class="max-w-7xl mx-auto relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-400/15 border border-gold-400/30 text-gold-300 text-[11px] uppercase tracking-luxury font-semibold">
+          <span>✦</span>
+          <span>Hospitalidade, Gastronomia &amp; Eventos</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-cream-100 font-light leading-tight">
+          Venda Direta da Vinícola para o seu Estabelecimento
+        </h2>
+        <p class="text-sm sm:text-base text-white/75 font-light leading-relaxed max-w-2xl">
+          Possui restaurante, hotel, empório, adega ou organiza eventos corporativos? Disponibilizamos fornecimento direto da vinícola em caixas fechadas com faturamento para CNPJ ativo, condições comerciais especiais e consultoria técnica de sommeliers.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 text-xs">
+          <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
+            <span class="block text-gold-400 font-serif text-base font-medium">Caixa Fechada</span>
+            <span class="text-white/60 text-[11px] mt-0.5 block">Embalagens com 6 garrafas</span>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
+            <span class="block text-gold-400 font-serif text-base font-medium">Faturamento 28D</span>
+            <span class="text-white/60 text-[11px] mt-0.5 block">Boleto para CNPJ cadastrado</span>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 col-span-2 sm:col-span-1">
+            <span class="block text-gold-400 font-serif text-base font-medium">Frota Própria MUFS</span>
+            <span class="text-white/60 text-[11px] mt-0.5 block">Logística direta & climatizada</span>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-4">
+        <a href="portal-b2b.html" class="w-full py-4 px-8 rounded-full bg-gold-400 hover:bg-gold-300 text-burgundy-950 text-xs uppercase tracking-loose-caps font-bold transition-all shadow-xl hover:shadow-gold-500/25 flex items-center justify-center gap-3 group">
+          <span>Acessar Portal Corporativo B2B</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=5541998632724&text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20o%20atendimento%20corporativo%20B2B%20da%20Toro%20Negro" target="_blank" rel="noopener noreferrer" class="w-full py-4 px-8 rounded-full border border-white/25 hover:border-gold-400 hover:bg-white/5 text-cream-100 text-xs uppercase tracking-loose-caps font-semibold transition-all flex items-center justify-center gap-2.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.587 1.961.954 3.003.954 3.182 0 5.768-2.587 5.769-5.766.001-3.181-2.586-5.769-5.767-5.769zm10.007 5.766c-.002 5.519-4.49 9.998-10.01 9.998-1.741 0-3.414-.457-4.887-1.309l-5.641 1.478 1.505-5.503c-.947-1.547-1.455-3.328-1.456-5.164.002-5.52 4.491-10 10.01-10 5.517.001 9.979 4.481 9.979 10zm-5.419 4.225c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+          <span>Falar com Sommelier Corporativo</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END: Institutional Hospitality & Corporate Section -->
+
+<!-- BEGIN: NewsletterAndFooter -->
+<footer class="bg-[#1C080E] text-white pt-20 pb-12 px-6 md:px-12 border-t border-white/10" data-purpose="site-footer">
+<div class="max-w-7xl mx-auto">
+<!-- Newsletter Section -->
+<div class="pb-16 border-b border-white/10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-6">
+<h3 class="font-serif text-3xl sm:text-4xl text-cream-100 font-light mb-2">Clube de Privilégios Toro Negro</h3>
+<p class="text-sm text-white/60 font-light">Receba safras limitadas, convites para degustações e condições exclusivas de importação.</p>
+</div>
+<div class="lg:col-span-6">
+<form class="flex flex-col sm:flex-row gap-3 max-w-md lg:ml-auto" onsubmit="event.preventDefault()">
+<input class="bg-white/5 border border-white/20 rounded-full px-5 py-3 text-xs tracking-wider text-white placeholder-white/40 focus:outline-none focus:border-gold-400 flex-grow" placeholder="Digite seu melhor e-mail" required="" type="email"/>
+<button class="bg-gold-400 hover:bg-gold-300 text-burgundy-900 font-semibold px-7 py-3 rounded-full text-xs uppercase tracking-luxury transition-colors whitespace-nowrap" type="submit">
+              Assinar
+            </button>
+</form>
+</div>
+</div>
+<!-- Links & Navigation -->
+<div class="py-14 grid grid-cols-2 md:grid-cols-5 gap-8">
+<!-- Brand identity -->
+<div class="col-span-2">
+<div class="inline-block mb-6">
+<img alt="Logo Oficial Toro Negro" class="h-10 md:h-12 w-auto object-contain filter drop-shadow-md" src="./assets/toro-negro-logo-oficial.png"/>
+</div>
+<p class="text-xs text-white/60 leading-relaxed max-w-sm font-light">
+            Vinhos de alta estirpe concebidos no Vale Central chileno e Mendoza. Expressão legítima da bravura e da arte vinícola sul-americana.
+          </p>
+</div>
+<!-- Links 1 -->
+<div>
+<h4 class="text-xs uppercase tracking-luxury text-gold-300 font-semibold mb-4">Vinhos</h4>
+<ul class="space-y-2.5 text-xs text-white/70 font-light">
+<li><a class="hover:text-white transition-colors" href="#catalogo">Carménère Reservado</a></li>
+<li><a class="hover:text-white transition-colors" href="#catalogo">Cabernet Sauvignon</a></li>
+<li><a class="hover:text-white transition-colors" href="#catalogo">Sauvignon Blanc &amp; Rosé</a></li>
+<li><a class="hover:text-white transition-colors" href="#argentina">Toro Negro Malbec Mendoza</a></li>
+<li><a class="hover:text-white transition-colors" href="#especiais">Suave Sweet &amp; Verano</a></li>
+</ul>
+</div>
+<!-- Links 2 -->
+<div>
+<h4 class="text-xs uppercase tracking-luxury text-gold-300 font-semibold mb-4">A Vinícola</h4>
+<ul class="space-y-2.5 text-xs text-white/70 font-light">
+<li><a class="hover:text-white transition-colors" href="vinicola.html" target="_blank">A Vinícola TerrAustral ↗</a></li>
+<li><a class="hover:text-white transition-colors" href="vinicola.html#terroirs" target="_blank">Nossos Terroirs Chilenos</a></li>
+<li><a class="hover:text-white transition-colors" href="vinicola.html#envase-qualidade" target="_blank">Planta de Envase &amp; Qualidade</a></li>
+<li><a class="hover:text-white transition-colors" href="https://www.terraustral.com" rel="noopener noreferrer" target="_blank">Site Oficial TerrAustral ↗</a></li>
+</ul>
+</div>
+<!-- Links 3 -->
+<div>
+<h4 class="text-xs uppercase tracking-luxury text-gold-300 font-semibold mb-4">Atendimento</h4>
+<ul class="space-y-2.5 text-xs text-white/70 font-light">
+<li><a class="hover:text-white transition-colors" href="#">Contato Corporativo</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Onde Encontrar</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Políticas de Entrega</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Perguntas Frequentes</a></li>
+</ul>
+</div>
+</div>
+<!-- Legal & Age Disclaimer -->
+<div class="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-[11px] text-white/40 gap-4">
+<p>© 2026 Toro Negro Wines. Elaborado e envasado por TerrAustral Wines (Chile • <a class="text-gold-400 hover:underline" href="https://www.terraustral.com" rel="noopener noreferrer" target="_blank">www.terraustral.com</a>).</p>
+<p class="text-center font-medium text-white/60 tracking-wider uppercase">
+          Aprecie com moderação. A venda e o consumo de bebidas alcoólicas são proibidos para menores de 18 anos.
+        </p>
+<div class="flex gap-4">
+<a class="hover:text-white/80" href="#">Termos</a>
+<span>•</span>
+<a class="hover:text-white/80" href="#">Privacidade</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- END: NewsletterAndFooter -->
+
+<!-- Infinite Continuous Carousel JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    function setupInfiniteCarousel({
+      containerId,
+      viewportId,
+      trackId,
+      prevBtnId,
+      nextBtnId,
+      dotsId,
+      autoPlayInterval = 3500
+    }) {
+      const container = document.getElementById(containerId);
+      const viewport = document.getElementById(viewportId);
+      const track = document.getElementById(trackId);
+      const prevBtn = document.getElementById(prevBtnId);
+      const nextBtn = document.getElementById(nextBtnId);
+      const dotsContainer = document.getElementById(dotsId);
+
+      if (!container || !viewport || !track) return;
+
+      const originalCards = Array.from(track.children);
+      const totalOriginal = originalCards.length;
+      if (totalOriginal === 0) return;
+
+      // Clone a set of cards before and after for true seamless infinite wrapping
+      const fragBefore = document.createDocumentFragment();
+      originalCards.forEach(c => {
+        const clone = c.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        fragBefore.appendChild(clone);
+      });
+      track.insertBefore(fragBefore, track.firstChild);
+
+      const fragAfter = document.createDocumentFragment();
+      originalCards.forEach(c => {
+        const clone = c.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        fragAfter.appendChild(clone);
+      });
+      track.appendChild(fragAfter);
+
+      let currentIndex = totalOriginal; // start on the first real card
+      let autoPlayTimer = null;
+      let isPointerDown = false;
+      let startX = 0;
+      let currentDiff = 0;
+      let baseOffset = 0;
+
+      // Build Dots
+      if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalOriginal; i++) {
+          const dot = document.createElement('button');
+          dot.setAttribute('aria-label', `Ir para o vinho ${i + 1}`);
+          dot.className = i === 0
+            ? 'h-2 w-8 rounded-full bg-burgundy-900 transition-all duration-300 cursor-pointer'
+            : 'h-2 w-2 rounded-full bg-cream-300 hover:bg-gold-400 transition-all duration-300 cursor-pointer';
+          dot.addEventListener('click', () => {
+            currentIndex = totalOriginal + i;
+            setPosition(true);
+            resetAutoplay();
+          });
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function updateDots() {
+        if (!dotsContainer) return;
+        const realIndex = ((currentIndex - totalOriginal) % totalOriginal + totalOriginal) % totalOriginal;
+        const dots = Array.from(dotsContainer.children);
+        dots.forEach((dot, idx) => {
+          if (idx === realIndex) {
+            dot.className = 'h-2 w-8 rounded-full bg-burgundy-900 transition-all duration-300 cursor-pointer';
+          } else {
+            dot.className = 'h-2 w-2 rounded-full bg-cream-300 hover:bg-gold-400 transition-all duration-300 cursor-pointer';
+          }
+        });
+      }
+
+      function getOffset(idx) {
+        const children = track.children;
+        if (!children[idx]) return 0;
+        return children[idx].offsetLeft - children[0].offsetLeft;
+      }
+
+      function setPosition(animate = true) {
+        const offset = getOffset(currentIndex);
+        track.style.transition = animate ? 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' : 'none';
+        track.style.transform = `translateX(-${offset}px)`;
+        updateDots();
+      }
+
+      // Seamless boundary wrap when transition ends
+      track.addEventListener('transitionend', () => {
+        if (currentIndex >= totalOriginal * 2) {
+          currentIndex -= totalOriginal;
+          setPosition(false);
+        } else if (currentIndex < totalOriginal) {
+          currentIndex += totalOriginal;
+          setPosition(false);
+        }
+      });
+
+      function nextSlide() {
+        currentIndex++;
+        setPosition(true);
+      }
+
+      function prevSlide() {
+        currentIndex--;
+        setPosition(true);
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          nextSlide();
+          resetAutoplay();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          prevSlide();
+          resetAutoplay();
+        });
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        autoPlayTimer = setInterval(nextSlide, autoPlayInterval);
+      }
+
+      function stopAutoplay() {
+        if (autoPlayTimer) {
+          clearInterval(autoPlayTimer);
+          autoPlayTimer = null;
+        }
+      }
+
+      function resetAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+      }
+
+      // Pause on hover
+      container.addEventListener('mouseenter', stopAutoplay);
+      container.addEventListener('mouseleave', startAutoplay);
+
+      // Drag / Swipe interactions
+      viewport.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('button, a')) return;
+        isPointerDown = true;
+        startX = e.clientX;
+        currentDiff = 0;
+        baseOffset = getOffset(currentIndex);
+        stopAutoplay();
+        track.style.transition = 'none';
+        if (viewport.setPointerCapture) {
+          try { viewport.setPointerCapture(e.pointerId); } catch(err) {}
+        }
+      });
+
+      viewport.addEventListener('pointermove', (e) => {
+        if (!isPointerDown) return;
+        currentDiff = e.clientX - startX;
+        track.style.transform = `translateX(-${baseOffset - currentDiff}px)`;
+      });
+
+      function handlePointerEnd(e) {
+        if (!isPointerDown) return;
+        isPointerDown = false;
+        if (viewport.releasePointerCapture && e.pointerId) {
+          try { viewport.releasePointerCapture(e.pointerId); } catch(err) {}
+        }
+        startAutoplay();
+        if (Math.abs(currentDiff) > 50) {
+          if (currentDiff > 0) {
+            prevSlide();
+          } else {
+            nextSlide();
+          }
+        } else {
+          setPosition(true);
+        }
+      }
+
+      viewport.addEventListener('pointerup', handlePointerEnd);
+      viewport.addEventListener('pointercancel', handlePointerEnd);
+
+      window.addEventListener('resize', () => {
+        setPosition(false);
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          stopAutoplay();
+        } else {
+          startAutoplay();
+        }
+      });
+
+      // Initial position setup
+      setTimeout(() => {
+        setPosition(false);
+        startAutoplay();
+      }, 150);
+
+      window.addEventListener('load', () => {
+        setPosition(false);
+      });
+    }
+
+    // Initialize Reservado Carousel (3.5s loop interval)
+    setupInfiniteCarousel({
+      containerId: 'reservado-carousel-container',
+      viewportId: 'reservado-viewport',
+      trackId: 'reservado-track',
+      prevBtnId: 'reservado-prev',
+      nextBtnId: 'reservado-next',
+      dotsId: 'reservado-dots',
+      autoPlayInterval: 3500
+    });
+
+    // Initialize Featured Hero Showcase Carousel (5.0s loop interval)
+    setupInfiniteCarousel({
+      containerId: 'destaques',
+      viewportId: 'hero-viewport',
+      trackId: 'hero-track',
+      prevBtnId: 'hero-prev',
+      nextBtnId: 'hero-next',
+      dotsId: 'hero-dots',
+      autoPlayInterval: 5000
+    });
+
+    // Initialize Especiais Carousel (4.0s loop interval)
+    setupInfiniteCarousel({
+      containerId: 'especiais-carousel-container',
+      viewportId: 'especiais-viewport',
+      trackId: 'especiais-track',
+      prevBtnId: 'especiais-prev',
+      nextBtnId: 'especiais-next',
+      dotsId: 'especiais-dots',
+      autoPlayInterval: 4000
+    });
+  });
+</script>
+
+</body>
+</html>
