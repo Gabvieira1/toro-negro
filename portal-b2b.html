@@ -2083,8 +2083,7 @@
         currentCompany = null;
         localStorage.removeItem(STORAGE_USER);
         localStorage.removeItem('tn_b2b_token');
-        loadSession();
-        showToast('Você saiu da conta corporativa.');
+        window.location.href = 'index.html';
       }
     }
 
