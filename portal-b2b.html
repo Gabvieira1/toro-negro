@@ -887,20 +887,55 @@
           <label class="block font-bold text-stone-700 mb-1.5">Condição Comercial Desejada</label>
           <div class="grid grid-cols-3 gap-2">
             <label class="border border-stone-200 rounded-xl p-2.5 flex flex-col text-center cursor-pointer hover:border-burgundy-900 transition-colors bg-stone-50 has-[:checked]:bg-burgundy-50 has-[:checked]:border-burgundy-900 has-[:checked]:text-burgundy-950">
-              <input type="radio" name="chk-payment" value="Boleto 07/14/21 Dias Faturado" checked class="sr-only"/>
-              <span class="font-bold text-xs">Boleto 07/14/21</span>
+              <input type="radio" name="chk-payment" value="BOLETO" checked onchange="handlePaymentMethodChange(this.value)" class="sr-only"/>
+              <span class="font-bold text-xs">Boleto Bancário</span>
               <span class="text-[10px] text-stone-500 mt-0.5">Prazo Faturado</span>
             </label>
             <label class="border border-stone-200 rounded-xl p-2.5 flex flex-col text-center cursor-pointer hover:border-burgundy-900 transition-colors bg-stone-50 has-[:checked]:bg-burgundy-50 has-[:checked]:border-burgundy-900 has-[:checked]:text-burgundy-950">
-              <input type="radio" name="chk-payment" value="Pix Antecipado (-3% Desconto)" class="sr-only"/>
+              <input type="radio" name="chk-payment" value="PIX" onchange="handlePaymentMethodChange(this.value)" class="sr-only"/>
               <span class="font-bold text-xs text-emerald-700">Pix (-3% OFF)</span>
               <span class="text-[10px] text-stone-500 mt-0.5">À Vista</span>
             </label>
             <label class="border border-stone-200 rounded-xl p-2.5 flex flex-col text-center cursor-pointer hover:border-burgundy-900 transition-colors bg-stone-50 has-[:checked]:bg-burgundy-50 has-[:checked]:border-burgundy-900 has-[:checked]:text-burgundy-950">
-              <input type="radio" name="chk-payment" value="Cartão Corporativo PJ (em até 3x)" class="sr-only"/>
+              <input type="radio" name="chk-payment" value="CARTAO" onchange="handlePaymentMethodChange(this.value)" class="sr-only"/>
               <span class="font-bold text-xs">Cartão PJ</span>
               <span class="text-[10px] text-stone-500 mt-0.5">Em até 3x</span>
             </label>
+          </div>
+
+          <!-- Caixa de Seleção Dinâmica do Boleto Bancário -->
+          <div id="boleto-rule-container" class="mt-2.5 p-3 rounded-xl bg-amber-50/60 border border-amber-200/80 transition-all">
+            <div class="flex items-center justify-between mb-1.5">
+              <label for="boleto-term-select" class="block text-xs font-bold text-stone-900 flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-burgundy-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <span>Regra de Faturamento do Boleto:</span>
+              </label>
+              <span class="text-[10px] text-emerald-800 font-bold bg-emerald-100/80 px-2 py-0.5 rounded-full border border-emerald-300">
+                Faturamento PJ
+              </span>
+            </div>
+            
+            <div class="relative">
+              <select 
+                id="boleto-term-select" 
+                onchange="updateBoletoPreview(this.value)"
+                class="w-full bg-white border border-stone-300 rounded-lg pl-3 pr-8 py-2 text-xs text-stone-900 font-bold focus:outline-none focus:border-burgundy-900 shadow-2xs cursor-pointer appearance-none"
+              >
+                <option value="07/14/21" selected>Regra 07/14/21 dias (3 parcelas: 7, 14 e 21 dias)</option>
+                <option value="07/14">Regra 07/14 dias (2 parcelas: 7 e 14 dias)</option>
+                <option value="14/28">Regra 14/28 dias (2 parcelas quinzenais: 14 e 28 dias)</option>
+                <option value="21">Regra 21 dias (1 parcela integral: 21 dias)</option>
+                <option value="28">Regra 28 dias (1 parcela integral: 28 dias)</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-stone-500">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </div>
+            </div>
+
+            <p id="boleto-installment-preview" class="text-[11px] text-stone-700 mt-2 flex items-center gap-1.5 font-medium bg-white/70 p-2 rounded-lg border border-amber-200/50">
+              <svg class="w-3.5 h-3.5 text-burgundy-900 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span id="boleto-preview-text">3 parcelas com vencimentos em 7, 14 e 21 dias</span>
+            </p>
           </div>
         </div>
 
@@ -2066,12 +2101,58 @@
       if (chkBoxes) chkBoxes.textContent = `${totalBoxes} caixas (${totalBoxes * 6} garrafas)`;
       if (chkAmount) chkAmount.textContent = `R$ ${totalAmount.toFixed(2).replace('.', ',')}`;
 
+      // Inicializa a seleção de pagamento no Boleto Bancário e calcula o preview de parcelas
+      const boletoRadio = document.querySelector('input[name="chk-payment"][value="BOLETO"]');
+      if (boletoRadio) boletoRadio.checked = true;
+      handlePaymentMethodChange('BOLETO');
+      updateBoletoPreview();
+
       if (modal) modal.classList.remove('hidden');
     }
 
     function closeCheckoutModal() {
       const modal = document.getElementById('checkout-modal');
       if (modal) modal.classList.add('hidden');
+    }
+
+    function handlePaymentMethodChange(paymentVal) {
+      const boletoContainer = document.getElementById('boleto-rule-container');
+      if (!boletoContainer) return;
+      if (paymentVal === 'BOLETO') {
+        boletoContainer.classList.remove('hidden');
+        updateBoletoPreview();
+      } else {
+        boletoContainer.classList.add('hidden');
+      }
+    }
+
+    function updateBoletoPreview(ruleValue) {
+      const selectEl = document.getElementById('boleto-term-select');
+      const val = ruleValue || (selectEl ? selectEl.value : '07/14/21');
+      const previewTextEl = document.getElementById('boleto-preview-text');
+      if (!previewTextEl) return;
+
+      const totalAmount = b2bCart.reduce((sum, item) => sum + (item.boxes * item.boxPrice), 0);
+
+      if (val === '07/14/21') {
+        const parcel = totalAmount / 3;
+        const pStr = `R$ ${parcel.toFixed(2).replace('.', ',')}`;
+        previewTextEl.textContent = `3 parcelas de ${pStr} (vencimentos em 7, 14 e 21 dias)`;
+      } else if (val === '07/14') {
+        const parcel = totalAmount / 2;
+        const pStr = `R$ ${parcel.toFixed(2).replace('.', ',')}`;
+        previewTextEl.textContent = `2 parcelas de ${pStr} (vencimentos em 7 e 14 dias)`;
+      } else if (val === '14/28') {
+        const parcel = totalAmount / 2;
+        const pStr = `R$ ${parcel.toFixed(2).replace('.', ',')}`;
+        previewTextEl.textContent = `2 parcelas quinzenais de ${pStr} (vencimentos em 14 e 28 dias)`;
+      } else if (val === '21') {
+        const pStr = `R$ ${totalAmount.toFixed(2).replace('.', ',')}`;
+        previewTextEl.textContent = `1 parcela integral de ${pStr} (vencimento em 21 dias)`;
+      } else if (val === '28') {
+        const pStr = `R$ ${totalAmount.toFixed(2).replace('.', ',')}`;
+        previewTextEl.textContent = `1 parcela integral de ${pStr} (vencimento em 28 dias)`;
+      }
     }
 
     // Login & Logout Management
@@ -2312,11 +2393,23 @@
       const whats = document.getElementById('chk-whatsapp').value.trim();
       const cid = document.getElementById('chk-cidade').value.trim();
       const paymentInput = document.querySelector('input[name="chk-payment"]:checked');
-      const paymentMethodText = paymentInput ? paymentInput.value : 'Boleto 07/14/21 Dias Faturado';
+      const paymentType = paymentInput ? paymentInput.value : 'BOLETO';
+      const boletoSelect = document.getElementById('boleto-term-select');
+      const boletoRule = boletoSelect ? boletoSelect.value : '07/14/21';
 
+      let paymentMethodText = '';
       let paymentMethodCode = 'BOLETO_07_14_21';
-      if (paymentMethodText.includes('Pix')) paymentMethodCode = 'PIX_A_VISTA';
-      if (paymentMethodText.includes('Cartão')) paymentMethodCode = 'CARTAO_3X';
+
+      if (paymentType === 'BOLETO') {
+        paymentMethodCode = `BOLETO_${boletoRule.replace(/\//g, '_')}`;
+        paymentMethodText = `Boleto Bancário (Regra ${boletoRule} Dias)`;
+      } else if (paymentType === 'PIX') {
+        paymentMethodCode = 'PIX_A_VISTA';
+        paymentMethodText = 'Pix Antecipado (-3% Desconto à Vista)';
+      } else {
+        paymentMethodCode = 'CARTAO_3X';
+        paymentMethodText = 'Cartão Corporativo PJ (em até 3x)';
+      }
 
       const totalBoxes = b2bCart.reduce((sum, item) => sum + item.boxes, 0);
       const totalAmount = b2bCart.reduce((sum, item) => sum + (item.boxes * item.boxPrice), 0);

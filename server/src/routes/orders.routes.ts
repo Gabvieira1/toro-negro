@@ -187,7 +187,16 @@ ordersRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Resp
     wsMsg += `*Número do Pedido:* ${orderNumber}\n`;
     wsMsg += `*Empresa:* ${compData?.nome_fantasia || compData?.razao_social || 'Cliente PJ'}\n`;
     wsMsg += `*CNPJ:* ${compData?.cnpj || 'Informado na plataforma'}\n`;
-    wsMsg += `*Condição de Pagamento:* ${paymentMethod === 'BOLETO_07_14_21' || paymentMethod === 'BOLETO_28D' ? 'Boleto Faturado (07/14/21 Dias)' : paymentMethod === 'PIX_A_VISTA' ? 'Pix à Vista (3% OFF aplicado)' : 'Cartão Corporativo'}\n`;
+    let paymentDesc = 'Boleto Bancário (Regra 07/14/21 Dias)';
+    if (typeof paymentMethod === 'string' && paymentMethod.startsWith('BOLETO')) {
+      const rule = paymentMethod.replace('BOLETO_', '').replace(/_/g, '/');
+      paymentDesc = `Boleto Bancário (Regra ${rule || '07/14/21'} Dias)`;
+    } else if (paymentMethod === 'PIX_A_VISTA') {
+      paymentDesc = 'Pix à Vista (3% OFF aplicado)';
+    } else if (typeof paymentMethod === 'string' && paymentMethod.includes('CARTAO')) {
+      paymentDesc = 'Cartão Corporativo PJ (em até 3x)';
+    }
+    wsMsg += `*Condição de Pagamento:* ${paymentDesc}\n`;
     wsMsg += `*Logística & Entrega:* Frota Própria MUFS (Direta e Climatizada)\n`;
     wsMsg += `----------------------------------------\n`;
     wsMsg += `*ITENS DO PEDIDO (CAIXAS COM 6 GARRAFAS):*\n`;
