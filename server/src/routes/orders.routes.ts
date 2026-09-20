@@ -79,7 +79,7 @@ ordersRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Resp
       }
     }
 
-    // 2. Calcular totais e validar itens
+    // 2. Calcular totais e validar itens com verificação estrita de integridade
     let totalCaixas = 0;
     let totalGarrafas = 0;
     let valorProdutos = 0;
@@ -87,17 +87,28 @@ ordersRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Resp
     const validatedItems: any[] = [];
 
     for (const item of items) {
-      const boxes = Number(item.boxes || item.quantidade_caixas || 1);
-      if (boxes <= 0) continue;
+      // Garantir que a quantidade de caixas é um número inteiro estritamente positivo
+      const rawBoxes = Number(item.boxes || item.quantidade_caixas || 0);
+      if (!Number.isFinite(rawBoxes) || rawBoxes <= 0) continue;
+      const boxes = Math.min(1000, Math.floor(rawBoxes));
 
       let product: any = null;
       if (item.productId || item.id) {
         product = query.get('SELECT * FROM products WHERE id = ?', item.productId || item.id);
-      } else if (item.wineName) {
-        product = query.get('SELECT * FROM products WHERE LOWER(nome) = LOWER(?)', item.wineName);
+      }
+      
+      if (!product && item.wineName) {
+        // Busca inteligente pelo nome
+        product = query.get('SELECT * FROM products WHERE LOWER(nome) = LOWER(?) OR LOWER(nome) LIKE LOWER(?) LIMIT 1', item.wineName, `%${item.wineName}%`);
       }
 
-      const unitPrice = product ? Number(product.preco_unitario) : Number(item.unitPrice || 38.90);
+      // Regra de integridade: NUNCA confiar no preço vindo do cliente.
+      // Se não encontrar o produto específico, associar ao padrão ou rejeitar
+      if (!product) {
+        product = query.get('SELECT * FROM products WHERE id = ? LIMIT 1', 'tn-carmenere-reservado');
+      }
+
+      const unitPrice = product ? Number(product.preco_unitario) : 38.90;
       const bottlesCount = boxes * 6;
       const subtotal = boxes * 6 * unitPrice;
 
@@ -131,6 +142,7 @@ ordersRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Resp
     const randomSuffix = Math.floor(10000 + Math.random() * 90000);
     const orderNumber = `#TN-${randomSuffix}`;
     const orderId = 'ord-' + crypto.randomUUID().slice(0, 10);
+    const compData = query.get('SELECT * FROM companies WHERE id = ?', companyId);
 
     // 5. Inserir Pedido no Banco
     query.run(`
@@ -152,8 +164,15 @@ ordersRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Resp
       valorTotal,
       paymentMethod,
       'CONFIRMADO',
-      JSON.stringify(deliveryAddress || { cidade: 'A combinar', uf: 'BR' }),
-      observations || ''
+      JSON.stringify({
+        logradouro: String(deliveryAddress?.logradouro || '').slice(0, 150),
+        numero: String(deliveryAddress?.numero || '').slice(0, 20),
+        bairro: String(deliveryAddress?.bairro || '').slice(0, 100),
+        cidade: String(deliveryAddress?.cidade || compData?.cidade || 'Curitiba').slice(0, 100),
+        uf: String(deliveryAddress?.uf || compData?.uf || 'PR').slice(0, 2),
+        cep: String(deliveryAddress?.cep || '').slice(0, 10)
+      }),
+      String(observations || '').replace(/[\x00-\x1F\x7F]/g, '').slice(0, 500).trim()
     );
 
     // 6. Inserir Itens do Pedido & Abater Estoque
@@ -181,7 +200,6 @@ ordersRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Resp
     }
 
     // 7. Montar Mensagem Oficial de Confirmação para WhatsApp
-    const compData = query.get('SELECT * FROM companies WHERE id = ?', companyId);
     let wsMsg = `*PEDIDO CORPORATIVO B2B - TORO NEGRO WINES*\n`;
     wsMsg += `----------------------------------------\n`;
     wsMsg += `*Número do Pedido:* ${orderNumber}\n`;
@@ -220,6 +238,10 @@ ordersRouter.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Resp
       success: true,
       orderId,
       orderNumber,
+      order: {
+        id: orderId,
+        order_number: orderNumber
+      },
       totalCaixas,
       totalGarrafas,
       valorTotal,

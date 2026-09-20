@@ -980,14 +980,16 @@
   <!-- ========================================================================= -->
   <!-- 9. FOOTER CORPORATIVO (MINIMALISTA) -->
   <!-- ========================================================================= -->
-  <footer class="bg-white border-t border-stone-200 mt-16 py-10 text-xs text-stone-500">
+  <footer class="bg-white border-t border-stone-200 mt-16 py-8 text-xs text-stone-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
       <div class="flex items-center gap-3">
-        <img src="./assets/toro-negro-logo-ecommerce.png" alt="E-commerce Toro Negro" class="h-8 w-auto opacity-75"/>
-        <span>E-commerce Toro Negro • Canal Direto de Venda da Vinícola</span>
+        <img src="./assets/toro-negro-logo-ecommerce.png" alt="E-commerce Toro Negro" class="h-8 w-auto opacity-80"/>
+        <span>E-commerce Toro Negro • Canal Direto de Venda da Vinícola • Distribuição MUFS</span>
       </div>
-      <div>
+      <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
         <span>Venda proibida para menores de 18 anos. Beba com moderação.</span>
+        <span class="text-stone-400">|</span>
+        <span>Desenvolvido por <span class="text-burgundy-950 font-semibold">Agência SEO²</span></span>
       </div>
     </div>
   </footer>
@@ -1298,6 +1300,16 @@
       viewMode: 'grid'
     };
 
+    function escapeHtml(str) {
+      if (str == null) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     // On Load
     document.addEventListener('DOMContentLoaded', () => {
       loadSession();
@@ -1332,27 +1344,30 @@
 
       if (containerEl) {
         if (currentCompany && (currentCompany.razaoSocial || currentCompany.nomeFantasia)) {
+          const rawName = currentCompany.nomeFantasia || currentCompany.razaoSocial;
+          const safeName = escapeHtml(rawName);
+          const safeCnpj = escapeHtml(currentCompany.cnpj || 'CNPJ Habilitado');
           containerEl.innerHTML = `
-            <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-stone-50 border border-stone-200">
-              <div class="w-8 h-8 rounded-lg bg-burgundy-900 text-white flex items-center justify-center font-bold text-xs shrink-0">
+            <div class="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-stone-50 border border-stone-200">
+              <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-burgundy-900 text-white flex items-center justify-center font-bold text-xs shrink-0">
                 PJ
               </div>
               <div class="flex flex-col text-left">
-                <span id="header-company-name" class="text-xs font-bold text-stone-900 leading-tight truncate max-w-[140px]">
-                  ${currentCompany.nomeFantasia || currentCompany.razaoSocial}
+                <span id="header-company-name" title="${safeName}" class="text-xs font-bold text-stone-900 leading-tight truncate max-w-[105px] sm:max-w-[170px]">
+                  ${safeName}
                 </span>
                 <span id="header-cnpj-num" class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> ${currentCompany.cnpj || 'CNPJ Habilitado'}
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span> <span class="truncate max-w-[90px] sm:max-w-none">${safeCnpj}</span>
                 </span>
               </div>
               <button 
                 type="button" 
                 onclick="handleLogout()" 
                 title="Deslogar e trocar de conta corporativa" 
-                class="ml-1 text-stone-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-colors flex items-center gap-1 text-[11px] font-bold cursor-pointer"
+                class="ml-0.5 text-stone-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-colors flex items-center gap-1 text-[11px] font-bold cursor-pointer"
               >
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                <span>Sair</span>
+                <span class="hidden sm:inline">Sair</span>
               </button>
             </div>
           `;
@@ -1862,16 +1877,17 @@
 
     // Cart Management
     function addItem(name, unitPrice, image, boxes) {
+      const safeBoxes = Math.max(1, Math.min(999, parseInt(boxes) || 1));
       const item = b2bCart.find(i => i.wineName === name);
       if (item) {
-        item.boxes += boxes;
+        item.boxes = Math.min(999, item.boxes + safeBoxes);
       } else {
         b2bCart.push({
           wineName: name,
           unitPrice: unitPrice,
           boxPrice: unitPrice * 6,
           image: image,
-          boxes: boxes
+          boxes: safeBoxes
         });
       }
       saveCart();
@@ -1968,11 +1984,12 @@
         } else {
           drawerList.innerHTML = b2bCart.map((item, index) => {
             const subtotal = item.boxes * item.boxPrice;
+            const safeItemName = escapeHtml(item.wineName);
             return `
               <div class="flex items-center gap-3 p-3 rounded-xl bg-stone-50 border border-stone-200">
-                <img src="${item.image}" alt="${item.wineName}" class="w-10 h-16 object-contain shrink-0" />
+                <img src="${item.image}" alt="${safeItemName}" class="w-10 h-16 object-contain shrink-0" />
                 <div class="flex-1 min-w-0">
-                  <h4 class="font-bold text-xs text-stone-900 truncate">${item.wineName}</h4>
+                  <h4 class="font-bold text-xs text-stone-900 truncate">${safeItemName}</h4>
                   <div class="text-[11px] text-stone-500 mt-0.5">
                     R$ ${item.unitPrice.toFixed(2).replace('.', ',')} /un • R$ ${item.boxPrice.toFixed(2).replace('.', ',')} /cx
                   </div>
@@ -2374,7 +2391,7 @@
                 feedbackEl.className = 'text-[11px] text-emerald-800 font-medium mt-1.5 flex items-center gap-1.5 bg-emerald-50 p-2 rounded-xl border border-emerald-200 shadow-2xs';
                 feedbackEl.innerHTML = `
                   <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span><strong>CNPJ Ativo na Receita:</strong> ${razaoNome} ${cidadeNome ? `• ${cidadeNome}/${ufSigla}` : ''}</span>
+                  <span><strong>CNPJ Ativo na Receita:</strong> ${escapeHtml(razaoNome)} ${cidadeNome ? `• ${escapeHtml(cidadeNome)}/${escapeHtml(ufSigla)}` : ''}</span>
                 `;
                 feedbackEl.classList.remove('hidden');
               }
@@ -2392,7 +2409,7 @@
               if (feedbackEl) {
                 feedbackEl.className = 'text-[11px] text-amber-800 font-medium mt-1.5 flex items-center gap-1.5 bg-amber-50 p-2 rounded-xl border border-amber-200';
                 feedbackEl.innerHTML = `
-                  <span>ℹ️ ${data.message || 'CNPJ não localizado na base pública da Receita Federal. Preencha os campos manualmente.'}</span>
+                  <span>ℹ️ CNPJ não localizado na base pública da Receita Federal. Preencha os campos manualmente.</span>
                 `;
                 feedbackEl.classList.remove('hidden');
               }
@@ -2494,8 +2511,9 @@
 
         if (res.ok) {
           const data = await res.json();
-          if (data.success && data.order?.order_number) {
-            finalOrderNumber = data.order.order_number;
+          const backendNum = data.orderNumber || data.order?.order_number;
+          if (data.success && backendNum) {
+            finalOrderNumber = backendNum;
           }
         }
       } catch (apiErr) {

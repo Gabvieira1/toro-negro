@@ -136,6 +136,9 @@
                 type="text" 
                 id="cnpj-input" 
                 required 
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="18"
                 placeholder="00.000.000/0000-00" 
                 oninput="handleCNPJTyping(this.value)"
                 class="w-full bg-stone-50 border border-stone-300 rounded-xl pl-3.5 pr-24 py-3 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900 font-medium"
@@ -212,7 +215,9 @@
               type="text" 
               id="auth-login-input" 
               required 
-              placeholder="compras@restaurantesantafe.com.br" 
+              inputmode="email"
+              autocomplete="username"
+              placeholder="compras@restaurantesantafe.com.br ou CNPJ" 
               class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-3 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900 font-medium"
             />
           </div>
@@ -220,15 +225,27 @@
           <div>
             <div class="flex justify-between items-center mb-1">
               <label class="block text-xs font-bold text-stone-800">Senha de Acesso *</label>
-              <span class="text-[10px] text-stone-400 font-mono">Demo: 123456</span>
+              <button type="button" onclick="fillDemoCredentials()" class="text-[10px] text-burgundy-900 font-bold hover:underline cursor-pointer">Usar Demo: 123456</button>
             </div>
-            <input 
-              type="password" 
-              id="auth-password-input" 
-              required 
-              placeholder="••••••••" 
-              class="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-3 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"
-            />
+            <div class="relative">
+              <input 
+                type="password" 
+                id="auth-password-input" 
+                required 
+                autocomplete="current-password"
+                placeholder="••••••••" 
+                class="w-full bg-stone-50 border border-stone-300 rounded-xl pl-3.5 pr-10 py-3 text-xs text-stone-900 focus:outline-none focus:border-burgundy-900"
+              />
+              <button 
+                type="button" 
+                id="pass-toggle-btn"
+                onclick="togglePasswordVisibility()" 
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-1 cursor-pointer"
+                title="Mostrar/Ocultar senha"
+              >
+                <svg id="pass-eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              </button>
+            </div>
           </div>
 
           <div id="auth-feedback" class="text-[11px] text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-200 hidden font-medium"></div>
@@ -288,6 +305,41 @@
   <script>
     const STORAGE_USER = 'toro_negro_b2b_user';
     let lookupTimeout = null;
+
+    function escapeHtml(str) {
+      if (str == null) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function togglePasswordVisibility() {
+      const passInput = document.getElementById('auth-password-input');
+      const eyeIcon = document.getElementById('pass-eye-icon');
+      if (!passInput) return;
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        if (eyeIcon) {
+          eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/>';
+        }
+      } else {
+        passInput.type = 'password';
+        if (eyeIcon) {
+          eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
+        }
+      }
+    }
+
+    function fillDemoCredentials() {
+      const loginInput = document.getElementById('auth-login-input');
+      const passInput = document.getElementById('auth-password-input');
+      if (loginInput) loginInput.value = 'compras@restaurantesantafe.com.br';
+      if (passInput) passInput.value = '123456';
+      showToast('Credenciais de teste preenchidas! Clique em Entrar.');
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
       // Check query param for tab selection
@@ -441,7 +493,7 @@
               feedback.className = 'text-[11px] text-emerald-800 font-medium mt-1.5 flex items-center gap-1.5 bg-emerald-50 p-2 rounded-xl border border-emerald-200';
               feedback.innerHTML = `
                 <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                <span><strong>CNPJ Ativo na Receita:</strong> ${razaoNome} ${cidadeNome ? `• ${cidadeNome}/${ufSigla}` : ''}</span>
+                <span><strong>CNPJ Ativo na Receita:</strong> ${escapeHtml(razaoNome)} ${cidadeNome ? `• ${escapeHtml(cidadeNome)}/${escapeHtml(ufSigla)}` : ''}</span>
               `;
               feedback.classList.remove('hidden');
             }

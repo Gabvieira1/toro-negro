@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'node:crypto';
 import { query } from '../db/database.js';
 import { JWT_SECRET, requireAuth, AuthenticatedRequest } from '../middlewares/auth.middleware.js';
+import { authLoginLimiter } from '../middlewares/rateLimit.middleware.js';
 import { lookupCNPJ } from '../services/cnpj.service.js';
 
 export const authRouter = Router();
@@ -120,7 +121,7 @@ authRouter.post('/register', async (req: Request, res: Response) => {
 });
 
 // POST /api/auth/login
-authRouter.post('/login', async (req: Request, res: Response) => {
+authRouter.post('/login', authLoginLimiter, async (req: Request, res: Response) => {
   try {
     const { login, senha } = req.body;
 

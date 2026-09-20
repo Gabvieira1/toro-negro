@@ -1,7 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import crypto from 'node:crypto';
 
-export const JWT_SECRET = process.env.JWT_SECRET || 'toro_negro_super_secret_b2b_key_2026';
+const defaultDevSecret = 'toro_negro_enterprise_b2b_vault_key_2026';
+export const JWT_SECRET: string = process.env.JWT_SECRET || (
+  process.env.NODE_ENV === 'production' 
+    ? (() => {
+        console.warn('⚠️ AVISO DE SEGURANÇA: JWT_SECRET não configurado em produção. Usando segredo criptográfico gerado em tempo de execução.');
+        return crypto.randomBytes(32).toString('hex');
+      })()
+    : defaultDevSecret
+);
 
 export interface AuthUserPayload {
   userId: string;
