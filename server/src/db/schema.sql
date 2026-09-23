@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS products (
     nome TEXT NOT NULL,
     linha TEXT NOT NULL,               -- 'Reservado Chile', 'Mendoza Argentina', 'Especiais'
     tipo TEXT NOT NULL,                -- 'Tinto', 'Branco', 'Rosé', 'Espumante'
-    uva TEXT NOT NULL,                 -- 'Carménère', 'Malbec', 'Pedro Jimenez', etc.
+    uva TEXT NOT NULL,                 -- 'Carménère', 'Cabernet Sauvignon', 'Merlot', 'Sauvignon Blanc', 'Chardonnay', 'Syrah Rosé', 'Malbec', 'Bonarda', 'Torrontés', 'Pedro Jimenez', 'Blend Nobre Ícone', 'Vitis Vinifera Suave', 'Sweet Tinto', 'Brut Charmat', 'Brut Rosé Charmat'
     pais TEXT NOT NULL,                -- 'Chile', 'Argentina'
     regiao TEXT NOT NULL,              -- 'Valle Central', 'Mendoza'
     safra TEXT DEFAULT '2023',
