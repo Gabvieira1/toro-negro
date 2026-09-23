@@ -2674,6 +2674,19 @@
         }
       });
 
+      // Atualiza valores do carrinho caso o administrador tenha modificado preços
+      if (Array.isArray(b2bCart) && b2bCart.length) {
+        b2bCart.forEach(item => {
+          const fresh = WINES_DATABASE.find(w => w.id === item.wineId || w.apiId === item.wineId);
+          if (fresh) {
+            item.unitPrice = fresh.unitPrice;
+            item.boxPrice = fresh.boxPrice;
+          }
+        });
+        saveCart();
+        renderCart();
+      }
+
       // Re-renderizar catálogo e filtros para atualizar preços, estoques e castas em tempo real
       populateFilterCounts();
       renderCatalog();
