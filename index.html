@@ -1056,9 +1056,12 @@ A Lenda • O Nome • A Origem
 </footer>
 <!-- END: NewsletterAndFooter -->
 
-<!-- Infinite Continuous Carousel JavaScript -->
+<!-- Infinite Continuous Carousel & Dynamic Catalog Synchronization JavaScript -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // -------------------------------------------------------------------------
+    // Configuração de Carrossel Infinito com Limpeza Reativa
+    // -------------------------------------------------------------------------
     function setupInfiniteCarousel({
       containerId,
       viewportId,
@@ -1077,35 +1080,54 @@ A Lenda • O Nome • A Origem
 
       if (!container || !viewport || !track) return;
 
+      // Limpa instância anterior do carrossel para evitar múltiplos timers e listeners
+      if (container._carouselCleanup) {
+        try {
+          container._carouselCleanup();
+        } catch (err) {}
+        container._carouselCleanup = null;
+      }
+
+      // Remove clones anteriores se houver
+      const existingClones = track.querySelectorAll('[data-clone="true"]');
+      existingClones.forEach(c => c.remove());
+
       const originalCards = Array.from(track.children);
       const totalOriginal = originalCards.length;
       if (totalOriginal === 0) return;
 
-      // Clone a set of cards before and after for true seamless infinite wrapping
-      const fragBefore = document.createDocumentFragment();
-      originalCards.forEach(c => {
-        const clone = c.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        fragBefore.appendChild(clone);
-      });
-      track.insertBefore(fragBefore, track.firstChild);
+      const ac = new AbortController();
+      const { signal } = ac;
 
-      const fragAfter = document.createDocumentFragment();
-      originalCards.forEach(c => {
-        const clone = c.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        fragAfter.appendChild(clone);
-      });
-      track.appendChild(fragAfter);
+      // Duplica os cards antes e depois para looping infinito perfeito se houver mais de 1 card
+      if (totalOriginal > 1) {
+        const fragBefore = document.createDocumentFragment();
+        originalCards.forEach(c => {
+          const clone = c.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.setAttribute('data-clone', 'true');
+          fragBefore.appendChild(clone);
+        });
+        track.insertBefore(fragBefore, track.firstChild);
 
-      let currentIndex = totalOriginal; // start on the first real card
+        const fragAfter = document.createDocumentFragment();
+        originalCards.forEach(c => {
+          const clone = c.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.setAttribute('data-clone', 'true');
+          fragAfter.appendChild(clone);
+        });
+        track.appendChild(fragAfter);
+      }
+
+      let currentIndex = totalOriginal > 1 ? totalOriginal : 0;
       let autoPlayTimer = null;
       let isPointerDown = false;
       let startX = 0;
       let currentDiff = 0;
       let baseOffset = 0;
 
-      // Build Dots
+      // Criação dos pontos de navegação (Dots)
       if (dotsContainer) {
         dotsContainer.innerHTML = '';
         for (let i = 0; i < totalOriginal; i++) {
@@ -1115,16 +1137,16 @@ A Lenda • O Nome • A Origem
             ? 'h-2 w-8 rounded-full bg-burgundy-900 transition-all duration-300 cursor-pointer'
             : 'h-2 w-2 rounded-full bg-cream-300 hover:bg-gold-400 transition-all duration-300 cursor-pointer';
           dot.addEventListener('click', () => {
-            currentIndex = totalOriginal + i;
+            currentIndex = (totalOriginal > 1 ? totalOriginal : 0) + i;
             setPosition(true);
             resetAutoplay();
-          });
+          }, { signal });
           dotsContainer.appendChild(dot);
         }
       }
 
       function updateDots() {
-        if (!dotsContainer) return;
+        if (!dotsContainer || totalOriginal <= 1) return;
         const realIndex = ((currentIndex - totalOriginal) % totalOriginal + totalOriginal) % totalOriginal;
         const dots = Array.from(dotsContainer.children);
         dots.forEach((dot, idx) => {
@@ -1138,7 +1160,7 @@ A Lenda • O Nome • A Origem
 
       function getOffset(idx) {
         const children = track.children;
-        if (!children[idx]) return 0;
+        if (!children[idx] || !children[0]) return 0;
         return children[idx].offsetLeft - children[0].offsetLeft;
       }
 
@@ -1149,23 +1171,26 @@ A Lenda • O Nome • A Origem
         updateDots();
       }
 
-      // Seamless boundary wrap when transition ends
-      track.addEventListener('transitionend', () => {
-        if (currentIndex >= totalOriginal * 2) {
-          currentIndex -= totalOriginal;
-          setPosition(false);
-        } else if (currentIndex < totalOriginal) {
-          currentIndex += totalOriginal;
-          setPosition(false);
-        }
-      });
+      if (totalOriginal > 1) {
+        track.addEventListener('transitionend', () => {
+          if (currentIndex >= totalOriginal * 2) {
+            currentIndex -= totalOriginal;
+            setPosition(false);
+          } else if (currentIndex < totalOriginal) {
+            currentIndex += totalOriginal;
+            setPosition(false);
+          }
+        }, { signal });
+      }
 
       function nextSlide() {
+        if (totalOriginal <= 1) return;
         currentIndex++;
         setPosition(true);
       }
 
       function prevSlide() {
+        if (totalOriginal <= 1) return;
         currentIndex--;
         setPosition(true);
       }
@@ -1175,7 +1200,7 @@ A Lenda • O Nome • A Origem
           e.preventDefault();
           nextSlide();
           resetAutoplay();
-        });
+        }, { signal });
       }
 
       if (prevBtn) {
@@ -1183,12 +1208,14 @@ A Lenda • O Nome • A Origem
           e.preventDefault();
           prevSlide();
           resetAutoplay();
-        });
+        }, { signal });
       }
 
       function startAutoplay() {
         stopAutoplay();
-        autoPlayTimer = setInterval(nextSlide, autoPlayInterval);
+        if (totalOriginal > 1) {
+          autoPlayTimer = setInterval(nextSlide, autoPlayInterval);
+        }
       }
 
       function stopAutoplay() {
@@ -1203,11 +1230,10 @@ A Lenda • O Nome • A Origem
         startAutoplay();
       }
 
-      // Pause on hover
-      container.addEventListener('mouseenter', stopAutoplay);
-      container.addEventListener('mouseleave', startAutoplay);
+      container.addEventListener('mouseenter', stopAutoplay, { signal });
+      container.addEventListener('mouseleave', startAutoplay, { signal });
 
-      // Drag / Swipe interactions
+      // Gestos de arrastar no Desktop e Swipe no Mobile
       viewport.addEventListener('pointerdown', (e) => {
         if (e.target.closest('button, a')) return;
         isPointerDown = true;
@@ -1219,13 +1245,13 @@ A Lenda • O Nome • A Origem
         if (viewport.setPointerCapture) {
           try { viewport.setPointerCapture(e.pointerId); } catch(err) {}
         }
-      });
+      }, { signal });
 
       viewport.addEventListener('pointermove', (e) => {
         if (!isPointerDown) return;
         currentDiff = e.clientX - startX;
         track.style.transform = `translateX(-${baseOffset - currentDiff}px)`;
-      });
+      }, { signal });
 
       function handlePointerEnd(e) {
         if (!isPointerDown) return;
@@ -1245,12 +1271,12 @@ A Lenda • O Nome • A Origem
         }
       }
 
-      viewport.addEventListener('pointerup', handlePointerEnd);
-      viewport.addEventListener('pointercancel', handlePointerEnd);
+      viewport.addEventListener('pointerup', handlePointerEnd, { signal });
+      viewport.addEventListener('pointercancel', handlePointerEnd, { signal });
 
       window.addEventListener('resize', () => {
         setPosition(false);
-      });
+      }, { signal });
 
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
@@ -1258,31 +1284,224 @@ A Lenda • O Nome • A Origem
         } else {
           startAutoplay();
         }
-      });
+      }, { signal });
 
-      // Initial position setup
+      container._carouselCleanup = () => {
+        stopAutoplay();
+        ac.abort();
+      };
+
+      // Inicialização da posição e autoplay
       setTimeout(() => {
         setPosition(false);
         startAutoplay();
       }, 150);
-
-      window.addEventListener('load', () => {
-        setPosition(false);
-      });
     }
 
-    // Initialize Reservado Carousel (3.5s loop interval)
-    setupInfiniteCarousel({
-      containerId: 'reservado-carousel-container',
-      viewportId: 'reservado-viewport',
-      trackId: 'reservado-track',
-      prevBtnId: 'reservado-prev',
-      nextBtnId: 'reservado-next',
-      dotsId: 'reservado-dots',
-      autoPlayInterval: 3500
-    });
+    // -------------------------------------------------------------------------
+    // Geradores de HTML para os Cards de Produtos
+    // -------------------------------------------------------------------------
+    function createReservadoCardHTML(p) {
+      const isArg = (p.pais || '').toLowerCase().includes('arg');
+      const flag = isArg ? './assets/flag-argentina.png' : './assets/flag-chile.png';
+      const paisNome = isArg ? 'Argentina' : (p.pais || 'Chile');
+      const regiao = p.regiao || (isArg ? 'Mendoza' : 'Valle Central');
+      const cleanTitle = p.nome
+        ? p.nome.replace(/^Vinho\s+Toro\s+Negro\s+/i, '').replace(/^Toro\s+Negro\s+/i, '')
+        : (p.uva ? `${p.uva} Reservado` : 'Vinho Reservado');
+      const desc = p.descricao || (p.uva ? `Notas nobres e expressivas de ${p.uva}. Taninos redondos, aveludados e equilíbrio impecável.` : 'Notas ricas de frutas selecionadas com taninos redondos e estruturados.');
+      const harmonizacao = p.harmonizacao || (
+        p.tipo === 'Branco' ? 'Ceviches, frutos do mar e saladas frescas.' :
+        p.tipo === 'Rosé' ? 'Pratos leves, peixes grelhados e carpaccios.' :
+        p.tipo === 'Espumante' ? 'Entradas leves, canapés finos e celebrações.' :
+        'Massas com molho vermelho, queijos e carnes grelhadas.'
+      );
+      const servico = p.temperatura_servico || (
+        p.tipo === 'Branco' ? '10° à 12°C' :
+        p.tipo === 'Rosé' ? '10° à 12°C' :
+        p.tipo === 'Espumante' ? '6° à 8°C' :
+        '16° à 18°C'
+      );
+      const imgUrl = p.imagem_url || './assets/bottles/web/toro-negro-carmenere.png';
 
-    // Initialize Featured Hero Showcase Carousel (5.0s loop interval)
+      return `
+        <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3)] group flex flex-col justify-between bg-white/70 p-5 rounded-3xl border border-cream-300/80 hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none" data-purpose="product-card" data-product-id="${p.id || ''}">
+          <div>
+            <div class="wine-card-bg rounded-2xl w-full h-[320px] flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+              <img alt="${p.nome || cleanTitle}" class="h-[280px] w-auto object-contain bottle-drop-shadow select-none pointer-events-none transform group-hover:scale-105 transition-transform duration-500" draggable="false" src="${imgUrl}" onerror="this.onerror=null; this.src='./assets/bottles/web/toro-negro-carmenere.png';"/>
+            </div>
+            <div class="flex items-center gap-1.5 mb-1">
+              <img alt="${paisNome}" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="${flag}"/>
+              <span class="text-[10px] uppercase tracking-widest text-[#8C7A70] font-semibold">${regiao} • ${paisNome}</span>
+            </div>
+            <h3 class="font-serif text-xl text-burgundy-900 group-hover:text-burgundy-700 transition-colors font-medium">
+              ${cleanTitle}
+            </h3>
+            <p class="text-xs text-[#5A4E48] mt-2 leading-relaxed font-light line-clamp-3">
+              ${desc}
+            </p>
+            <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+              <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> ${harmonizacao}</div>
+              <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> ${servico} ${p.teor_alcoolico ? `• ${p.teor_alcoolico}% vol` : ''}</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-cream-200/80 flex items-center justify-between">
+            <span class="text-[10px] uppercase tracking-wider text-burgundy-900/80 font-medium bg-cream-200/70 px-2.5 py-1 rounded-full">${p.uva || p.tipo || 'Vinho Fino'}</span>
+            <a href="portal-b2b.html" class="inline-flex items-center gap-1 text-xs font-semibold text-burgundy-900 hover:text-gold-600 transition-colors" title="Solicitar cotação no Portal B2B">
+              <span>Ver no B2B</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    function createEspecialCardHTML(p) {
+      const isArg = (p.pais || '').toLowerCase().includes('arg') || (p.linha || '').toLowerCase().includes('mendoza');
+      const flag = isArg ? './assets/flag-argentina.png' : './assets/flag-chile.png';
+      const paisNome = isArg ? 'Argentina' : (p.pais || 'Chile');
+      const regiao = p.regiao || (isArg ? 'Mendoza' : 'Valle Central');
+      const cleanTitle = p.nome
+        ? p.nome.replace(/^Vinho\s+/i, '')
+        : (p.uva ? `Toro Negro ${p.uva}` : 'Toro Negro Especial');
+      const desc = p.descricao || (p.uva ? `Exemplar distinto com notas ricas de ${p.uva}, paladar harmônico e persistente.` : 'Seleção diferenciada expressando tipicidade e distinção.');
+      const harmonizacao = p.harmonizacao || (
+        p.tipo === 'Branco' ? 'Cozinha asiática, frutos do mar e queijos leves.' :
+        p.tipo === 'Espumante' ? 'Entradas leves, canapés finos e celebrações.' :
+        p.tipo === 'Rosé' ? 'Salmão grelhado, carpaccios e pratos leves.' :
+        'Carnes vermelhas assadas, churrascos e queijos duros.'
+      );
+      const servico = p.temperatura_servico || (
+        p.tipo === 'Branco' ? '8° à 10°C' :
+        p.tipo === 'Espumante' ? '6° à 8°C' :
+        p.tipo === 'Rosé' ? '6° à 8°C' :
+        '14° à 16°C'
+      );
+      const imgUrl = p.imagem_url || (isArg ? './assets/bottles/web/toro-negro-malbec.png' : './assets/bottles/web/toro-negro-carmenere.png');
+
+      return `
+        <article class="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] bg-white/80 p-6 rounded-3xl flex flex-col justify-between border border-cream-300/80 group hover:border-gold-400/60 transition-all duration-300 shadow-sm hover:shadow-xl select-none" data-purpose="product-card" data-product-id="${p.id || ''}">
+          <div>
+            <div class="wine-card-bg rounded-2xl h-64 flex items-center justify-center mb-4 relative overflow-hidden">
+              <img alt="${p.nome || cleanTitle}" class="h-56 w-auto object-contain bottle-drop-shadow pointer-events-none transform group-hover:scale-105 transition-transform duration-500" draggable="false" src="${imgUrl}" onerror="this.onerror=null; this.src='./assets/bottles/web/toro-negro-malbec.png';"/>
+            </div>
+            <div class="flex items-center gap-1.5 mb-1">
+              <img alt="${paisNome}" class="w-4 h-2.5 object-cover rounded-[2px] shadow-xs border border-black/10 inline-block shrink-0" src="${flag}"/>
+              <span class="text-[10px] uppercase font-bold tracking-widest text-[#8C7A70]">${regiao} • ${paisNome}</span>
+            </div>
+            <h3 class="font-serif text-xl text-burgundy-900 font-medium">
+              ${cleanTitle}
+            </h3>
+            <p class="text-xs text-[#5A4E48] mt-2 font-light leading-relaxed line-clamp-3">
+              ${desc}
+            </p>
+            <div class="mt-3 pt-3 border-t border-cream-200 text-[11px] text-[#706660] space-y-1">
+              <div><strong class="text-burgundy-900 font-medium">Harmonização:</strong> ${harmonizacao}</div>
+              <div><strong class="text-burgundy-900 font-medium">Serviço:</strong> ${servico} ${p.teor_alcoolico ? `• ${p.teor_alcoolico}% vol` : ''}</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-cream-200/80 flex items-center justify-between">
+            <span class="text-[10px] uppercase tracking-wider text-burgundy-900/80 font-medium bg-cream-200/70 px-2.5 py-1 rounded-full">${p.tipo || p.linha || 'Especial'}</span>
+            <a href="portal-b2b.html" class="inline-flex items-center gap-1 text-xs font-semibold text-burgundy-900 hover:text-gold-600 transition-colors" title="Solicitar cotação no Portal B2B">
+              <span>Ver no B2B</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    // -------------------------------------------------------------------------
+    // Sincronização Dinâmica do Catálogo com a API e localStorage
+    // -------------------------------------------------------------------------
+    async function syncInstitutionalCatalog() {
+      let apiProducts = [];
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
+        const res = await fetch('/api/products', { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          const data = await res.json();
+          apiProducts = data.products || [];
+          if (apiProducts.length) {
+            localStorage.setItem('tn_offline_products', JSON.stringify(apiProducts));
+          }
+        }
+      } catch (err) {
+        // Modo offline / GitHub Pages
+      }
+
+      // Se a API não respondeu ou estamos no GitHub Pages, carrega do localStorage
+      if (!apiProducts.length) {
+        const savedOffline = localStorage.getItem('tn_offline_products');
+        if (savedOffline) {
+          try {
+            apiProducts = JSON.parse(savedOffline);
+          } catch (e) {}
+        }
+      }
+
+      if (!apiProducts || !apiProducts.length) return;
+
+      const activeProds = apiProducts.filter(p => p.ativo !== 0);
+
+      // Linha Reservado Chile:
+      const reservadoProds = activeProds.filter(p => {
+        const linha = (p.linha || '').toLowerCase();
+        const pais = (p.pais || '').toLowerCase();
+        const tipo = (p.tipo || '').toLowerCase();
+        const nome = (p.nome || '').toLowerCase();
+
+        if (linha.includes('mendoza') || linha.includes('argentina') || pais.includes('argentina')) return false;
+        if (tipo.includes('espumante') || linha.includes('espumante')) return false;
+        if (linha.includes('especiais') || nome.includes('secreto') || nome.includes('verano') || nome.includes('sweet')) return false;
+
+        return linha.includes('reservado') || pais.includes('chile');
+      });
+
+      // Coleções Especiais / Argentina / Novas Linhas criadas no Admin:
+      const especiaisProds = activeProds.filter(p => !reservadoProds.includes(p));
+
+      // Atualiza o Carrossel da Linha Reservado
+      if (reservadoProds.length > 0) {
+        const resTrack = document.getElementById('reservado-track');
+        if (resTrack) {
+          resTrack.innerHTML = reservadoProds.map(createReservadoCardHTML).join('');
+          setupInfiniteCarousel({
+            containerId: 'reservado-carousel-container',
+            viewportId: 'reservado-viewport',
+            trackId: 'reservado-track',
+            prevBtnId: 'reservado-prev',
+            nextBtnId: 'reservado-next',
+            dotsId: 'reservado-dots',
+            autoPlayInterval: 3500
+          });
+        }
+      }
+
+      // Atualiza o Carrossel de Linhas Especiais & Argentina
+      if (especiaisProds.length > 0) {
+        const espTrack = document.getElementById('especiais-track');
+        if (espTrack) {
+          espTrack.innerHTML = especiaisProds.map(createEspecialCardHTML).join('');
+          setupInfiniteCarousel({
+            containerId: 'especiais-carousel-container',
+            viewportId: 'especiais-viewport',
+            trackId: 'especiais-track',
+            prevBtnId: 'especiais-prev',
+            nextBtnId: 'especiais-next',
+            dotsId: 'especiais-dots',
+            autoPlayInterval: 4000
+          });
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Inicialização Inicial dos Carrosséis
+    // -------------------------------------------------------------------------
+    // 1. Carrossel Destaques Hero (El Secreto & Verano)
     setupInfiniteCarousel({
       containerId: 'destaques',
       viewportId: 'hero-viewport',
@@ -1293,7 +1512,17 @@ A Lenda • O Nome • A Origem
       autoPlayInterval: 5000
     });
 
-    // Initialize Especiais Carousel (4.0s loop interval)
+    // 2. Inicialização dos carrosséis com cards pré-existentes (evita tela vazia)
+    setupInfiniteCarousel({
+      containerId: 'reservado-carousel-container',
+      viewportId: 'reservado-viewport',
+      trackId: 'reservado-track',
+      prevBtnId: 'reservado-prev',
+      nextBtnId: 'reservado-next',
+      dotsId: 'reservado-dots',
+      autoPlayInterval: 3500
+    });
+
     setupInfiniteCarousel({
       containerId: 'especiais-carousel-container',
       viewportId: 'especiais-viewport',
@@ -1304,7 +1533,35 @@ A Lenda • O Nome • A Origem
       autoPlayInterval: 4000
     });
 
+    // 3. Sincronização dinâmica imediata a partir da API ou localStorage
+    syncInstitutionalCatalog();
+
+    // -------------------------------------------------------------------------
+    // Sincronização Reativa em Tempo Real Entre Abas
+    // -------------------------------------------------------------------------
+    // Dispara quando o admin adiciona ou edita um vinho em outra aba
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'tn_offline_products') {
+        syncInstitutionalCatalog();
+      }
+    });
+
+    // Canal Broadcast em tempo real para sincronização instantânea
+    try {
+      const bc = new BroadcastChannel('tn_catalog_channel');
+      bc.onmessage = () => {
+        syncInstitutionalCatalog();
+      };
+    } catch(e) {}
+
+    // Atualiza ao focar na janela/aba
+    window.addEventListener('focus', () => {
+      syncInstitutionalCatalog();
+    });
+
+    // -------------------------------------------------------------------------
     // Mobile Navigation Menu Toggle
+    // -------------------------------------------------------------------------
     window.toggleMobileMenu = function() {
       const menu = document.getElementById('mobile-nav-menu');
       const hIcon = document.getElementById('hamburger-icon');

@@ -2661,6 +2661,13 @@
       }
     });
 
+    try {
+      const bc = new BroadcastChannel('tn_catalog_channel');
+      bc.onmessage = () => {
+        syncCatalogWithApi();
+      };
+    } catch(e) {}
+
     window.addEventListener('focus', () => {
       syncCatalogWithApi();
     });

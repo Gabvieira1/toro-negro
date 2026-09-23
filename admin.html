@@ -1772,6 +1772,13 @@
       if (bComp) bComp.textContent = stats.totalCompanies;
     }
 
+    function broadcastCatalogUpdate() {
+      try {
+        const bc = new BroadcastChannel('tn_catalog_channel');
+        bc.postMessage({ type: 'CATALOG_UPDATED', timestamp: Date.now() });
+      } catch(e) {}
+    }
+
     // 2. Fetch Products
     async function fetchProducts() {
       try {
@@ -1780,6 +1787,7 @@
           const data = await res.json();
           allProducts = data.products || [];
           localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+          broadcastCatalogUpdate();
         }
       } catch (e) {
         const saved = localStorage.getItem('tn_offline_products');
@@ -1794,6 +1802,7 @@
           }
         });
         localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+        broadcastCatalogUpdate();
       }
 
       const bProd = document.getElementById('nav-badge-products');
@@ -2103,6 +2112,7 @@
           destaque
         };
         localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+        broadcastCatalogUpdate();
         showToast('Valores atualizados com sucesso (Salvo no Navegador)!');
         closeProductEditModal();
         renderProductsTable();
@@ -2132,6 +2142,7 @@
       if (pIdx !== -1) {
         allProducts[pIdx].ativo = allProducts[pIdx].ativo === 1 ? 0 : 1;
         localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+        broadcastCatalogUpdate();
         showToast(`Rótulo ${allProducts[pIdx].ativo === 1 ? 'ativado' : 'desativado'} com sucesso!`);
         renderProductsTable();
         renderTopWinesCarousel();
@@ -2514,6 +2525,7 @@
         allProducts.unshift(newProd);
         try {
           localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+          broadcastCatalogUpdate();
         } catch (e) {
           console.warn('LocalStorage cheio, mantendo em memória:', e);
         }
@@ -2595,6 +2607,7 @@
         allProducts.unshift(newProd);
         try {
           localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+          broadcastCatalogUpdate();
         } catch (e) {
           console.warn('Aviso localStorage:', e);
         }
