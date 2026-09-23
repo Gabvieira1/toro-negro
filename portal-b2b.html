@@ -990,6 +990,8 @@
         <span>Venda proibida para menores de 18 anos. Beba com moderação.</span>
         <span class="text-stone-400">|</span>
         <span>Desenvolvido por <span class="text-burgundy-950 font-semibold">Agência SEO²</span></span>
+        <span class="text-stone-400">|</span>
+        <a href="admin.html" class="text-stone-400 hover:text-burgundy-900 transition-colors">Gestão Interna</a>
       </div>
     </div>
   </footer>
@@ -999,7 +1001,7 @@
   <!-- ========================================================================= -->
   <script>
     // 14 Real Master Wines from Toro Negro with full metadata
-    const WINES_DATABASE = [
+    let WINES_DATABASE = [
       {
         id: 'carmenere',
         name: 'Vinho Toro Negro Carménère Reservado 750ml',
@@ -1311,11 +1313,12 @@
     }
 
     // On Load
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       loadSession();
       populateMobileFilters();
       renderCatalog();
       renderCart();
+      await syncCatalogWithApi();
     });
 
     function loadSession() {
@@ -1511,6 +1514,9 @@
     // Filter Logic
     function getFilteredWines() {
       let list = WINES_DATABASE.filter(wine => {
+        // Active filter (Admin control)
+        if (wine.active === false) return false;
+
         // Type filter
         if (filterState.types.size > 0 && !filterState.types.has(wine.type)) {
           return false;
@@ -2563,6 +2569,77 @@
 
       window.open(waUrl, '_blank');
       showToast(`Pedido ${finalOrderNumber} registrado com sucesso! Notificando comercial...`);
+    }
+
+    // =========================================================================
+    // 11. SINCRONIZAÇÃO DINÂMICA COM BACKEND (ADMIN & CATÁLOGO)
+    // =========================================================================
+    async function syncCatalogWithApi() {
+      try {
+        const res = await fetch('/api/products');
+        if (!res.ok) return;
+        const data = await res.json();
+        const apiProducts = data.products || [];
+        if (!apiProducts.length) return;
+
+        apiProducts.forEach(apiP => {
+          const cleanApiName = (apiP.nome || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+          const cleanApiUva = (apiP.uva || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+          let match = WINES_DATABASE.find(w => {
+            if (w.id === apiP.id) return true;
+            const cleanWName = (w.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            const cleanWShort = (w.shortName || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            const cleanWId = (w.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            return (cleanApiUva && cleanWName.includes(cleanApiUva)) ||
+                   (cleanWId && cleanApiName.includes(cleanWId)) ||
+                   (cleanApiUva && cleanWShort.includes(cleanApiUva)) ||
+                   cleanWName === cleanApiName;
+          });
+
+          if (match) {
+            match.unitPrice = Number(apiP.preco_unitario);
+            match.boxPrice = Number(apiP.preco_caixa);
+            match.retailPrice = Number(apiP.preco_varejo_ref);
+            match.stock = Number(apiP.estoque_caixas);
+            if (apiP.descricao) match.notes = apiP.descricao;
+            if (apiP.imagem_url) match.image = apiP.imagem_url;
+            match.active = apiP.ativo === 1;
+            match.apiId = apiP.id;
+          } else if (apiP.ativo === 1) {
+            const typeKey = (apiP.tipo || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            const countryKey = (apiP.pais || '').toLowerCase();
+            WINES_DATABASE.push({
+              id: apiP.id,
+              apiId: apiP.id,
+              name: apiP.nome,
+              shortName: apiP.uva ? `${apiP.uva} ${apiP.safra || ''}`.trim() : apiP.nome,
+              type: typeKey.includes('espumante') ? 'espumante' : (typeKey.includes('branco') ? 'branco' : (typeKey.includes('rose') ? 'rose' : 'tinto')),
+              category: (apiP.linha || 'reservado').toLowerCase(),
+              country: countryKey.includes('arg') ? 'argentina' : 'chile',
+              origin: `${apiP.regiao || 'Valle Central'} • ${apiP.pais || 'Chile'}`,
+              flag: countryKey.includes('arg') ? './assets/flag-argentina.png' : './assets/flag-chile.png',
+              grape: apiP.uva || 'Casta Nobre',
+              alcohol: apiP.teor_alcoolico ? `${apiP.teor_alcoolico}%` : '13.0%',
+              retailPrice: Number(apiP.preco_varejo_ref) || 59.9,
+              unitPrice: Number(apiP.preco_unitario) || 38.9,
+              boxPrice: Number(apiP.preco_caixa) || 233.4,
+              rating: 4.8,
+              reviewsCount: 35,
+              badge: apiP.destaque ? 'NOVIDADE' : 'B2B EXCLUSIVO',
+              image: apiP.imagem_url || './assets/bottles/web/toro-negro-carmenere.png',
+              notes: apiP.descricao || '',
+              stock: Number(apiP.estoque_caixas),
+              active: true
+            });
+          }
+        });
+
+        // Re-renderizar catálogo para atualizar preços e estoques em tempo real
+        renderCatalog();
+      } catch (err) {
+        console.info('Portal B2B operando em modo offline / fallback estático.');
+      }
     }
   </script>
 

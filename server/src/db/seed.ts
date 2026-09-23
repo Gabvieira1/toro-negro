@@ -61,6 +61,58 @@ export async function runSeed() {
     console.log('✅ Usuário Demo criado (login: compras@restaurantesantafe.com.br / 123456).');
   }
 
+  // 2.1 Criar Empresa e Usuário Administrador Geral
+  const adminCompanyId = 'comp-toronegro-matriz';
+  const existingAdminComp = query.get('SELECT id FROM companies WHERE id = ?', adminCompanyId);
+  if (!existingAdminComp) {
+    query.run(`
+      INSERT INTO companies (
+        id, cnpj, razao_social, nome_fantasia, inscricao_estadual,
+        segmento, cnae_principal, logradouro, numero, bairro,
+        cidade, uf, cep, limite_credito, status_aprovacao
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+      adminCompanyId,
+      '00.000.000/0001-00',
+      'Toro Negro Wines Importação e Distribuição Ltda',
+      'Toro Negro Matriz & Gestão',
+      'ISENTO',
+      'Importadora / Vinícola',
+      '46.35-4-01',
+      'Av. das Vinhas',
+      '1000',
+      'Centro',
+      'Curitiba',
+      'PR',
+      '80000-000',
+      999999.00,
+      'APROVADO'
+    );
+  }
+
+  const adminUserId = 'user-admin-001';
+  const existingAdminUser = query.get('SELECT id FROM users WHERE id = ? OR email = ?', adminUserId, 'admin@toronegro.com.br');
+  if (!existingAdminUser) {
+    const salt = await bcrypt.genSalt(10);
+    const senhaHash = await bcrypt.hash('admin123', salt);
+
+    query.run(`
+      INSERT INTO users (
+        id, company_id, nome, email, telefone_whatsapp, senha_hash, cargo, role
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+      adminUserId,
+      adminCompanyId,
+      'Gestão Toro Negro',
+      'admin@toronegro.com.br',
+      '(41) 99863-2724',
+      senhaHash,
+      'Administrador Geral',
+      'ADMIN'
+    );
+    console.log('✅ Usuário Administrador criado (login: admin@toronegro.com.br / admin123).');
+  }
+
   // 3. Catálogo Oficial dos 14 Vinhos Toro Negro
   const wines = [
     {

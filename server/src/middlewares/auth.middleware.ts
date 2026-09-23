@@ -53,3 +53,12 @@ export function optionalAuth(req: AuthenticatedRequest, res: Response, next: Nex
   }
   next();
 }
+
+export function requireAdmin(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  requireAuth(req, res, () => {
+    if (!req.user || req.user.role !== 'ADMIN') {
+      return res.status(403).json({ error: 'Acesso restrito. Privilégios de administrador necessários.' });
+    }
+    next();
+  });
+}

@@ -8,6 +8,7 @@ import { cnpjRouter } from './routes/cnpj.routes.js';
 import { authRouter } from './routes/auth.routes.js';
 import { productsRouter } from './routes/products.routes.js';
 import { ordersRouter } from './routes/orders.routes.js';
+import { adminRouter } from './routes/admin.routes.js';
 
 import { authLoginLimiter, cnpjLookupLimiter } from './middlewares/rateLimit.middleware.js';
 
@@ -33,11 +34,12 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
 
-// Auto-seed se o banco estiver vazio
+// Auto-seed se o banco estiver vazio ou sem usuário admin
 try {
   const count = query.get<{ total: number }>('SELECT COUNT(*) as total FROM products')?.total || 0;
-  if (count === 0) {
-    console.log('📦 Banco sem dados de produtos. Executando seed automático...');
+  const hasAdmin = query.get("SELECT id FROM users WHERE role = 'ADMIN'");
+  if (count === 0 || !hasAdmin) {
+    console.log('📦 Inicializando seed de produtos e administrador Toro Negro...');
     await runSeed();
   }
 } catch (e) {
@@ -55,6 +57,7 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/cnpj', cnpjLookupLimiter, cnpjRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/admin', adminRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/orders', ordersRouter);
 
