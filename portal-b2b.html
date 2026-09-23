@@ -2572,75 +2572,102 @@
     }
 
     // =========================================================================
-    // 11. SINCRONIZAÇÃO DINÂMICA COM BACKEND (ADMIN & CATÁLOGO)
+    // 11. SINCRONIZAÇÃO DINÂMICA COM BACKEND & PAINEL ADMINISTRATIVO
     // =========================================================================
     async function syncCatalogWithApi() {
+      let apiProducts = [];
       try {
         const res = await fetch('/api/products');
-        if (!res.ok) return;
-        const data = await res.json();
-        const apiProducts = data.products || [];
-        if (!apiProducts.length) return;
-
-        apiProducts.forEach(apiP => {
-          const cleanApiName = (apiP.nome || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-          const cleanApiUva = (apiP.uva || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-
-          let match = WINES_DATABASE.find(w => {
-            if (w.id === apiP.id) return true;
-            const cleanWName = (w.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-            const cleanWShort = (w.shortName || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-            const cleanWId = (w.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-            return (cleanApiUva && cleanWName.includes(cleanApiUva)) ||
-                   (cleanWId && cleanApiName.includes(cleanWId)) ||
-                   (cleanApiUva && cleanWShort.includes(cleanApiUva)) ||
-                   cleanWName === cleanApiName;
-          });
-
-          if (match) {
-            match.unitPrice = Number(apiP.preco_unitario);
-            match.boxPrice = Number(apiP.preco_caixa);
-            match.retailPrice = Number(apiP.preco_varejo_ref);
-            match.stock = Number(apiP.estoque_caixas);
-            if (apiP.descricao) match.notes = apiP.descricao;
-            if (apiP.imagem_url) match.image = apiP.imagem_url;
-            match.active = apiP.ativo === 1;
-            match.apiId = apiP.id;
-          } else if (apiP.ativo === 1) {
-            const typeKey = (apiP.tipo || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-            const countryKey = (apiP.pais || '').toLowerCase();
-            WINES_DATABASE.push({
-              id: apiP.id,
-              apiId: apiP.id,
-              name: apiP.nome,
-              shortName: apiP.uva ? `${apiP.uva} ${apiP.safra || ''}`.trim() : apiP.nome,
-              type: typeKey.includes('espumante') ? 'espumante' : (typeKey.includes('branco') ? 'branco' : (typeKey.includes('rose') ? 'rose' : 'tinto')),
-              category: (apiP.linha || 'reservado').toLowerCase(),
-              country: countryKey.includes('arg') ? 'argentina' : 'chile',
-              origin: `${apiP.regiao || 'Valle Central'} • ${apiP.pais || 'Chile'}`,
-              flag: countryKey.includes('arg') ? './assets/flag-argentina.png' : './assets/flag-chile.png',
-              grape: apiP.uva || 'Casta Nobre',
-              alcohol: apiP.teor_alcoolico ? `${apiP.teor_alcoolico}%` : '13.0%',
-              retailPrice: Number(apiP.preco_varejo_ref) || 59.9,
-              unitPrice: Number(apiP.preco_unitario) || 38.9,
-              boxPrice: Number(apiP.preco_caixa) || 233.4,
-              rating: 4.8,
-              reviewsCount: 35,
-              badge: apiP.destaque ? 'NOVIDADE' : 'B2B EXCLUSIVO',
-              image: apiP.imagem_url || './assets/bottles/web/toro-negro-carmenere.png',
-              notes: apiP.descricao || '',
-              stock: Number(apiP.estoque_caixas),
-              active: true
-            });
+        if (res.ok) {
+          const data = await res.json();
+          apiProducts = data.products || [];
+          if (apiProducts.length) {
+            localStorage.setItem('tn_offline_products', JSON.stringify(apiProducts));
           }
+        }
+      } catch (err) {
+        // Modo offline / GitHub Pages
+      }
+
+      // Se a API não respondeu ou estamos no GitHub Pages, carrega as alterações salvas pelo painel admin
+      if (!apiProducts.length) {
+        const savedOffline = localStorage.getItem('tn_offline_products');
+        if (savedOffline) {
+          try {
+            apiProducts = JSON.parse(savedOffline);
+          } catch (e) {}
+        }
+      }
+
+      if (!apiProducts || !apiProducts.length) return;
+
+      apiProducts.forEach(apiP => {
+        const cleanApiName = (apiP.nome || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const cleanApiUva = (apiP.uva || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+        let match = WINES_DATABASE.find(w => {
+          if (w.id === apiP.id || w.apiId === apiP.id) return true;
+          const cleanWName = (w.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+          const cleanWShort = (w.shortName || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+          const cleanWId = (w.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+          return (cleanApiUva && cleanWName.includes(cleanApiUva)) ||
+                 (cleanWId && cleanApiName.includes(cleanWId)) ||
+                 (cleanApiUva && cleanWShort.includes(cleanApiUva)) ||
+                 cleanWName === cleanApiName;
         });
 
-        // Re-renderizar catálogo para atualizar preços e estoques em tempo real
-        renderCatalog();
-      } catch (err) {
-        console.info('Portal B2B operando em modo offline / fallback estático.');
-      }
+        if (match) {
+          match.unitPrice = Number(apiP.preco_unitario);
+          match.boxPrice = Number(apiP.preco_caixa) || Number((apiP.preco_unitario * 6).toFixed(2));
+          match.retailPrice = Number(apiP.preco_varejo_ref);
+          match.stock = Number(apiP.estoque_caixas);
+          if (apiP.descricao) match.notes = apiP.descricao;
+          if (apiP.imagem_url) match.image = apiP.imagem_url;
+          match.active = apiP.ativo === 1;
+          match.apiId = apiP.id;
+        } else if (apiP.ativo === 1) {
+          const typeKey = (apiP.tipo || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          const countryKey = (apiP.pais || '').toLowerCase();
+          WINES_DATABASE.push({
+            id: apiP.id,
+            apiId: apiP.id,
+            name: apiP.nome,
+            shortName: apiP.uva ? `${apiP.uva} ${apiP.safra || ''}`.trim() : apiP.nome,
+            type: typeKey.includes('espumante') ? 'espumante' : (typeKey.includes('branco') ? 'branco' : (typeKey.includes('rose') ? 'rose' : 'tinto')),
+            category: (apiP.linha || 'reservado').toLowerCase(),
+            country: countryKey.includes('arg') ? 'argentina' : 'chile',
+            origin: `${apiP.regiao || 'Valle Central'} • ${apiP.pais || 'Chile'}`,
+            flag: countryKey.includes('arg') ? './assets/flag-argentina.png' : './assets/flag-chile.png',
+            grape: apiP.uva || 'Casta Nobre',
+            alcohol: apiP.teor_alcoolico ? `${apiP.teor_alcoolico}%` : '13.0%',
+            retailPrice: Number(apiP.preco_varejo_ref) || 59.9,
+            unitPrice: Number(apiP.preco_unitario) || 38.9,
+            boxPrice: Number(apiP.preco_caixa) || Number((apiP.preco_unitario * 6).toFixed(2)),
+            rating: 4.8,
+            reviewsCount: 35,
+            badge: apiP.destaque ? 'NOVIDADE' : 'B2B EXCLUSIVO',
+            image: apiP.imagem_url || './assets/bottles/web/toro-negro-carmenere.png',
+            notes: apiP.descricao || '',
+            stock: Number(apiP.estoque_caixas),
+            active: true
+          });
+        }
+      });
+
+      // Re-renderizar catálogo para atualizar preços e estoques em tempo real
+      renderCatalog();
     }
+
+    // Atualiza automaticamente caso o administrador modifique preços em outra aba
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'tn_offline_products') {
+        syncCatalogWithApi();
+      }
+    });
+
+    window.addEventListener('focus', () => {
+      syncCatalogWithApi();
+    });
   </script>
 
 </body>
