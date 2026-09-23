@@ -178,37 +178,87 @@ productsRouter.post('/', requireAdmin, (req: AuthenticatedRequest, res: Response
   try {
     const {
       nome,
+      name,
+      title,
       linha = 'Reservado Chile',
+      line,
       tipo = 'Tinto',
+      type,
       uva = 'Cabernet Sauvignon',
+      grape,
       pais = 'Chile',
+      country,
       regiao = 'Valle Central',
+      region,
       safra = '2023',
-      teor_alcoolico = 13.0,
+      vintage,
+      teor_alcoolico,
+      alcool,
+      alcohol,
       volume_ml = 750,
-      unidades_por_caixa = 6,
-      preco_varejo_ref = 59.90,
-      preco_unitario = 38.90,
-      estoque_caixas = 50,
-      descricao = '',
-      harmonizacao = '',
-      temperatura_servico = '16° à 18°C',
-      imagem_url = './assets/bottles/web/toro-negro-carmenere.png',
-      destaque = 0
+      volume,
+      unidades_por_caixa,
+      unitsPerBox,
+      preco_varejo_ref,
+      retailRef,
+      preco_varejo,
+      preco_unitario,
+      unitPrice,
+      preco,
+      estoque_caixas,
+      stockBoxes,
+      estoque,
+      descricao,
+      description,
+      harmonizacao,
+      pairing,
+      temperatura_servico,
+      servingTemp,
+      imagem_url,
+      image,
+      garrafa,
+      destaque = 0,
+      featured = 0
     } = req.body;
 
-    if (!nome) {
+    const rawNome = nome || name || title;
+    if (!rawNome) {
       return res.status(400).json({ error: 'Nome do vinho é obrigatório.' });
     }
 
-    const cleanName = String(nome).trim();
+    const cleanName = String(rawNome).trim();
     const idSlug = 'tn-' + cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + crypto.randomUUID().slice(0, 4);
 
-    const unitPrice = Math.max(0.01, Number(preco_unitario));
-    const unitsPerBox = Math.max(1, Number(unidades_por_caixa));
-    const boxPrice = Number((unitPrice * unitsPerBox).toFixed(2));
-    const retailRef = Math.max(unitPrice, Number(preco_varejo_ref));
-    const stockBoxes = Math.max(0, Math.floor(Number(estoque_caixas)));
+    const finalLinha = linha || line || 'Reservado Chile';
+    const finalTipo = tipo || type || 'Tinto';
+    const finalUva = uva || grape || 'Cabernet Sauvignon';
+    const finalPais = pais || country || 'Chile';
+    const finalRegiao = regiao || region || 'Valle Central';
+    const finalSafra = String(safra || vintage || '2023');
+
+    const rawTeor = teor_alcoolico ?? alcool ?? alcohol ?? 13.0;
+    const finalTeor = parseFloat(String(rawTeor).replace('%', '').trim()) || 13.0;
+
+    const finalVolume = parseInt(String(volume_ml || volume || 750)) || 750;
+    const unitsBox = Math.max(1, parseInt(String(unidades_por_caixa ?? unitsPerBox ?? 6)) || 6);
+
+    const rawUnitPrice = preco_unitario ?? unitPrice ?? preco;
+    const numPrice = parseFloat(String(rawUnitPrice));
+    const finalUnitPrice = (!isNaN(numPrice) && numPrice > 0) ? numPrice : 38.90;
+    const boxPrice = Number((finalUnitPrice * unitsBox).toFixed(2));
+
+    const rawRetail = preco_varejo_ref ?? retailRef ?? preco_varejo;
+    const numRetail = parseFloat(String(rawRetail));
+    const finalRetailRef = (!isNaN(numRetail) && numRetail >= finalUnitPrice) ? numRetail : Number((finalUnitPrice * 1.5).toFixed(2));
+
+    const rawStock = estoque_caixas ?? stockBoxes ?? estoque ?? 50;
+    const stockBoxesCount = Math.max(0, parseInt(String(rawStock)) || 0);
+
+    const finalDesc = String(descricao || description || '').trim();
+    const finalHarmon = String(harmonizacao || pairing || '').trim();
+    const finalTemp = String(temperatura_servico || servingTemp || '16° à 18°C').trim();
+    const finalImg = String(imagem_url || image || garrafa || './assets/bottles/web/toro-negro-carmenere.png').trim();
+    const finalDestaque = (destaque || featured) ? 1 : 0;
 
     query.run(`
       INSERT INTO products (
@@ -220,24 +270,24 @@ productsRouter.post('/', requireAdmin, (req: AuthenticatedRequest, res: Response
     `,
       idSlug,
       cleanName,
-      linha,
-      tipo,
-      uva,
-      pais,
-      regiao,
-      safra,
-      Number(teor_alcoolico),
-      Number(volume_ml),
-      unitsPerBox,
-      retailRef,
-      unitPrice,
+      finalLinha,
+      finalTipo,
+      finalUva,
+      finalPais,
+      finalRegiao,
+      finalSafra,
+      finalTeor,
+      finalVolume,
+      unitsBox,
+      finalRetailRef,
+      finalUnitPrice,
       boxPrice,
-      stockBoxes,
-      descricao,
-      harmonizacao,
-      temperatura_servico,
-      imagem_url,
-      destaque ? 1 : 0,
+      stockBoxesCount,
+      finalDesc,
+      finalHarmon,
+      finalTemp,
+      finalImg,
+      finalDestaque,
       1
     );
 
