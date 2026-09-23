@@ -1808,6 +1808,28 @@
         if (cleanId === 'brut-rose') cleanId = 'tn-brut-rose-sparkling';
         p.id = cleanId;
 
+        // Sanitização estrita das imagens oficiais
+        if (cleanId === 'tn-brut-sparkling') {
+          if (!p.imagem_url || p.imagem_url.includes('toro-negro-brut-rose') || p.imagem_url.includes('toro-negro-sweet')) {
+            p.imagem_url = './assets/bottles/web/toro-negro-brut.png';
+          }
+          p.nome = 'Toro Negro Brut Sparkling';
+        } else if (cleanId === 'tn-brut-rose-sparkling') {
+          if (!p.imagem_url || (p.imagem_url.includes('toro-negro-brut.png') && !p.imagem_url.includes('rose'))) {
+            p.imagem_url = './assets/bottles/web/toro-negro-brut-rose.png';
+          }
+          p.nome = 'Toro Negro Brut Rosé Sparkling';
+        } else if (cleanId === 'tn-sweet-sparkling') {
+          if (!p.imagem_url || p.imagem_url.includes('toro-negro-brut')) {
+            p.imagem_url = './assets/bottles/web/toro-negro-sweet.png';
+          }
+          p.nome = 'Espumante Toro Negro Sparkling Sweet 750ml';
+        } else if (cleanId === 'tn-suave-sweet') {
+          if (!p.imagem_url || p.imagem_url.includes('toro-negro-sweet.png')) {
+            p.imagem_url = './assets/bottles/web/toro-negro-suave.png';
+          }
+        }
+
         if (!cleanMap.has(cleanId)) {
           cleanMap.set(cleanId, p);
         }

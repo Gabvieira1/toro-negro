@@ -1235,8 +1235,8 @@
       {
         id: 'tn-brut-sparkling',
         apiId: 'tn-brut-sparkling',
-        name: 'Toro Negro Brut Sparkling 750ml',
-        shortName: 'Espumante Brut Sparkling',
+        name: 'Toro Negro Brut Sparkling',
+        shortName: 'Toro Negro Brut Sparkling',
         type: 'espumante',
         category: 'especiais',
         country: 'argentina',
@@ -1258,8 +1258,8 @@
       {
         id: 'tn-brut-rose-sparkling',
         apiId: 'tn-brut-rose-sparkling',
-        name: 'Toro Negro Brut Rosé Sparkling 750ml',
-        shortName: 'Espumante Brut Rosé Sparkling',
+        name: 'Toro Negro Brut Rosé Sparkling',
+        shortName: 'Toro Negro Brut Rosé Sparkling',
         type: 'espumante',
         category: 'especiais',
         country: 'argentina',
@@ -1271,7 +1271,7 @@
         unitPrice: 44.90,
         boxPrice: 269.40,
         rating: 4.9,
-        reviewsCount: 84,
+        reviewsCount: 95,
         badge: 'ELEGANTE',
         image: './assets/bottles/web/toro-negro-brut-rose.png',
         notes: 'Coloração salmão suave com perlage delicado e persistente. Aromas sedutores de frutas vermelhas frescas e paladar cremoso.',
@@ -2684,31 +2684,65 @@
         else badge = 'CELEBRAÇÃO';
       }
 
-      // Safe image selection
+      // Seleção e validação rigorosa da imagem oficial correspondente
       let image = apiP.imagem_url;
-      if (!image || (normId === 'tn-suave-sweet' && image.includes('toro-negro-sweet.png'))) {
-        if (normId === 'tn-suave-sweet') {
-          image = './assets/bottles/web/toro-negro-suave.png';
-        } else if (normId === 'tn-sweet-sparkling') {
-          image = './assets/bottles/web/toro-negro-sweet.png';
-        } else if (normId === 'tn-brut-sparkling') {
+      if (normId === 'tn-brut-sparkling') {
+        if (!image || image.includes('toro-negro-brut-rose') || image.includes('toro-negro-sweet') || image.includes('toro-negro-suave')) {
           image = './assets/bottles/web/toro-negro-brut.png';
-        } else if (normId === 'tn-brut-rose-sparkling') {
-          image = './assets/bottles/web/toro-negro-brut-rose.png';
-        } else {
-          image = existingWine?.image || './assets/bottles/web/toro-negro-carmenere.png';
         }
+      } else if (normId === 'tn-brut-rose-sparkling') {
+        if (!image || image.includes('toro-negro-sweet') || (image.includes('toro-negro-brut.png') && !image.includes('rose'))) {
+          image = './assets/bottles/web/toro-negro-brut-rose.png';
+        }
+      } else if (normId === 'tn-sweet-sparkling') {
+        if (!image || image.includes('toro-negro-brut') || image.includes('toro-negro-suave')) {
+          image = './assets/bottles/web/toro-negro-sweet.png';
+        }
+      } else if (normId === 'tn-suave-sweet') {
+        if (!image || image.includes('toro-negro-sweet.png')) {
+          image = './assets/bottles/web/toro-negro-suave.png';
+        }
+      } else if (!image) {
+        image = existingWine?.image || './assets/bottles/web/toro-negro-carmenere.png';
       }
 
       const unitPrice = Number(apiP.preco_unitario) || existingWine?.unitPrice || 38.90;
       const boxPrice = Number(apiP.preco_caixa) || Number((unitPrice * 6).toFixed(2));
-      const retailPrice = Number(apiP.preco_varejo_ref) || existingWine?.retailPrice || 59.90;
+      let retailPrice = Number(apiP.preco_varejo_ref) || existingWine?.retailPrice || 59.90;
+      if (normId === 'tn-brut-sparkling' || normId === 'tn-brut-rose-sparkling') {
+        if (!apiP.preco_varejo_ref || Number(apiP.preco_varejo_ref) === 72.00) {
+          retailPrice = 69.90;
+        }
+      } else if (normId === 'tn-sweet-sparkling') {
+        if (!apiP.preco_varejo_ref) {
+          retailPrice = 72.00;
+        }
+      }
+
+      // Alinha nomes e ranking de popularidade com o cadastro do Admin
+      let name = apiP.nome || existingWine?.name || 'Vinho Toro Negro';
+      let shortName = existingWine?.shortName || (apiP.uva ? `${apiP.uva} ${apiP.safra || ''}`.trim() : name);
+      let reviewsCount = existingWine?.reviewsCount || 45;
+
+      if (normId === 'tn-brut-sparkling') {
+        name = apiP.nome || 'Toro Negro Brut Sparkling';
+        shortName = 'Toro Negro Brut Sparkling';
+        reviewsCount = 98;
+      } else if (normId === 'tn-brut-rose-sparkling') {
+        name = apiP.nome || 'Toro Negro Brut Rosé Sparkling';
+        shortName = 'Toro Negro Brut Rosé Sparkling';
+        reviewsCount = 95;
+      } else if (normId === 'tn-sweet-sparkling') {
+        name = apiP.nome || 'Espumante Toro Negro Sparkling Sweet 750ml';
+        shortName = 'Espumante Sweet Sparkling';
+        reviewsCount = 92;
+      }
 
       return {
         id: normId,
         apiId: apiP.id,
-        name: apiP.nome || existingWine?.name || 'Vinho Toro Negro',
-        shortName: existingWine?.shortName || (apiP.uva ? `${apiP.uva} ${apiP.safra || ''}`.trim() : apiP.nome),
+        name: name,
+        shortName: shortName,
         type: wineType,
         category: (apiP.linha || existingWine?.category || (isEspumante ? 'especiais' : 'reservado chile')).toLowerCase(),
         country: country,
@@ -2720,7 +2754,7 @@
         unitPrice: unitPrice,
         boxPrice: boxPrice,
         rating: existingWine?.rating || 4.8,
-        reviewsCount: existingWine?.reviewsCount || 45,
+        reviewsCount: reviewsCount,
         badge: badge,
         image: image,
         notes: apiP.descricao || existingWine?.notes || '',
@@ -2744,14 +2778,49 @@
         // Modo offline / GitHub Pages
       }
 
-      // Se a API não respondeu ou estamos no GitHub Pages, carrega do localStorage
-      if (!apiProducts.length) {
-        const savedOffline = localStorage.getItem('tn_offline_products');
-        if (savedOffline) {
-          try {
-            apiProducts = JSON.parse(savedOffline);
-          } catch (e) {}
-        }
+      // Higieniza qualquer dado legado/incorreto no localStorage para garantir conformidade imediata com o Admin
+      const savedOffline = localStorage.getItem('tn_offline_products');
+      if (savedOffline) {
+        try {
+          let parsed = JSON.parse(savedOffline);
+          if (Array.isArray(parsed)) {
+            parsed.forEach(p => {
+              const pId = normalizeWineId(p.id);
+              p.id = pId;
+              if (pId === 'tn-brut-sparkling') {
+                p.nome = 'Toro Negro Brut Sparkling';
+                p.imagem_url = './assets/bottles/web/toro-negro-brut.png';
+                p.uva = 'Brut Charmat';
+                p.preco_varejo_ref = 69.90;
+                p.preco_unitario = 44.90;
+                p.preco_caixa = 269.40;
+              }
+              if (pId === 'tn-brut-rose-sparkling') {
+                p.nome = 'Toro Negro Brut Rosé Sparkling';
+                p.imagem_url = './assets/bottles/web/toro-negro-brut-rose.png';
+                p.uva = 'Brut Rosé Charmat';
+                p.preco_varejo_ref = 69.90;
+                p.preco_unitario = 44.90;
+                p.preco_caixa = 269.40;
+              }
+              if (pId === 'tn-sweet-sparkling') {
+                p.nome = 'Espumante Toro Negro Sparkling Sweet 750ml';
+                p.imagem_url = './assets/bottles/web/toro-negro-sweet.png';
+                p.uva = 'Charmat Sweet';
+                p.preco_varejo_ref = 72.00;
+                p.preco_unitario = 44.90;
+                p.preco_caixa = 269.40;
+              }
+              if (pId === 'tn-suave-sweet') {
+                p.imagem_url = './assets/bottles/web/toro-negro-suave.png';
+              }
+            });
+            localStorage.setItem('tn_offline_products', JSON.stringify(parsed));
+            if (!apiProducts.length) {
+              apiProducts = parsed;
+            }
+          }
+        } catch (e) {}
       }
 
       if (!apiProducts || !apiProducts.length) return;
