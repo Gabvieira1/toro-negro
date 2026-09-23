@@ -1093,7 +1093,7 @@
       },
       {
         id: 'suave-sweet',
-        name: 'Vinho Toro Negro Suave Sweet Tinto Vinífera 750ml',
+        name: 'Vinho Toro Negro Suave Tinto Vinífera 750ml',
         shortName: 'Toro Negro Suave Tinto',
         type: 'tinto',
         category: 'destaques',
@@ -1212,24 +1212,25 @@
         notes: 'Coloração salmão brilhante. Borbulhas finas com notas de morango silvestre, cereja ácida e cremosidade no paladar.'
       },
       {
-        id: 'sweet-tinto',
-        name: 'Vinho Toro Negro Sweet Tinto 750ml',
-        shortName: 'Toro Negro Sweet Tinto',
-        type: 'tinto',
-        category: 'destaques',
-        country: 'chile',
-        origin: 'Valle Central • Chile',
-        flag: './assets/flag-chile.png',
-        grape: 'Sweet Tinto',
-        alcohol: '12.5%',
-        retailPrice: 49.90,
-        unitPrice: 32.90,
-        boxPrice: 197.40,
-        rating: 4.8,
-        reviewsCount: 79,
+        id: 'sweet-sparkling',
+        apiId: 'tn-sweet-sparkling',
+        name: 'Espumante Toro Negro Sparkling Sweet 750ml',
+        shortName: 'Espumante Sweet Sparkling',
+        type: 'espumante',
+        category: 'espumantes',
+        country: 'argentina',
+        origin: 'Mendoza • Argentina',
+        flag: './assets/flag-argentina.png',
+        grape: 'Charmat Sweet',
+        alcohol: '12.0%',
+        retailPrice: 72.00,
+        unitPrice: 44.90,
+        boxPrice: 269.40,
+        rating: 4.9,
+        reviewsCount: 92,
         badge: 'DOCE EQUILIBRADO',
         image: './assets/bottles/web/toro-negro-sweet.png',
-        notes: 'Intensidade aromática de geléia de amoras e cerejas com final doce, macio e aveludado.'
+        notes: 'Perlage fino e persistente com doçura envolvente, aromas de pêssego em calda, flor de laranjeira e frescor vibrante de altitude.'
       }
     ];
 
@@ -2598,10 +2599,25 @@
           if (w.id === apiP.id || w.apiId === apiP.id) return true;
           if (apiP.id === 'tn-brut-sparkling' && w.id === 'brut') return true;
           if (apiP.id === 'tn-brut-rose-sparkling' && w.id === 'brut-rose') return true;
+          if ((apiP.id === 'tn-sweet-sparkling' || apiP.id === 'tn-sweet-tinto') && (w.id === 'sweet-sparkling' || w.id === 'sweet-tinto')) return true;
+          if (apiP.id === 'tn-suave-sweet' && w.id === 'suave-sweet') return true;
           if (apiP.id === 'tn-el-secreto' && w.id === 'el-secreto') return true;
           if (apiP.id === 'tn-verano-pedro-jimenez' && w.id === 'verano') return true;
-          if (apiP.id === 'tn-suave-sweet' && w.id === 'suave-sweet') return true;
-          if (apiP.id === 'tn-sweet-tinto' && w.id === 'sweet-tinto') return true;
+          if (apiP.id === 'tn-carmenere-reservado' && w.id === 'carmenere') return true;
+          if (apiP.id === 'tn-cabernet-reservado' && w.id === 'cabernet') return true;
+          if (apiP.id === 'tn-merlot-reservado' && w.id === 'merlot') return true;
+          if (apiP.id === 'tn-sauvignon-reservado' && w.id === 'sauvignon') return true;
+          if (apiP.id === 'tn-chardonnay-reservado' && w.id === 'chardonnay') return true;
+          if (apiP.id === 'tn-rose-reservado' && w.id === 'rose') return true;
+          if (apiP.id === 'tn-malbec-mendoza' && w.id === 'malbec') return true;
+          if (apiP.id === 'tn-bonarda-mendoza' && w.id === 'bonarda') return true;
+          if (apiP.id === 'tn-torrontes-mendoza' && w.id === 'torrontes') return true;
+
+          // Valida se o tipo do vinho bate antes de comparar por uva/nome
+          const apiType = (apiP.tipo || '').toLowerCase();
+          const wType = (w.type || '').toLowerCase();
+          if (apiType.includes('espumante') !== wType.includes('espumante')) return false;
+
           const cleanWName = (w.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
           const cleanWShort = (w.shortName || '').toLowerCase().replace(/[^a-z0-9]/g, '');
           const cleanWId = (w.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -2617,7 +2633,16 @@
           match.retailPrice = Number(apiP.preco_varejo_ref);
           match.stock = Number(apiP.estoque_caixas);
           if (apiP.descricao) match.notes = apiP.descricao;
-          if (apiP.imagem_url) match.image = apiP.imagem_url;
+          // Preserva imagens oficiais corretas para evitar que garrafa de espumante sobrescreva vinho tinto
+          if (match.id === 'suave-sweet') {
+            match.image = (apiP.imagem_url && !apiP.imagem_url.includes('toro-negro-sweet.png'))
+              ? apiP.imagem_url
+              : './assets/bottles/web/toro-negro-suave.png';
+          } else if (match.id === 'sweet-sparkling') {
+            match.image = apiP.imagem_url || './assets/bottles/web/toro-negro-sweet.png';
+          } else if (apiP.imagem_url) {
+            match.image = apiP.imagem_url;
+          }
           match.active = apiP.ativo === 1;
           match.apiId = apiP.id;
         } else if (apiP.ativo === 1) {

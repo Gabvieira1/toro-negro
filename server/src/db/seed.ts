@@ -410,25 +410,25 @@ export async function runSeed() {
       destaque: 1
     },
     {
-      id: 'tn-sweet-tinto',
-      nome: 'Toro Negro Sweet',
+      id: 'tn-sweet-sparkling',
+      nome: 'Espumante Toro Negro Sparkling Sweet',
       linha: 'Especiais',
-      tipo: 'Tinto',
-      uva: 'Sweet Tinto',
-      pais: 'Chile',
-      regiao: 'Valle Central',
-      safra: '2023',
-      teor_alcoolico: 12.5,
+      tipo: 'Espumante',
+      uva: 'Charmat Sweet',
+      pais: 'Argentina',
+      regiao: 'Mendoza',
+      safra: 'NV',
+      teor_alcoolico: 12.0,
       volume_ml: 750,
-      preco_varejo_ref: 49.90,
-      preco_unitario: 32.90,
-      preco_caixa: 197.40,
+      preco_varejo_ref: 72.00,
+      preco_unitario: 44.90,
+      preco_caixa: 269.40,
       estoque_caixas: 65,
-      descricao: 'Intensidade aromática de geléia de amoras e cerejas com final doce, macio e aveludado, preservando a identidade clássica da casta.',
-      harmonizacao: 'Sobremesas à base de frutas vermelhas e queijos azuis.',
-      temperatura_servico: '14° à 16°C',
+      descricao: 'Coloração amarelo-palha brilhante com perlage fino e persistente. Notas aromáticas de pêssego em calda, flor de laranjeira e doçura vibrante de altitude.',
+      harmonizacao: 'Sobremesas à base de frutas, tortas, queijos azuis e celebrações.',
+      temperatura_servico: '6° à 8°C',
       imagem_url: './assets/bottles/web/toro-negro-sweet.png',
-      destaque: 0
+      destaque: 1
     }
   ];
 
