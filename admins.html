@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel de Gestão & Manutenção | Toro Negro Wines</title>
+
+  <!-- Tailwind CSS CDN v3 -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            burgundy: {
+              950: '#120307',
+              900: '#1E050D',
+              850: '#2A0813',
+              800: '#3D0E1C',
+              700: '#541528',
+              600: '#731C36',
+              50: '#FDF7F8',
+            },
+            gold: {
+              300: '#E5C768',
+              400: '#D4AF37',
+              500: '#BA9225',
+              600: '#947214',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Cormorant Garamond"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0E0205;
+    }
+    .bg-panel {
+      background: radial-gradient(circle at 50% 0%, rgba(42, 8, 19, 0.8) 0%, rgba(14, 2, 5, 0.98) 100%);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.25);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(212, 175, 55, 0.45);
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col text-stone-100 bg-panel selection:bg-gold-500 selection:text-burgundy-950">
+
+  <!-- ========================================================================= -->
+  <!-- 1. TOP NAVBAR / HEADER EXECUTIVO -->
+  <!-- ========================================================================= -->
+  <header class="w-full bg-burgundy-950/90 border-b border-gold-400/20 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <img src="./assets/toro-negro-logo-ecommerce.png" alt="Toro Negro" class="h-10 sm:h-12 w-auto object-contain drop-shadow-md group-hover:scale-102 transition-transform"/>
+        </a>
+        <div class="h-7 w-[1px] bg-white/15 hidden sm:block"></div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs sm:text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
+              <span>Painel de Gestão & Manutenção</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" title="Servidor Ativo"></span>
+            </span>
+          </div>
+          <span class="text-[10px] sm:text-[11px] text-gold-400 uppercase tracking-widest font-semibold block">E-commerce Toro Negro B2B</span>
+        </div>
+      </div>
+
+      <!-- Action Nav & User Info -->
+      <div class="flex items-center gap-2 sm:gap-4 text-xs">
+        <a href="portal-b2b.html" target="_blank" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-gold-300 border border-white/10 transition-colors font-medium">
+          <svg class="w-3.5 h-3.5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          <span>Ver Loja B2B ↗</span>
+        </a>
+
+        <!-- Admin User Badge -->
+        <div id="admin-user-badge" class="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-burgundy-900/80 border border-gold-400/25">
+          <div class="w-7 h-7 rounded-lg bg-gold-400 text-burgundy-950 flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
+            AD
+          </div>
+          <div class="flex flex-col text-left leading-tight">
+            <span id="admin-user-name" class="font-bold text-white truncate max-w-[110px] sm:max-w-[150px]">Gestão Toro Negro</span>
+            <span class="text-[9px] text-emerald-400 font-semibold uppercase tracking-wider">Acesso Master</span>
+          </div>
+          <button type="button" onclick="handleAdminLogout()" title="Encerrar sessão de administração" class="ml-1 text-white/50 hover:text-red-400 p-1 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN CONTAINER -->
+  <!-- ========================================================================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- KPI Metrics Grid -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+      
+      <!-- Metric 1: Rótulos Ativos -->
+      <div class="p-5 rounded-2xl bg-burgundy-900/40 border border-white/10 hover:border-gold-400/40 transition-colors shadow-lg relative overflow-hidden group">
+        <div class="flex items-center justify-between text-white/60 mb-2">
+          <span class="text-xs uppercase font-bold tracking-wider">Rótulos no Catálogo</span>
+          <span class="text-gold-400 text-lg">🍷</span>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span id="kpi-products-count" class="text-2xl sm:text-3xl font-extrabold text-white">--</span>
+          <span class="text-xs text-emerald-400 font-semibold">100% ativos</span>
+        </div>
+        <p class="text-[11px] text-white/40 mt-1">Linhas Chile, Argentina & Especiais</p>
+      </div>
+
+      <!-- Metric 2: Estoque em Caixas -->
+      <div class="p-5 rounded-2xl bg-burgundy-900/40 border border-white/10 hover:border-gold-400/40 transition-colors shadow-lg relative overflow-hidden group">
+        <div class="flex items-center justify-between text-white/60 mb-2">
+          <span class="text-xs uppercase font-bold tracking-wider">Estoque em Caixas</span>
+          <span class="text-gold-400 text-lg">📦</span>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span id="kpi-stock-boxes" class="text-2xl sm:text-3xl font-extrabold text-white">--</span>
+          <span id="kpi-stock-bottles" class="text-xs text-gold-300 font-semibold">-- garrafas</span>
+        </div>
+        <p class="text-[11px] text-white/40 mt-1">6 garrafas por caixa fechada</p>
+      </div>
+
+      <!-- Metric 3: Faturamento Total B2B -->
+      <div class="p-5 rounded-2xl bg-burgundy-900/40 border border-white/10 hover:border-gold-400/40 transition-colors shadow-lg relative overflow-hidden group">
+        <div class="flex items-center justify-between text-white/60 mb-2">
+          <span class="text-xs uppercase font-bold tracking-wider">Faturamento B2B</span>
+          <span class="text-gold-400 text-lg">💰</span>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span id="kpi-revenue-total" class="text-2xl sm:text-3xl font-extrabold text-gold-400">R$ --</span>
+        </div>
+        <p class="text-[11px] text-white/40 mt-1" id="kpi-orders-count">-- pedidos faturados</p>
+      </div>
+
+      <!-- Metric 4: Clientes PJ Cadastrados -->
+      <div class="p-5 rounded-2xl bg-burgundy-900/40 border border-white/10 hover:border-gold-400/40 transition-colors shadow-lg relative overflow-hidden group">
+        <div class="flex items-center justify-between text-white/60 mb-2">
+          <span class="text-xs uppercase font-bold tracking-wider">Empresas Compradoras</span>
+          <span class="text-gold-400 text-lg">🏢</span>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span id="kpi-companies-count" class="text-2xl sm:text-3xl font-extrabold text-white">--</span>
+          <span class="text-xs text-emerald-400 font-semibold">PJ Habilitados</span>
+        </div>
+        <p class="text-[11px] text-white/40 mt-1">Restaurantes, adegas e empórios</p>
+      </div>
+
+    </section>
+
+    <!-- Navigation Tabs & Toolbar -->
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+      <div class="flex items-center gap-1.5 p-1 bg-burgundy-900/50 rounded-2xl border border-white/10">
+        <button 
+          type="button" 
+          id="tab-btn-products" 
+          onclick="switchAdminTab('products')"
+          class="px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-xs bg-gold-400 text-burgundy-950 cursor-pointer flex items-center gap-2"
+        >
+          <span>🍷 Catálogo & Valores</span>
+          <span id="tab-badge-products" class="px-1.5 py-0.5 rounded-full bg-burgundy-950 text-gold-300 text-[10px]">14</span>
+        </button>
+        <button 
+          type="button" 
+          id="tab-btn-orders" 
+          onclick="switchAdminTab('orders')"
+          class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-white/70 hover:text-white cursor-pointer flex items-center gap-2"
+        >
+          <span>📋 Pedidos Corporativos</span>
+          <span id="tab-badge-orders" class="px-1.5 py-0.5 rounded-full bg-white/10 text-white text-[10px]">--</span>
+        </button>
+        <button 
+          type="button" 
+          id="tab-btn-companies" 
+          onclick="switchAdminTab('companies')"
+          class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-white/70 hover:text-white cursor-pointer flex items-center gap-2"
+        >
+          <span>🏢 Clientes PJ</span>
+          <span id="tab-badge-companies" class="px-1.5 py-0.5 rounded-full bg-white/10 text-white text-[10px]">--</span>
+        </button>
+      </div>
+
+      <!-- Quick Action: Cadastrar Novo Vinho -->
+      <div class="flex items-center gap-2">
+        <button 
+          type="button" 
+          onclick="openCreateProductModal()"
+          class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-300 text-burgundy-950 font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+        >
+          <svg class="w-4 h-4 text-burgundy-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+          <span>Novo Rótulo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: GESTÃO DE PRODUTOS & VALORES -->
+    <!-- ========================================================================= -->
+    <div id="tab-content-products" class="space-y-4">
+      
+      <!-- Filter and Search Toolbar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 rounded-2xl bg-burgundy-900/30 border border-white/10">
+        <div class="relative w-full sm:w-80">
+          <input 
+            type="text" 
+            id="product-search-input" 
+            oninput="handleProductSearch(this.value)"
+            placeholder="Buscar por nome, uva ou terroir..." 
+            class="w-full bg-black/40 border border-white/15 rounded-xl pl-9 pr-3.5 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-gold-400 font-medium"
+          />
+          <svg class="w-4 h-4 text-white/40 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <select 
+            id="product-filter-type" 
+            onchange="handleProductFilterType(this.value)"
+            class="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400 font-medium cursor-pointer"
+          >
+            <option value="">Todos os Tipos</option>
+            <option value="Tinto">Tintos</option>
+            <option value="Branco">Brancos</option>
+            <option value="Rosé">Rosés</option>
+            <option value="Espumante">Espumantes</option>
+          </select>
+
+          <select 
+            id="product-filter-status" 
+            onchange="handleProductFilterStatus(this.value)"
+            class="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400 font-medium cursor-pointer"
+          >
+            <option value="all">Todos os Status</option>
+            <option value="active" selected>Apenas Ativos na Loja</option>
+            <option value="inactive">Inativos / Ocultos</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Products Table Container -->
+      <div class="overflow-x-auto rounded-2xl border border-white/10 bg-burgundy-950/60 shadow-xl custom-scrollbar">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b border-white/10 bg-white/5 text-[11px] text-gold-400 font-bold uppercase tracking-wider">
+              <th class="py-3.5 px-4">Rótulo / Vinho</th>
+              <th class="py-3.5 px-3">Terroir & Uva</th>
+              <th class="py-3.5 px-3 text-right">Preço Unitário (Atacado)</th>
+              <th class="py-3.5 px-3 text-right">Preço Caixa (6 un)</th>
+              <th class="py-3.5 px-3 text-right">Ref. Varejo</th>
+              <th class="py-3.5 px-3 text-center">Estoque (Caixas)</th>
+              <th class="py-3.5 px-3 text-center">Status</th>
+              <th class="py-3.5 px-4 text-center">Ações de Manutenção</th>
+            </tr>
+          </thead>
+          <tbody id="products-table-body" class="divide-y divide-white/5 text-stone-200">
+            <!-- Renderizado dinamicamente via JavaScript -->
+            <tr>
+              <td colspan="8" class="py-12 text-center text-white/40">Carregando catálogo de vinhos...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: GESTÃO DE PEDIDOS CORPORATIVOS -->
+    <!-- ========================================================================= -->
+    <div id="tab-content-orders" class="space-y-4 hidden">
+      <div class="overflow-x-auto rounded-2xl border border-white/10 bg-burgundy-950/60 shadow-xl custom-scrollbar">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b border-white/10 bg-white/5 text-[11px] text-gold-400 font-bold uppercase tracking-wider">
+              <th class="py-3.5 px-4">N° Pedido</th>
+              <th class="py-3.5 px-3">Empresa Compradora (CNPJ)</th>
+              <th class="py-3.5 px-3">Data</th>
+              <th class="py-3.5 px-3 text-center">Volumes</th>
+              <th class="py-3.5 px-3 text-right">Total Faturado</th>
+              <th class="py-3.5 px-3">Condição Comercial</th>
+              <th class="py-3.5 px-3 text-center">Status Operacional</th>
+              <th class="py-3.5 px-4 text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="orders-table-body" class="divide-y divide-white/5 text-stone-200">
+            <tr>
+              <td colspan="8" class="py-12 text-center text-white/40">Carregando pedidos corporativos...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: CLIENTES PJ CADASTRADOS -->
+    <!-- ========================================================================= -->
+    <div id="tab-content-companies" class="space-y-4 hidden">
+      <div class="overflow-x-auto rounded-2xl border border-white/10 bg-burgundy-950/60 shadow-xl custom-scrollbar">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b border-white/10 bg-white/5 text-[11px] text-gold-400 font-bold uppercase tracking-wider">
+              <th class="py-3.5 px-4">CNPJ & Razão Social</th>
+              <th class="py-3.5 px-3">Nome Fantasia</th>
+              <th class="py-3.5 px-3">Cidade / UF</th>
+              <th class="py-3.5 px-3">Segmento</th>
+              <th class="py-3.5 px-3 text-right">Limite de Crédito</th>
+              <th class="py-3.5 px-3 text-center">Pedidos</th>
+              <th class="py-3.5 px-3 text-right">Total Comprado</th>
+              <th class="py-3.5 px-4 text-center">Status Fiscal</th>
+            </tr>
+          </thead>
+          <tbody id="companies-table-body" class="divide-y divide-white/5 text-stone-200">
+            <tr>
+              <td colspan="8" class="py-12 text-center text-white/40">Carregando empresas cadastradas...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 3. MODAL: EDITAR PRODUTO / VALORES / ESTOQUE -->
+  <!-- ========================================================================= -->
+  <div id="edit-product-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="relative w-full max-w-2xl bg-burgundy-900 border border-gold-400/30 rounded-3xl shadow-2xl overflow-hidden text-stone-100 my-auto">
+      
+      <!-- Modal Header -->
+      <div class="p-6 border-b border-white/10 bg-burgundy-950 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] uppercase font-bold tracking-widest text-gold-400 block mb-0.5">Manutenção de Catálogo</span>
+          <h3 id="edit-modal-title" class="font-bold text-xl text-white">Editar Dados & Preços do Vinho</h3>
+        </div>
+        <button type="button" onclick="closeEditProductModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold cursor-pointer transition-colors">✕</button>
+      </div>
+
+      <!-- Edit Form -->
+      <form id="edit-product-form" onsubmit="handleProductEditSubmit(event)" class="p-6 space-y-4">
+        <input type="hidden" id="edit-prod-id" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- Preview da Garrafa -->
+          <div class="flex flex-col items-center justify-center bg-black/40 border border-white/10 rounded-2xl p-4 text-center">
+            <img id="edit-prod-img-preview" src="" alt="Garrafa" class="h-36 w-auto object-contain drop-shadow-md mb-2"/>
+            <span class="text-[10px] text-white/40 uppercase font-semibold">Visualização da Garrafa</span>
+          </div>
+
+          <!-- Campos Principais -->
+          <div class="sm:col-span-2 space-y-3">
+            <div>
+              <label class="block text-xs font-bold text-white mb-1">Nome Comercial do Vinho *</label>
+              <input type="text" id="edit-prod-nome" required class="w-full bg-black/40 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400 font-medium"/>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-xs font-bold text-white mb-1">Linha / Coleção</label>
+                <select id="edit-prod-linha" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400 cursor-pointer">
+                  <option value="Reservado Chile">Reservado Chile</option>
+                  <option value="Gran Reserva Argentina">Gran Reserva Argentina</option>
+                  <option value="Especiais">Especiais & Doces</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-white mb-1">Tipo de Vinho</label>
+                <select id="edit-prod-tipo" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400 cursor-pointer">
+                  <option value="Tinto">Tinto</option>
+                  <option value="Branco">Branco</option>
+                  <option value="Rosé">Rosé</option>
+                  <option value="Espumante">Espumante</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-xs font-bold text-white mb-1">Varietal / Uva</label>
+                <input type="text" id="edit-prod-uva" required class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400"/>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-white mb-1">País & Terroir</label>
+                <input type="text" id="edit-prod-pais" required class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco de Preços e Valores Financeiros -->
+        <div class="p-4 rounded-2xl bg-black/30 border border-gold-400/30 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-gold-300 uppercase tracking-wider flex items-center gap-1.5">
+              <span>💳 Estrutura de Preços & Margem Atacado</span>
+            </span>
+            <span class="text-[10px] text-white/50">Cálculo Automático por Caixa</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-white mb-1">Preço Unitário Atacado (R$) *</label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-xs">R$</span>
+                <input 
+                  type="number" 
+                  step="0.01" 
+                  min="0.01" 
+                  id="edit-prod-preco-unitario" 
+                  oninput="handlePriceCalculationLive()"
+                  required 
+                  class="w-full bg-black/60 border border-gold-400/40 rounded-xl pl-8 pr-3 py-2.5 text-xs text-gold-300 font-extrabold focus:outline-none focus:border-gold-300"
+                />
+              </div>
+              <span class="text-[10px] text-white/40 block mt-1">Valor por garrafa cobrado do PJ</span>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-white mb-1">Preço da Caixa Fechada (R$)</label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-xs">R$</span>
+                <input 
+                  type="text" 
+                  id="edit-prod-preco-caixa" 
+                  readonly 
+                  class="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-3 py-2.5 text-xs text-white font-bold cursor-not-allowed"
+                />
+              </div>
+              <span class="text-[10px] text-emerald-400 block mt-1">Calculado: Unitário × 6 un</span>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-white mb-1">Preço Sugerido Varejo (R$)</label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-xs">R$</span>
+                <input 
+                  type="number" 
+                  step="0.01" 
+                  min="0.01" 
+                  id="edit-prod-preco-varejo" 
+                  required 
+                  class="w-full bg-black/60 border border-white/20 rounded-xl pl-8 pr-3 py-2.5 text-xs text-white font-medium focus:outline-none focus:border-gold-400"
+                />
+              </div>
+              <span class="text-[10px] text-white/40 block mt-1">Preço de referência no cardápio</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco de Estoque e Status -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">Estoque em Caixas *</label>
+            <input 
+              type="number" 
+              min="0" 
+              id="edit-prod-estoque" 
+              required 
+              class="w-full bg-black/40 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white font-bold focus:outline-none focus:border-gold-400"
+            />
+            <span class="text-[10px] text-white/40 mt-0.5 block">Saldo de caixas fechadas</span>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">Safra</label>
+            <input type="text" id="edit-prod-safra" placeholder="2023" class="w-full bg-black/40 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400"/>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">Teor Alcoólico (%)</label>
+            <input type="number" step="0.1" id="edit-prod-teor" placeholder="13.0" class="w-full bg-black/40 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400"/>
+          </div>
+        </div>
+
+        <!-- Imagem e Metadados -->
+        <div>
+          <label class="block text-xs font-bold text-white mb-1">Caminho / URL da Imagem da Garrafa</label>
+          <input 
+            type="text" 
+            id="edit-prod-imagem" 
+            oninput="document.getElementById('edit-prod-img-preview').src = this.value"
+            class="w-full bg-black/40 border border-white/20 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-gold-400"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-white mb-1">Notas Sensoriais de Degustação</label>
+          <textarea id="edit-prod-desc" rows="2" class="w-full bg-black/40 border border-white/20 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-gold-400"></textarea>
+        </div>
+
+        <!-- Toggles: Destaque e Ativo -->
+        <div class="flex items-center gap-6 pt-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="edit-prod-destaque" class="rounded bg-black/50 border-white/30 text-gold-400 focus:ring-0 w-4 h-4 cursor-pointer"/>
+            <span class="text-xs font-bold text-white">⭐ Rótulo em Destaque na Vitrine</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="edit-prod-ativo" class="rounded bg-black/50 border-white/30 text-emerald-500 focus:ring-0 w-4 h-4 cursor-pointer"/>
+            <span class="text-xs font-bold text-emerald-400">✓ Ativo e Visível para Venda</span>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+          <button 
+            type="button" 
+            onclick="closeEditProductModal()" 
+            class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold transition-colors cursor-pointer"
+          >
+            Cancelar
+          </button>
+          <button 
+            type="submit" 
+            id="btn-save-product"
+            class="px-6 py-2.5 rounded-xl bg-gold-400 hover:bg-gold-300 text-burgundy-950 text-xs font-bold uppercase tracking-wider transition-all shadow-md cursor-pointer flex items-center gap-1.5"
+          >
+            <span>Salvar Alterações</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 4. MODAL: CADASTRAR NOVO PRODUTO -->
+  <!-- ========================================================================= -->
+  <div id="create-product-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="relative w-full max-w-xl bg-burgundy-900 border border-gold-400/30 rounded-3xl shadow-2xl overflow-hidden text-stone-100 my-auto">
+      
+      <div class="p-6 border-b border-white/10 bg-burgundy-950 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] uppercase font-bold tracking-widest text-gold-400 block mb-0.5">Novo Item</span>
+          <h3 class="font-bold text-xl text-white">Cadastrar Rótulo de Vinho</h3>
+        </div>
+        <button type="button" onclick="closeCreateProductModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold cursor-pointer">✕</button>
+      </div>
+
+      <form id="create-product-form" onsubmit="handleProductCreateSubmit(event)" class="p-6 space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-white mb-1">Nome do Vinho *</label>
+          <input type="text" id="create-prod-nome" required placeholder="Ex: Toro Negro Gran Reserva Malbec" class="w-full bg-black/40 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400 font-medium"/>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">Linha / Terroir</label>
+            <select id="create-prod-linha" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400">
+              <option value="Reservado Chile">Reservado Chile</option>
+              <option value="Gran Reserva Argentina">Gran Reserva Argentina</option>
+              <option value="Especiais">Especiais & Doces</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">Tipo</label>
+            <select id="create-prod-tipo" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400">
+              <option value="Tinto">Tinto</option>
+              <option value="Branco">Branco</option>
+              <option value="Rosé">Rosé</option>
+              <option value="Espumante">Espumante</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">Uva Varietal</label>
+            <input type="text" id="create-prod-uva" required placeholder="Ex: Malbec" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">País de Origem</label>
+            <input type="text" id="create-prod-pais" required placeholder="Chile ou Argentina" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400"/>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">Preço Unitário (R$)</label>
+            <input type="number" step="0.01" id="create-prod-preco" required placeholder="38.90" class="w-full bg-black/40 border border-gold-400/40 rounded-xl px-3 py-2 text-xs text-gold-300 font-bold focus:outline-none focus:border-gold-300"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">Ref. Varejo (R$)</label>
+            <input type="number" step="0.01" id="create-prod-varejo" required placeholder="59.90" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400"/>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-white mb-1">Estoque (Caixas)</label>
+            <input type="number" id="create-prod-estoque" required placeholder="50" class="w-full bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none focus:border-gold-400"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-white mb-1">Caminho da Imagem</label>
+          <input type="text" id="create-prod-imagem" value="./assets/bottles/web/toro-negro-carmenere.png" class="w-full bg-black/40 border border-white/20 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-gold-400"/>
+        </div>
+
+        <div class="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeCreateProductModal()" class="px-5 py-2.5 rounded-xl bg-white/10 text-white text-xs font-bold">Cancelar</button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-gold-400 text-burgundy-950 text-xs font-bold uppercase tracking-wider shadow-md">Cadastrar no Catálogo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 5. MODAL DE LOGIN ADMINISTRATIVO (GATE DE ACESSO) -->
+  <!-- ========================================================================= -->
+  <div id="admin-login-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-burgundy-950 border border-gold-400/30 rounded-3xl p-7 text-stone-100 shadow-2xl relative">
+      <div class="text-center mb-6">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-gold-400/30 text-gold-400 text-[10px] font-black uppercase tracking-widest mb-3">
+          Gestão Master
+        </div>
+        <h2 class="text-2xl font-bold text-white tracking-tight">Autenticação Administrativa</h2>
+        <p class="text-xs text-white/50 mt-1">Área restrita para manutenção de preços e pedidos da vinícola.</p>
+      </div>
+
+      <form onsubmit="handleAdminLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-white/80 mb-1">E-mail Administrativo *</label>
+          <input 
+            type="email" 
+            id="admin-login-email" 
+            required 
+            placeholder="admin@toronegro.com.br"
+            class="w-full bg-black/50 border border-white/20 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-gold-400 font-medium"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-white/80 mb-1">Senha de Acesso *</label>
+          <input 
+            type="password" 
+            id="admin-login-senha" 
+            required 
+            placeholder="••••••••"
+            class="w-full bg-black/50 border border-white/20 rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-gold-400"
+          />
+        </div>
+
+        <div id="admin-login-error" class="hidden p-2.5 rounded-xl bg-red-950/80 border border-red-500/50 text-red-200 text-xs text-center font-medium"></div>
+
+        <button 
+          type="submit" 
+          id="btn-admin-login-submit"
+          class="w-full py-3.5 rounded-xl bg-gold-400 hover:bg-gold-300 text-burgundy-950 font-bold text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer"
+        >
+          Entrar na Gestão Toro Negro
+        </button>
+
+        <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-white/50">
+          <span>Credenciais padrão:</span>
+          <button type="button" onclick="fillAdminDemo()" class="text-gold-400 font-bold hover:underline cursor-pointer">
+            Preencher Teste (admin123)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-stone-900 border border-gold-400/40 text-white text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 font-medium">
+      <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+      <span id="toast-message">Notificação</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 6. JAVASCRIPT CONTROLLER DO PAINEL ADMIN -->
+  <!-- ========================================================================= -->
+  <script>
+    const STORAGE_ADMIN_TOKEN = 'tn_admin_token';
+    const STORAGE_ADMIN_USER = 'tn_admin_user';
+
+    let allProducts = [];
+    let allOrders = [];
+    let allCompanies = [];
+    let currentAdminTab = 'products';
+
+    function escapeHtml(str) {
+      if (str == null) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAdminAuth();
+    });
+
+    // 1. Verificação de Autenticação Admin
+    function checkAdminAuth() {
+      const token = localStorage.getItem(STORAGE_ADMIN_TOKEN);
+      const user = localStorage.getItem(STORAGE_ADMIN_USER);
+
+      if (!token || !user) {
+        showLoginModal();
+      } else {
+        try {
+          const parsed = JSON.parse(user);
+          const nameEl = document.getElementById('admin-user-name');
+          if (nameEl) nameEl.textContent = parsed.nome || 'Administrador';
+          hideLoginModal();
+          loadAdminDashboard();
+        } catch (e) {
+          showLoginModal();
+        }
+      }
+    }
+
+    function showLoginModal() {
+      const modal = document.getElementById('admin-login-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function hideLoginModal() {
+      const modal = document.getElementById('admin-login-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function fillAdminDemo() {
+      const emailInput = document.getElementById('admin-login-email');
+      const senhaInput = document.getElementById('admin-login-senha');
+      if (emailInput) emailInput.value = 'admin@toronegro.com.br';
+      if (senhaInput) senhaInput.value = 'admin123';
+    }
+
+    async function handleAdminLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('admin-login-email').value.trim();
+      const senha = document.getElementById('admin-login-senha').value.trim();
+      const errBox = document.getElementById('admin-login-error');
+      const submitBtn = document.getElementById('btn-admin-login-submit');
+
+      if (errBox) errBox.classList.add('hidden');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Verificando privilégios...';
+      }
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, senha })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.token) {
+          localStorage.setItem(STORAGE_ADMIN_TOKEN, data.token);
+          localStorage.setItem(STORAGE_ADMIN_USER, JSON.stringify(data.user));
+          hideLoginModal();
+          showToast(`Bem-vindo, ${data.user.nome}!`);
+          loadAdminDashboard();
+        } else {
+          if (errBox) {
+            errBox.textContent = data.error || 'Credenciais de administrador inválidas.';
+            errBox.classList.remove('hidden');
+          }
+        }
+      } catch (err) {
+        // Fallback local se estiver offline
+        if (email.toLowerCase() === 'admin@toronegro.com.br' && senha === 'admin123') {
+          const fakeUser = { nome: 'Gestão Toro Negro', email, role: 'ADMIN' };
+          localStorage.setItem(STORAGE_ADMIN_TOKEN, 'demo-admin-token');
+          localStorage.setItem(STORAGE_ADMIN_USER, JSON.stringify(fakeUser));
+          hideLoginModal();
+          showToast('Acesso administrativo liberado (Modo Homologação)!');
+          loadAdminDashboard();
+          return;
+        }
+        if (errBox) {
+          errBox.textContent = 'Erro ao conectar ao servidor.';
+          errBox.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Entrar na Gestão Toro Negro';
+        }
+      }
+    }
+
+    function handleAdminLogout() {
+      localStorage.removeItem(STORAGE_ADMIN_TOKEN);
+      localStorage.removeItem(STORAGE_ADMIN_USER);
+      showToast('Sessão administrativa encerrada.');
+      showLoginModal();
+    }
+
+    function getAuthHeaders() {
+      const token = localStorage.getItem(STORAGE_ADMIN_TOKEN) || '';
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      };
+    }
+
+    // 2. Carregar Dados do Dashboard
+    async function loadAdminDashboard() {
+      await Promise.all([
+        fetchStats(),
+        fetchProducts(),
+        fetchOrders(),
+        fetchCompanies()
+      ]);
+    }
+
+    // 2.1 Fetch Stats
+    async function fetchStats() {
+      try {
+        const res = await fetch('/api/admin/stats', { headers: getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.stats) {
+            const s = data.stats;
+            document.getElementById('kpi-products-count').textContent = s.activeProducts;
+            document.getElementById('kpi-stock-boxes').textContent = s.totalBoxesStock;
+            document.getElementById('kpi-stock-bottles').textContent = `${s.totalBoxesStock * 6} garrafas`;
+            document.getElementById('kpi-revenue-total').textContent = `R$ ${s.totalRevenue.toFixed(2).replace('.', ',')}`;
+            document.getElementById('kpi-orders-count').textContent = `${s.totalOrders} pedidos emitidos`;
+            document.getElementById('kpi-companies-count').textContent = s.totalCompanies;
+            document.getElementById('tab-badge-orders').textContent = s.totalOrders;
+            document.getElementById('tab-badge-companies').textContent = s.totalCompanies;
+          }
+        }
+      } catch (e) {}
+    }
+
+    // 2.2 Fetch Products
+    async function fetchProducts() {
+      try {
+        const res = await fetch('/api/products?includeInactive=1');
+        if (res.ok) {
+          const data = await res.json();
+          allProducts = data.products || [];
+          document.getElementById('tab-badge-products').textContent = allProducts.length;
+          renderProductsTable();
+        }
+      } catch (e) {
+        console.warn('Erro ao buscar produtos:', e);
+      }
+    }
+
+    // 2.3 Fetch Orders
+    async function fetchOrders() {
+      try {
+        const res = await fetch('/api/admin/orders', { headers: getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          allOrders = data.orders || [];
+          renderOrdersTable();
+        }
+      } catch (e) {}
+    }
+
+    // 2.4 Fetch Companies
+    async function fetchCompanies() {
+      try {
+        const res = await fetch('/api/admin/companies', { headers: getAuthHeaders() });
+        if (res.ok) {
+          const data = await res.json();
+          allCompanies = data.companies || [];
+          renderCompaniesTable();
+        }
+      } catch (e) {}
+    }
+
+    // 3. Renderização de Produtos
+    function renderProductsTable() {
+      const tbody = document.getElementById('products-table-body');
+      if (!tbody) return;
+
+      const q = (document.getElementById('product-search-input')?.value || '').toLowerCase();
+      const typeFilter = document.getElementById('product-filter-type')?.value || '';
+      const statusFilter = document.getElementById('product-filter-status')?.value || 'active';
+
+      const filtered = allProducts.filter(p => {
+        if (typeFilter && p.tipo !== typeFilter) return false;
+        if (statusFilter === 'active' && p.ativo !== 1) return false;
+        if (statusFilter === 'inactive' && p.ativo === 1) return false;
+        if (q) {
+          const match = p.nome.toLowerCase().includes(q) ||
+                        p.uva.toLowerCase().includes(q) ||
+                        p.regiao.toLowerCase().includes(q) ||
+                        p.pais.toLowerCase().includes(q);
+          if (!match) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="py-10 text-center text-white/40">
+              Nenhum rótulo encontrado com os filtros aplicados.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(p => {
+        const isLowStock = p.estoque_caixas <= 20;
+        const stockBadgeClass = isLowStock
+          ? 'bg-amber-950/80 text-amber-300 border-amber-500/40'
+          : 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40';
+
+        const flagImg = (p.pais || '').toLowerCase() === 'argentina' ? './assets/flag-argentina.png' : './assets/flag-chile.png';
+
+        return `
+          <tr class="hover:bg-white/[0.03] transition-colors group">
+            <td class="py-3 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-14 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center p-1 shrink-0 overflow-hidden">
+                  <img src="${p.imagem_url}" alt="${escapeHtml(p.nome)}" class="h-12 w-auto object-contain"/>
+                </div>
+                <div>
+                  <span class="font-bold text-white text-xs block">${escapeHtml(p.nome)}</span>
+                  <div class="flex items-center gap-1.5 text-[10px] text-white/50 mt-0.5">
+                    <img src="${flagImg}" class="w-3.5 h-2.5 object-cover rounded-2xs" alt=""/>
+                    <span>${escapeHtml(p.regiao)} • ${escapeHtml(p.pais)}</span>
+                    <span>• Safra ${escapeHtml(p.safra || '2023')}</span>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <td class="py-3 px-3">
+              <span class="px-2 py-0.5 rounded-md bg-white/10 text-white font-medium text-[10px]">
+                ${escapeHtml(p.tipo)} • ${escapeHtml(p.uva)}
+              </span>
+            </td>
+
+            <td class="py-3 px-3 text-right">
+              <span class="text-xs font-black text-gold-400">R$ ${p.preco_unitario.toFixed(2).replace('.', ',')}</span>
+              <span class="text-[10px] text-white/40 block">/garrafa</span>
+            </td>
+
+            <td class="py-3 px-3 text-right">
+              <span class="text-xs font-bold text-white">R$ ${p.preco_caixa.toFixed(2).replace('.', ',')}</span>
+              <span class="text-[10px] text-white/40 block">6 garrafas</span>
+            </td>
+
+            <td class="py-3 px-3 text-right text-white/50">
+              <span class="line-through">R$ ${p.preco_varejo_ref.toFixed(2).replace('.', ',')}</span>
+            </td>
+
+            <td class="py-3 px-3 text-center">
+              <span class="px-2.5 py-1 rounded-full border text-[11px] font-bold ${stockBadgeClass}">
+                ${p.estoque_caixas} cx
+              </span>
+              <span class="text-[10px] text-white/40 block mt-0.5">${p.estoque_caixas * 6} un</span>
+            </td>
+
+            <td class="py-3 px-3 text-center">
+              ${p.ativo === 1 
+                ? '<span class="inline-flex items-center gap-1 text-emerald-400 text-[11px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Ativo</span>' 
+                : '<span class="inline-flex items-center gap-1 text-stone-400 text-[11px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-stone-500"></span> Oculto</span>'}
+            </td>
+
+            <td class="py-3 px-4 text-center">
+              <div class="inline-flex items-center gap-1.5">
+                <button 
+                  type="button" 
+                  onclick="openEditProductModal('${p.id}')"
+                  class="px-2.5 py-1.5 rounded-lg bg-gold-400/20 hover:bg-gold-400 text-gold-300 hover:text-burgundy-950 font-bold text-[11px] transition-all cursor-pointer flex items-center gap-1"
+                  title="Editar preços e detalhes"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                  <span>Editar</span>
+                </button>
+
+                <button 
+                  type="button" 
+                  onclick="toggleProductStatus('${p.id}')"
+                  class="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors cursor-pointer"
+                  title="${p.ativo === 1 ? 'Desativar da loja' : 'Ativar na loja'}"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function handleProductSearch(val) {
+      renderProductsTable();
+    }
+    function handleProductFilterType(val) {
+      renderProductsTable();
+    }
+    function handleProductFilterStatus(val) {
+      renderProductsTable();
+    }
+
+    // 4. Modal de Edição de Vinho
+    function openEditProductModal(id) {
+      const p = allProducts.find(x => x.id === id);
+      if (!p) return;
+
+      document.getElementById('edit-prod-id').value = p.id;
+      document.getElementById('edit-prod-nome').value = p.nome;
+      document.getElementById('edit-prod-linha').value = p.linha;
+      document.getElementById('edit-prod-tipo').value = p.tipo;
+      document.getElementById('edit-prod-uva').value = p.uva;
+      document.getElementById('edit-prod-pais').value = p.pais;
+      document.getElementById('edit-prod-preco-unitario').value = p.preco_unitario;
+      document.getElementById('edit-prod-preco-varejo').value = p.preco_varejo_ref;
+      document.getElementById('edit-prod-estoque').value = p.estoque_caixas;
+      document.getElementById('edit-prod-safra').value = p.safra || '2023';
+      document.getElementById('edit-prod-teor').value = p.teor_alcoolico || 13.0;
+      document.getElementById('edit-prod-imagem').value = p.imagem_url;
+      document.getElementById('edit-prod-img-preview').src = p.imagem_url;
+      document.getElementById('edit-prod-desc').value = p.descricao || '';
+      document.getElementById('edit-prod-destaque').checked = Boolean(p.destaque);
+      document.getElementById('edit-prod-ativo').checked = Boolean(p.ativo);
+
+      handlePriceCalculationLive();
+
+      const modal = document.getElementById('edit-product-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeEditProductModal() {
+      const modal = document.getElementById('edit-product-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handlePriceCalculationLive() {
+      const unitInput = document.getElementById('edit-prod-preco-unitario');
+      const boxInput = document.getElementById('edit-prod-preco-caixa');
+      if (!unitInput || !boxInput) return;
+      const unit = parseFloat(unitInput.value) || 0;
+      const box = (unit * 6).toFixed(2).replace('.', ',');
+      boxInput.value = box;
+    }
+
+    async function handleProductEditSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('edit-prod-id').value;
+      const btn = document.getElementById('btn-save-product');
+
+      const payload = {
+        nome: document.getElementById('edit-prod-nome').value.trim(),
+        linha: document.getElementById('edit-prod-linha').value,
+        tipo: document.getElementById('edit-prod-tipo').value,
+        uva: document.getElementById('edit-prod-uva').value.trim(),
+        pais: document.getElementById('edit-prod-pais').value.trim(),
+        preco_unitario: parseFloat(document.getElementById('edit-prod-preco-unitario').value),
+        preco_varejo_ref: parseFloat(document.getElementById('edit-prod-preco-varejo').value),
+        estoque_caixas: parseInt(document.getElementById('edit-prod-estoque').value),
+        safra: document.getElementById('edit-prod-safra').value.trim(),
+        teor_alcoolico: parseFloat(document.getElementById('edit-prod-teor').value),
+        imagem_url: document.getElementById('edit-prod-imagem').value.trim(),
+        descricao: document.getElementById('edit-prod-desc').value.trim(),
+        destaque: document.getElementById('edit-prod-destaque').checked ? 1 : 0,
+        ativo: document.getElementById('edit-prod-ativo').checked ? 1 : 0
+      };
+
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Salvando no banco...';
+      }
+
+      try {
+        const res = await fetch(`/api/products/${id}`, {
+          method: 'PUT',
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showToast(`Preço e dados do vinho atualizados com sucesso!`);
+          closeEditProductModal();
+          await fetchProducts();
+          await fetchStats();
+        } else {
+          alert(data.error || 'Erro ao salvar alterações do produto.');
+        }
+      } catch (err) {
+        alert('Erro ao conectar com o servidor.');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Salvar Alterações';
+        }
+      }
+    }
+
+    // 5. Ativar / Desativar Produto
+    async function toggleProductStatus(id) {
+      const p = allProducts.find(x => x.id === id);
+      if (!p) return;
+      const action = p.ativo === 1 ? 'desativar' : 'ativar';
+      if (!confirm(`Deseja ${action} o rótulo "${p.nome}" no e-commerce?`)) return;
+
+      try {
+        const res = await fetch(`/api/products/${id}`, {
+          method: 'DELETE',
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(data.message);
+          await fetchProducts();
+          await fetchStats();
+        } else {
+          alert(data.error || 'Erro ao alterar status.');
+        }
+      } catch (e) {
+        alert('Erro ao conectar ao servidor.');
+      }
+    }
+
+    // 6. Modal Criar Produto
+    function openCreateProductModal() {
+      const modal = document.getElementById('create-product-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeCreateProductModal() {
+      const modal = document.getElementById('create-product-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function handleProductCreateSubmit(e) {
+      e.preventDefault();
+      const payload = {
+        nome: document.getElementById('create-prod-nome').value.trim(),
+        linha: document.getElementById('create-prod-linha').value,
+        tipo: document.getElementById('create-prod-tipo').value,
+        uva: document.getElementById('create-prod-uva').value.trim(),
+        pais: document.getElementById('create-prod-pais').value.trim(),
+        preco_unitario: parseFloat(document.getElementById('create-prod-preco').value),
+        preco_varejo_ref: parseFloat(document.getElementById('create-prod-varejo').value),
+        estoque_caixas: parseInt(document.getElementById('create-prod-estoque').value),
+        imagem_url: document.getElementById('create-prod-imagem').value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/products', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`Vinho "${payload.nome}" incluído no catálogo com sucesso!`);
+          closeCreateProductModal();
+          await fetchProducts();
+          await fetchStats();
+        } else {
+          alert(data.error || 'Erro ao criar produto.');
+        }
+      } catch (e) {
+        alert('Erro de conexão ao criar produto.');
+      }
+    }
+
+    // 7. Renderização de Pedidos
+    function renderOrdersTable() {
+      const tbody = document.getElementById('orders-table-body');
+      if (!tbody) return;
+
+      if (allOrders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-10 text-center text-white/40">Nenhum pedido corporativo registrado ainda.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = allOrders.map(o => {
+        const formattedDate = new Date(o.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+        
+        let payBadge = 'Boleto Faturado';
+        if ((o.forma_pagamento || '').includes('PIX')) payBadge = 'Pix à Vista (-3%)';
+        else if ((o.forma_pagamento || '').includes('CARTAO')) payBadge = 'Cartão PJ (3x)';
+        else if ((o.forma_pagamento || '').includes('BOLETO')) {
+          const rule = o.forma_pagamento.replace('BOLETO_', '').replace(/_/g, '/');
+          payBadge = `Boleto (${rule}d)`;
+        }
+
+        return `
+          <tr class="hover:bg-white/[0.03] transition-colors">
+            <td class="py-3 px-4 font-mono font-bold text-gold-400">${o.order_number}</td>
+            <td class="py-3 px-3">
+              <span class="font-bold text-white block truncate max-w-[180px]">${escapeHtml(o.nome_fantasia || o.razao_social)}</span>
+              <span class="text-[10px] text-white/50">${escapeHtml(o.cnpj)}</span>
+            </td>
+            <td class="py-3 px-3 text-white/60">${formattedDate}</td>
+            <td class="py-3 px-3 text-center">
+              <span class="font-bold text-white">${o.total_caixas} cx</span>
+              <span class="text-[10px] text-white/40 block">${o.total_garrafas} un</span>
+            </td>
+            <td class="py-3 px-3 text-right font-black text-gold-400">
+              R$ ${o.valor_total.toFixed(2).replace('.', ',')}
+            </td>
+            <td class="py-3 px-3 text-white/70">
+              <span class="px-2 py-0.5 rounded bg-white/10 text-[10px] font-medium">${payBadge}</span>
+            </td>
+            <td class="py-3 px-3 text-center">
+              <select 
+                onchange="handleOrderStatusChange('${o.id}', this.value)"
+                class="bg-black/50 border border-white/20 rounded-lg px-2 py-1 text-[11px] font-bold text-white focus:outline-none focus:border-gold-400 cursor-pointer"
+              >
+                <option value="CONFIRMADO" ${o.status === 'CONFIRMADO' ? 'selected' : ''}>Confirmado</option>
+                <option value="FATURADO" ${o.status === 'FATURADO' ? 'selected' : ''}>Faturado (NFe)</option>
+                <option value="EM_SEPARACAO" ${o.status === 'EM_SEPARACAO' ? 'selected' : ''}>Em Separação</option>
+                <option value="EM_TRANSPORTE" ${o.status === 'EM_TRANSPORTE' ? 'selected' : ''}>Em Transporte (MUFS)</option>
+                <option value="ENTREGUE" ${o.status === 'ENTREGUE' ? 'selected' : ''}>Entregue</option>
+                <option value="CANCELADO" ${o.status === 'CANCELADO' ? 'selected' : ''}>Cancelado</option>
+              </select>
+            </td>
+            <td class="py-3 px-4 text-center">
+              <a 
+                href="https://wa.me/5541998632724?text=Ol%C3%A1%2C%20atualiza%C3%A7%C3%A3o%20sobre%20o%20pedido%20${encodeURIComponent(o.order_number)}" 
+                target="_blank"
+                class="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-white transition-colors inline-block"
+                title="Abrir WhatsApp Comercial"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.42-.101.825z"/></svg>
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function handleOrderStatusChange(orderId, newStatus) {
+      try {
+        const res = await fetch(`/api/admin/orders/${orderId}/status`, {
+          method: 'PATCH',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ status: newStatus })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(data.message);
+          await fetchStats();
+        } else {
+          alert(data.error || 'Erro ao atualizar status.');
+        }
+      } catch (e) {
+        alert('Erro ao conectar ao servidor.');
+      }
+    }
+
+    // 8. Renderização de Empresas
+    function renderCompaniesTable() {
+      const tbody = document.getElementById('companies-table-body');
+      if (!tbody) return;
+
+      if (allCompanies.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-10 text-center text-white/40">Nenhuma empresa cliente cadastrada.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = allCompanies.map(c => `
+        <tr class="hover:bg-white/[0.03] transition-colors">
+          <td class="py-3 px-4">
+            <span class="font-bold text-white block">${escapeHtml(c.razao_social)}</span>
+            <span class="text-[10px] text-gold-400 font-mono">${escapeHtml(c.cnpj)}</span>
+          </td>
+          <td class="py-3 px-3 text-white/80">${escapeHtml(c.nome_fantasia || c.razao_social)}</td>
+          <td class="py-3 px-3 text-white/60">${escapeHtml(c.cidade)} / ${escapeHtml(c.uf)}</td>
+          <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-white/5 text-[10px]">${escapeHtml(c.segmento || 'Restaurante')}</span></td>
+          <td class="py-3 px-3 text-right font-bold text-white">R$ ${(c.limite_credito || 0).toFixed(2).replace('.', ',')}</td>
+          <td class="py-3 px-3 text-center font-bold text-gold-400">${c.total_pedidos || 0}</td>
+          <td class="py-3 px-3 text-right font-black text-emerald-400">R$ ${(c.total_faturado || 0).toFixed(2).replace('.', ',')}</td>
+          <td class="py-3 px-4 text-center">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/30">
+              ${c.status_aprovacao || 'APROVADO'}
+            </span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // 9. Alternância de Abas
+    function switchAdminTab(tab) {
+      currentAdminTab = tab;
+      const btnProd = document.getElementById('tab-btn-products');
+      const btnOrd = document.getElementById('tab-btn-orders');
+      const btnComp = document.getElementById('tab-btn-companies');
+
+      const cntProd = document.getElementById('tab-content-products');
+      const cntOrd = document.getElementById('tab-content-orders');
+      const cntComp = document.getElementById('tab-content-companies');
+
+      const activeBtnClass = 'px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-xs bg-gold-400 text-burgundy-950 cursor-pointer flex items-center gap-2';
+      const inactiveBtnClass = 'px-4 py-2 rounded-xl text-xs font-bold transition-all text-white/70 hover:text-white cursor-pointer flex items-center gap-2';
+
+      if (tab === 'products') {
+        btnProd.className = activeBtnClass;
+        btnOrd.className = inactiveBtnClass;
+        btnComp.className = inactiveBtnClass;
+        cntProd.classList.remove('hidden');
+        cntOrd.classList.add('hidden');
+        cntComp.classList.add('hidden');
+      } else if (tab === 'orders') {
+        btnOrd.className = activeBtnClass;
+        btnProd.className = inactiveBtnClass;
+        btnComp.className = inactiveBtnClass;
+        cntOrd.classList.remove('hidden');
+        cntProd.classList.add('hidden');
+        cntComp.classList.add('hidden');
+      } else {
+        btnComp.className = activeBtnClass;
+        btnProd.className = inactiveBtnClass;
+        btnOrd.className = inactiveBtnClass;
+        cntComp.classList.remove('hidden');
+        cntProd.classList.add('hidden');
+        cntOrd.classList.add('hidden');
+      }
+    }
+
+    // Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-message');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3500);
+    }
+  </script>
+
+</body>
+</html>

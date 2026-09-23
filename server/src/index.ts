@@ -61,9 +61,23 @@ app.use('/api/admin', adminRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/orders', ordersRouter);
 
-// Servir os arquivos estáticos do frontend (pasta raiz do projeto)
+// Rotas diretas e amigáveis para páginas HTML
 const staticRoot = path.resolve(__dirname, '../../');
-app.use(express.static(staticRoot));
+
+app.get(['/admin', '/admins', '/admins.html'], (req, res) => {
+  res.sendFile(path.join(staticRoot, 'admin.html'));
+});
+
+app.get(['/portal-b2b', '/b2b', '/loja', '/comprar'], (req, res) => {
+  res.sendFile(path.join(staticRoot, 'portal-b2b.html'));
+});
+
+app.get(['/login', '/login-b2b'], (req, res) => {
+  res.sendFile(path.join(staticRoot, 'login-b2b.html'));
+});
+
+// Servir os arquivos estáticos do frontend com resolução automática de extensão .html
+app.use(express.static(staticRoot, { extensions: ['html'] }));
 
 // Iniciar Servidor
 app.listen(PORT, () => {

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Toro Negro Wines</title>
+  <script>
+    (function() {
+      var pathname = window.location.pathname;
+      var clean = pathname.replace(/\/$/, ''); // remove trailing slash
+      var lastSeg = clean.split('/').pop() || '';
+
+      if (lastSeg === 'admins' || lastSeg === 'admin') {
+        window.location.replace('admin.html');
+      } else if (lastSeg === 'portal-b2b' || lastSeg === 'b2b' || lastSeg === 'loja' || lastSeg === 'comprar') {
+        window.location.replace('portal-b2b.html');
+      } else if (lastSeg === 'login' || lastSeg === 'login-b2b') {
+        window.location.replace('login-b2b.html');
+      } else if (lastSeg === 'vinicola') {
+        window.location.replace('vinicola.html');
+      } else {
+        window.location.replace('index.html');
+      }
+    })();
+  </script>
+</head>
+<body style="background: #0E0205; color: #D4AF37; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center;">
+  <div>
+    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Carregando Toro Negro Wines...</h2>
+    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Redirecionando para a página solicitada.</p>
+  </div>
+</body>
+</html>
