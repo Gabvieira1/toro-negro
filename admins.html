@@ -761,8 +761,8 @@
                   <option value="./assets/bottles/web/toro-negro-torrontes.png">Toro Negro Torrontés Mendoza</option>
                   <option value="./assets/bottles/web/toro-negro-verano.png">Pedro Jimenez Verano Limarí</option>
                   <option value="./assets/bottles/web/toro-negro-el-secreto.png">Toro Negro El Secreto Gran Seleção</option>
-                  <option value="./assets/bottles/web/toro-negro-suave.png">Toro Negro Suave Sweet</option>
-                  <option value="./assets/bottles/web/toro-negro-sweet.png">Toro Negro Sweet Tinto</option>
+                  <option value="./assets/bottles/web/toro-negro-suave.png">Toro Negro Suave Tinto (Chile)</option>
+                  <option value="./assets/bottles/web/toro-negro-sweet.png">Espumante Sweet Sparkling (Argentina)</option>
                   <option value="./assets/bottles/web/toro-negro-brut.png">Espumante Brut Sparkling</option>
                   <option value="./assets/bottles/web/toro-negro-brut-rose.png">Espumante Brut Rosé Sparkling</option>
                 </select>
@@ -922,8 +922,8 @@
                   <option value="./assets/bottles/web/toro-negro-torrontes.png">Toro Negro Torrontés Mendoza</option>
                   <option value="./assets/bottles/web/toro-negro-verano.png">Pedro Jimenez Verano Limarí</option>
                   <option value="./assets/bottles/web/toro-negro-el-secreto.png">Toro Negro El Secreto Gran Seleção</option>
-                  <option value="./assets/bottles/web/toro-negro-suave.png">Toro Negro Suave Sweet</option>
-                  <option value="./assets/bottles/web/toro-negro-sweet.png">Toro Negro Sweet Tinto</option>
+                  <option value="./assets/bottles/web/toro-negro-suave.png">Toro Negro Suave Tinto (Chile)</option>
+                  <option value="./assets/bottles/web/toro-negro-sweet.png">Espumante Sweet Sparkling (Argentina)</option>
                   <option value="./assets/bottles/web/toro-negro-brut.png">Espumante Brut Sparkling</option>
                   <option value="./assets/bottles/web/toro-negro-brut-rose.png">Espumante Brut Rosé Sparkling</option>
                 </select>
@@ -1332,24 +1332,24 @@
         ativo: 1
       },
       {
-        id: 'tn-sweet-tinto',
-        nome: 'Toro Negro Sweet Tinto',
+        id: 'tn-sweet-sparkling',
+        nome: 'Espumante Toro Negro Sparkling Sweet 750ml',
         linha: 'Especiais',
-        tipo: 'Tinto',
-        uva: 'Sweet Tinto',
-        pais: 'Chile',
-        regiao: 'Valle Central',
-        safra: '2023',
-        teor_alcoolico: 12.5,
+        tipo: 'Espumante',
+        uva: 'Charmat Sweet',
+        pais: 'Argentina',
+        regiao: 'Mendoza',
+        safra: 'NV',
+        teor_alcoolico: 12,
         unidades_por_caixa: 6,
-        preco_varejo_ref: 49.90,
-        preco_unitario: 32.90,
-        preco_caixa: 197.40,
+        preco_varejo_ref: 72.00,
+        preco_unitario: 44.90,
+        preco_caixa: 269.40,
         estoque_caixas: 65,
-        descricao: 'Geleia de amoras e cerejas com final aveludado e macio.',
-        harmonizacao: 'Sobremesas e queijos azuis.',
+        descricao: 'Perlage fino e persistente com notas de pêssego em calda, flor de laranjeira e doçura vibrante de altitude.',
+        harmonizacao: 'Sobremesas, tortas finas e celebrações.',
         imagem_url: './assets/bottles/web/toro-negro-sweet.png',
-        destaque: 0,
+        destaque: 1,
         ativo: 1
       },
       {
@@ -1501,8 +1501,8 @@
       },
       {
         id: 'tn-suave-sweet',
-        nome: 'Toro Negro Suave Sweet',
-        linha: 'Especiais',
+        nome: 'Vinho Toro Negro Suave Tinto Vinífera 750ml',
+        linha: 'Reservado Chile',
         tipo: 'Tinto',
         uva: 'Vitis Vinifera Suave',
         pais: 'Chile',
@@ -1772,6 +1772,13 @@
       if (bComp) bComp.textContent = stats.totalCompanies;
     }
 
+    function broadcastCatalogUpdate() {
+      try {
+        const bc = new BroadcastChannel('tn_catalog_channel');
+        bc.postMessage({ type: 'CATALOG_UPDATED', timestamp: Date.now() });
+      } catch(e) {}
+    }
+
     // 2. Fetch Products
     async function fetchProducts() {
       try {
@@ -1780,21 +1787,43 @@
           const data = await res.json();
           allProducts = data.products || [];
           localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+          broadcastCatalogUpdate();
         }
       } catch (e) {
         const saved = localStorage.getItem('tn_offline_products');
         allProducts = saved ? JSON.parse(saved) : DEFAULT_PRODUCTS;
       }
 
-      if (!allProducts || allProducts.length < DEFAULT_PRODUCTS.length) {
-        const existingIds = new Set((allProducts || []).map(p => p.id));
+      // Sanitiza e desduplica IDs legados para evitar repetições
+      const cleanMap = new Map();
+      (allProducts || []).forEach(p => {
+        let cleanId = p.id;
+        if (cleanId === 'tn-sweet-tinto' || cleanId === 'sweet-sparkling') {
+          cleanId = 'tn-sweet-sparkling';
+          p.id = cleanId;
+          p.tipo = 'Espumante';
+          p.imagem_url = './assets/bottles/web/toro-negro-sweet.png';
+        }
+        if (cleanId === 'brut') cleanId = 'tn-brut-sparkling';
+        if (cleanId === 'brut-rose') cleanId = 'tn-brut-rose-sparkling';
+        p.id = cleanId;
+
+        if (!cleanMap.has(cleanId)) {
+          cleanMap.set(cleanId, p);
+        }
+      });
+      allProducts = Array.from(cleanMap.values());
+
+      if (allProducts.length < DEFAULT_PRODUCTS.length) {
+        const existingIds = new Set(allProducts.map(p => p.id));
         DEFAULT_PRODUCTS.forEach(dp => {
           if (!existingIds.has(dp.id)) {
             allProducts.push(dp);
           }
         });
-        localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
       }
+      localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+      broadcastCatalogUpdate();
 
       const bProd = document.getElementById('nav-badge-products');
       if (bProd) bProd.textContent = allProducts.length;
@@ -2103,6 +2132,7 @@
           destaque
         };
         localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+        broadcastCatalogUpdate();
         showToast('Valores atualizados com sucesso (Salvo no Navegador)!');
         closeProductEditModal();
         renderProductsTable();
@@ -2132,6 +2162,7 @@
       if (pIdx !== -1) {
         allProducts[pIdx].ativo = allProducts[pIdx].ativo === 1 ? 0 : 1;
         localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+        broadcastCatalogUpdate();
         showToast(`Rótulo ${allProducts[pIdx].ativo === 1 ? 'ativado' : 'desativado'} com sucesso!`);
         renderProductsTable();
         renderTopWinesCarousel();
@@ -2514,6 +2545,7 @@
         allProducts.unshift(newProd);
         try {
           localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+          broadcastCatalogUpdate();
         } catch (e) {
           console.warn('LocalStorage cheio, mantendo em memória:', e);
         }
@@ -2595,6 +2627,7 @@
         allProducts.unshift(newProd);
         try {
           localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+          broadcastCatalogUpdate();
         } catch (e) {
           console.warn('Aviso localStorage:', e);
         }

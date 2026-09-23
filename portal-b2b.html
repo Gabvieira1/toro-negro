@@ -374,7 +374,7 @@
                   <input type="checkbox" value="tinto" onchange="toggleFilter('type', 'tinto', this.checked)" class="filter-type-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
                   <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Vinho Tinto</span>
                 </div>
-                <span class="text-[11px] text-stone-400 font-mono">(8)</span>
+                <span id="desktop-count-tinto" class="text-[11px] text-stone-400 font-mono">(8)</span>
               </label>
 
               <label class="flex items-center justify-between group cursor-pointer">
@@ -382,7 +382,7 @@
                   <input type="checkbox" value="branco" onchange="toggleFilter('type', 'branco', this.checked)" class="filter-type-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
                   <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Vinho Branco</span>
                 </div>
-                <span class="text-[11px] text-stone-400 font-mono">(3)</span>
+                <span id="desktop-count-branco" class="text-[11px] text-stone-400 font-mono">(3)</span>
               </label>
 
               <label class="flex items-center justify-between group cursor-pointer">
@@ -390,15 +390,15 @@
                   <input type="checkbox" value="rose" onchange="toggleFilter('type', 'rose', this.checked)" class="filter-type-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
                   <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Vinho Rosé</span>
                 </div>
-                <span class="text-[11px] text-stone-400 font-mono">(1)</span>
+                <span id="desktop-count-rose" class="text-[11px] text-stone-400 font-mono">(1)</span>
               </label>
 
               <label class="flex items-center justify-between group cursor-pointer">
                 <div class="flex items-center gap-2.5">
                   <input type="checkbox" value="espumante" onchange="toggleFilter('type', 'espumante', this.checked)" class="filter-type-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
-                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Espumante Brut</span>
+                  <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Espumantes</span>
                 </div>
-                <span class="text-[11px] text-stone-400 font-mono">(2)</span>
+                <span id="desktop-count-espumante" class="text-[11px] text-stone-400 font-mono">(3)</span>
               </label>
             </div>
           </div>
@@ -417,7 +417,7 @@
                     Chile (Valle Central / Limarí)
                   </span>
                 </div>
-                <span class="text-[11px] text-stone-400 font-mono">(9)</span>
+                <span id="desktop-count-chile" class="text-[11px] text-stone-400 font-mono">(9)</span>
               </label>
 
               <label class="flex items-center justify-between group cursor-pointer">
@@ -428,7 +428,7 @@
                     Argentina (Mendoza)
                   </span>
                 </div>
-                <span class="text-[11px] text-stone-400 font-mono">(5)</span>
+                <span id="desktop-count-argentina" class="text-[11px] text-stone-400 font-mono">(6)</span>
               </label>
             </div>
           </div>
@@ -444,7 +444,7 @@
                   <input type="checkbox" value="ate-35" onchange="toggleFilter('price', 'ate-35', this.checked)" class="filter-price-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
                   <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Até R$ 35,00</span>
                 </div>
-                <span class="text-[11px] text-stone-400 font-mono">(2)</span>
+                <span id="desktop-count-price-ate35" class="text-[11px] text-stone-400 font-mono">(2)</span>
               </label>
 
               <label class="flex items-center justify-between group cursor-pointer">
@@ -452,7 +452,7 @@
                   <input type="checkbox" value="35-40" onchange="toggleFilter('price', '35-40', this.checked)" class="filter-price-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
                   <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">R$ 35,00 a R$ 40,00</span>
                 </div>
-                <span class="text-[11px] text-stone-400 font-mono">(7)</span>
+                <span id="desktop-count-price-3540" class="text-[11px] text-stone-400 font-mono">(7)</span>
               </label>
 
               <label class="flex items-center justify-between group cursor-pointer">
@@ -460,7 +460,7 @@
                   <input type="checkbox" value="acima-40" onchange="toggleFilter('price', 'acima-40', this.checked)" class="filter-price-checkbox rounded border-stone-300 text-burgundy-900 focus:ring-burgundy-900 w-4 h-4 cursor-pointer"/>
                   <span class="text-stone-700 group-hover:text-burgundy-900 font-medium">Acima de R$ 40,00</span>
                 </div>
-                <span class="text-[11px] text-stone-400 font-mono">(5)</span>
+                <span id="desktop-count-price-acima40" class="text-[11px] text-stone-400 font-mono">(6)</span>
               </label>
             </div>
           </div>
@@ -929,14 +929,40 @@
   <!-- 10. JAVASCRIPT CONTROLLER (WINE.COM.BR EXPERIENCE) -->
   <!-- ========================================================================= -->
   <script>
-    // 14 Real Master Wines from Toro Negro with full metadata
+    function normalizeWineId(id) {
+      if (!id) return '';
+      const map = {
+        'carmenere': 'tn-carmenere-reservado',
+        'cabernet': 'tn-cabernet-reservado',
+        'merlot': 'tn-merlot-reservado',
+        'sauvignon': 'tn-sauvignon-reservado',
+        'sauvignon-blanc': 'tn-sauvignon-reservado',
+        'chardonnay': 'tn-chardonnay-reservado',
+        'rose': 'tn-rose-reservado',
+        'el-secreto': 'tn-el-secreto',
+        'verano': 'tn-verano-pedro-jimenez',
+        'suave-sweet': 'tn-suave-sweet',
+        'malbec': 'tn-malbec-mendoza',
+        'bonarda': 'tn-bonarda-mendoza',
+        'torrontes': 'tn-torrontes-mendoza',
+        'brut': 'tn-brut-sparkling',
+        'brut-rose': 'tn-brut-rose-sparkling',
+        'sweet-sparkling': 'tn-sweet-sparkling',
+        'sweet-tinto': 'tn-sweet-sparkling',
+        'tn-sweet-tinto': 'tn-sweet-sparkling'
+      };
+      return map[id] || id;
+    }
+
+    // Catálogo Mestre Oficial dos Rótulos Toro Negro baseado 1:1 no Cadastro do Painel Admin
     let WINES_DATABASE = [
       {
-        id: 'carmenere',
+        id: 'tn-carmenere-reservado',
+        apiId: 'tn-carmenere-reservado',
         name: 'Vinho Toro Negro Carménère Reservado 750ml',
         shortName: 'Carménère Reservado',
         type: 'tinto',
-        category: 'reservado',
+        category: 'reservado chile',
         country: 'chile',
         origin: 'Valle Central • Chile',
         flag: './assets/flag-chile.png',
@@ -949,14 +975,17 @@
         reviewsCount: 142,
         badge: 'MAIS VENDIDO',
         image: './assets/bottles/web/toro-negro-carmenere.png',
-        notes: 'Vermelho cereja profundo. Taninos redondos, aveludados e notas sedutoras de amoras pretas e especiarias.'
+        notes: 'Vermelho cereja profundo. Taninos redondos, aveludados e notas sedutoras de amoras pretas e especiarias.',
+        stock: 120,
+        active: true
       },
       {
-        id: 'cabernet',
+        id: 'tn-cabernet-reservado',
+        apiId: 'tn-cabernet-reservado',
         name: 'Vinho Toro Negro Cabernet Sauvignon Reservado 750ml',
         shortName: 'Cabernet Sauvignon Reservado',
         type: 'tinto',
-        category: 'reservado',
+        category: 'reservado chile',
         country: 'chile',
         origin: 'Valle Central • Chile',
         flag: './assets/flag-chile.png',
@@ -969,14 +998,17 @@
         reviewsCount: 118,
         badge: 'CLÁSSICO',
         image: './assets/bottles/web/toro-negro-cabernet.png',
-        notes: 'Rubi intenso. Aromas de ameixas maduras, notas sutis de carvalho tostado e corpo harmonioso.'
+        notes: 'Rubi intenso. Aromas de ameixas maduras, notas sutis de carvalho tostado e corpo harmonioso.',
+        stock: 150,
+        active: true
       },
       {
-        id: 'merlot',
+        id: 'tn-merlot-reservado',
+        apiId: 'tn-merlot-reservado',
         name: 'Vinho Toro Negro Merlot Reservado 750ml',
         shortName: 'Merlot Reservado',
         type: 'tinto',
-        category: 'reservado',
+        category: 'reservado chile',
         country: 'chile',
         origin: 'Valle Central • Chile',
         flag: './assets/flag-chile.png',
@@ -989,14 +1021,17 @@
         reviewsCount: 86,
         badge: 'EQUILIBRADO',
         image: './assets/bottles/web/toro-negro-merlot.png',
-        notes: 'Sedoso e envolvente. Frutas vermelhas frescas, notas doces de cacau e taninos macios.'
+        notes: 'Sedoso e envolvente. Frutas vermelhas frescas, notas doces de cacau e taninos macios.',
+        stock: 90,
+        active: true
       },
       {
-        id: 'sauvignon-blanc',
+        id: 'tn-sauvignon-reservado',
+        apiId: 'tn-sauvignon-reservado',
         name: 'Vinho Toro Negro Sauvignon Blanc Reservado 750ml',
         shortName: 'Sauvignon Blanc Reservado',
         type: 'branco',
-        category: 'reservado',
+        category: 'reservado chile',
         country: 'chile',
         origin: 'Valle Central • Chile',
         flag: './assets/flag-chile.png',
@@ -1009,14 +1044,17 @@
         reviewsCount: 94,
         badge: 'FRESCO & VIBRANTE',
         image: './assets/bottles/web/toro-negro-sauvignon-blanc.png',
-        notes: 'Amarelo palha com reflexos esverdeados. Cítricos vibrantes, maracujá e acidez mineral cristalina.'
+        notes: 'Amarelo palha com reflexos esverdeados. Cítricos vibrantes, maracujá e acidez mineral cristalina.',
+        stock: 80,
+        active: true
       },
       {
-        id: 'chardonnay',
+        id: 'tn-chardonnay-reservado',
+        apiId: 'tn-chardonnay-reservado',
         name: 'Vinho Toro Negro Chardonnay Reservado 750ml',
         shortName: 'Chardonnay Reservado',
         type: 'branco',
-        category: 'reservado',
+        category: 'reservado chile',
         country: 'chile',
         origin: 'Valle Central • Chile',
         flag: './assets/flag-chile.png',
@@ -1029,14 +1067,17 @@
         reviewsCount: 65,
         badge: 'UNTUOSO',
         image: './assets/bottles/web/toro-negro-chardonnay.png',
-        notes: 'Dourado brilhante. Aromas tropicais de abacaxi maduro, pêssego e toques florais refinados.'
+        notes: 'Dourado brilhante. Aromas tropicais de abacaxi maduro, pêssego e toques florais refinados.',
+        stock: 75,
+        active: true
       },
       {
-        id: 'rose',
+        id: 'tn-rose-reservado',
+        apiId: 'tn-rose-reservado',
         name: 'Vinho Toro Negro Rosé Syrah Reservado 750ml',
         shortName: 'Rosé Syrah Reservado',
         type: 'rose',
-        category: 'reservado',
+        category: 'reservado chile',
         country: 'chile',
         origin: 'Valle Central • Chile',
         flag: './assets/flag-chile.png',
@@ -1049,14 +1090,17 @@
         reviewsCount: 72,
         badge: 'GASTRONÔMICO',
         image: './assets/bottles/web/toro-negro-rose.png',
-        notes: 'Coloração rosa salmão tênue. Frutas vermelhas frescas, framboesa e final límpido e seco.'
+        notes: 'Coloração rosa salmão tênue. Frutas vermelhas frescas, framboesa e final límpido e seco.',
+        stock: 60,
+        active: true
       },
       {
-        id: 'el-secreto',
+        id: 'tn-el-secreto',
+        apiId: 'tn-el-secreto',
         name: 'Vinho Toro Negro El Secreto Gran Seleção 750ml',
         shortName: 'Toro Negro El Secreto',
         type: 'tinto',
-        category: 'destaques',
+        category: 'especiais',
         country: 'chile',
         origin: 'Valle Central • Chile',
         flag: './assets/flag-chile.png',
@@ -1069,14 +1113,17 @@
         reviewsCount: 164,
         badge: 'ÍCONE DA CASA',
         image: './assets/bottles/web/toro-negro-el-secreto.png',
-        notes: 'Edição especial de vinhedos selecionados. Encorpado, nobre, com notas complexas de cassis, cedro e baunilha.'
+        notes: 'Edição especial de vinhedos selecionados. Encorpado, nobre, com notas complexas de cassis, cedro e baunilha.',
+        stock: 80,
+        active: true
       },
       {
-        id: 'verano',
+        id: 'tn-verano-pedro-jimenez',
+        apiId: 'tn-verano-pedro-jimenez',
         name: 'Vinho Branco Toro Negro Verano Pedro Jimenez 750ml',
         shortName: 'Pedro Jimenez Verano',
         type: 'branco',
-        category: 'destaques',
+        category: 'especiais',
         country: 'chile',
         origin: 'Valle del Limarí • Chile',
         flag: './assets/flag-chile.png',
@@ -1089,14 +1136,17 @@
         reviewsCount: 88,
         badge: 'VALE DO LIMARÍ',
         image: './assets/bottles/web/toro-negro-verano.png',
-        notes: 'Uvas colhidas na brisa fresca do Vale do Limarí. Aromas de mel de flor de laranjeira, maçã verde e final mineral.'
+        notes: 'Uvas colhidas na brisa fresca do Vale do Limarí. Aromas de mel de flor de laranjeira, maçã verde e final mineral.',
+        stock: 95,
+        active: true
       },
       {
-        id: 'suave-sweet',
+        id: 'tn-suave-sweet',
+        apiId: 'tn-suave-sweet',
         name: 'Vinho Toro Negro Suave Tinto Vinífera 750ml',
         shortName: 'Toro Negro Suave Tinto',
         type: 'tinto',
-        category: 'destaques',
+        category: 'reservado chile',
         country: 'chile',
         origin: 'Valle Central • Chile',
         flag: './assets/flag-chile.png',
@@ -1109,115 +1159,132 @@
         reviewsCount: 110,
         badge: 'SUAVE FINO',
         image: './assets/bottles/web/toro-negro-suave.png',
-        notes: 'Elaborado 100% com uvas viníferas nobres. Aveludado, doçura equilibrada e notas de geleia de amoras.'
+        notes: 'Elaborado 100% com uvas viníferas nobres. Aveludado, doçura equilibrada e notas de geleia de amoras.',
+        stock: 110,
+        active: true
       },
       {
-        id: 'malbec',
+        id: 'tn-malbec-mendoza',
+        apiId: 'tn-malbec-mendoza',
         name: 'Vinho Toro Negro Malbec Mendoza Argentina 750ml',
         shortName: 'Toro Negro Malbec Mendoza',
         type: 'tinto',
-        category: 'argentina',
+        category: 'mendoza argentina',
         country: 'argentina',
         origin: 'Mendoza • Argentina',
         flag: './assets/flag-argentina.png',
         grape: 'Malbec',
-        alcohol: '13.0%',
-        retailPrice: 68.00,
+        alcohol: '13.5%',
+        retailPrice: 64.90,
         unitPrice: 42.90,
         boxPrice: 257.40,
         rating: 4.9,
         reviewsCount: 153,
         badge: 'TERROIR ANDINO',
         image: './assets/bottles/web/toro-negro-malbec.png',
-        notes: 'A expressão máxima dos Andes. Frutas vermelhas maduras, violetas, notas de ameixa e taninos carnudos.'
+        notes: 'A expressão máxima dos Andes. Frutas vermelhas maduras, violetas, notas de ameixa e taninos carnudos.',
+        stock: 140,
+        active: true
       },
       {
-        id: 'bonarda',
+        id: 'tn-bonarda-mendoza',
+        apiId: 'tn-bonarda-mendoza',
         name: 'Vinho Toro Negro Bonarda Mendoza Argentina 750ml',
         shortName: 'Toro Negro Bonarda Mendoza',
         type: 'tinto',
-        category: 'argentina',
+        category: 'mendoza argentina',
         country: 'argentina',
         origin: 'Mendoza • Argentina',
         flag: './assets/flag-argentina.png',
         grape: 'Bonarda',
         alcohol: '13.0%',
-        retailPrice: 68.00,
+        retailPrice: 64.90,
         unitPrice: 42.90,
         boxPrice: 257.40,
         rating: 4.8,
         reviewsCount: 76,
         badge: 'CASTAS CLÁSSICAS',
         image: './assets/bottles/web/toro-negro-bonarda.png',
-        notes: 'Cor rubi profunda com reflexos granada. Notas de figo seco, especiarias doces e textura envolvente.'
+        notes: 'Cor rubi profunda com reflexos granada. Notas de figo seco, especiarias doces e textura envolvente.',
+        stock: 85,
+        active: true
       },
       {
-        id: 'torrontes',
+        id: 'tn-torrontes-mendoza',
+        apiId: 'tn-torrontes-mendoza',
         name: 'Vinho Toro Negro Torrontés Mendoza Argentina 750ml',
         shortName: 'Toro Negro Torrontés Mendoza',
         type: 'branco',
-        category: 'argentina',
+        category: 'mendoza argentina',
         country: 'argentina',
         origin: 'Mendoza • Argentina',
         flag: './assets/flag-argentina.png',
         grape: 'Torrontés',
         alcohol: '13.0%',
-        retailPrice: 62.00,
+        retailPrice: 59.90,
         unitPrice: 39.90,
         boxPrice: 239.40,
         rating: 4.8,
         reviewsCount: 59,
         badge: 'AROMÁTICO',
         image: './assets/bottles/web/toro-negro-torrontes.png',
-        notes: 'Perfume floral arrebatador, casca de limão siciliano e pêssegos brancos com acidez crocante.'
+        notes: 'Perfume floral arrebatador, casca de limão siciliano e pêssegos brancos com acidez crocante.',
+        stock: 70,
+        active: true
       },
       {
-        id: 'brut',
-        name: 'Espumante Toro Negro Sparkling Brut 750ml',
+        id: 'tn-brut-sparkling',
+        apiId: 'tn-brut-sparkling',
+        name: 'Toro Negro Brut Sparkling 750ml',
         shortName: 'Espumante Brut Sparkling',
         type: 'espumante',
-        category: 'espumantes',
+        category: 'especiais',
         country: 'argentina',
         origin: 'Mendoza • Argentina',
         flag: './assets/flag-argentina.png',
-        grape: 'Charmat Brut',
+        grape: 'Brut Charmat',
         alcohol: '12.0%',
-        retailPrice: 72.00,
+        retailPrice: 69.90,
         unitPrice: 44.90,
         boxPrice: 269.40,
         rating: 4.9,
         reviewsCount: 98,
         badge: 'CELEBRAÇÃO',
         image: './assets/bottles/web/toro-negro-brut.png',
-        notes: 'Perlage fina e persistente. Elegância cítrica com notas de maçã verde fresca, brioche e final refrescante.'
+        notes: 'Perlage fino e constante, notas cítricas elegantes e frescor vibrante na taça, expressando o equilíbrio da altitude mendocina.',
+        stock: 80,
+        active: true
       },
       {
-        id: 'brut-rose',
-        name: 'Espumante Toro Negro Sparkling Brut Rosé 750ml',
+        id: 'tn-brut-rose-sparkling',
+        apiId: 'tn-brut-rose-sparkling',
+        name: 'Toro Negro Brut Rosé Sparkling 750ml',
         shortName: 'Espumante Brut Rosé Sparkling',
         type: 'espumante',
-        category: 'espumantes',
+        category: 'especiais',
         country: 'argentina',
         origin: 'Mendoza • Argentina',
         flag: './assets/flag-argentina.png',
-        grape: 'Charmat Brut Rosé',
+        grape: 'Brut Rosé Charmat',
         alcohol: '12.0%',
-        retailPrice: 72.00,
+        retailPrice: 69.90,
         unitPrice: 44.90,
         boxPrice: 269.40,
         rating: 4.9,
         reviewsCount: 84,
         badge: 'ELEGANTE',
         image: './assets/bottles/web/toro-negro-brut-rose.png',
-        notes: 'Coloração salmão brilhante. Borbulhas finas com notas de morango silvestre, cereja ácida e cremosidade no paladar.'
+        notes: 'Coloração salmão suave com perlage delicado e persistente. Aromas sedutores de frutas vermelhas frescas e paladar cremoso.',
+        stock: 70,
+        active: true
       },
       {
-        id: 'sweet-sparkling',
+        id: 'tn-sweet-sparkling',
         apiId: 'tn-sweet-sparkling',
         name: 'Espumante Toro Negro Sparkling Sweet 750ml',
         shortName: 'Espumante Sweet Sparkling',
         type: 'espumante',
-        category: 'espumantes',
+        category: 'especiais',
         country: 'argentina',
         origin: 'Mendoza • Argentina',
         flag: './assets/flag-argentina.png',
@@ -1230,7 +1297,9 @@
         reviewsCount: 92,
         badge: 'DOCE EQUILIBRADO',
         image: './assets/bottles/web/toro-negro-sweet.png',
-        notes: 'Perlage fino e persistente com doçura envolvente, aromas de pêssego em calda, flor de laranjeira e frescor vibrante de altitude.'
+        notes: 'Coloração amarelo-palha brilhante com perlage fino e persistente. Notas aromáticas de pêssego em calda, flor de laranjeira e doçura vibrante de altitude.',
+        stock: 65,
+        active: true
       }
     ];
 
@@ -1287,6 +1356,11 @@
         const savedCart = localStorage.getItem(STORAGE_CART);
         if (savedCart) {
           b2bCart = JSON.parse(savedCart);
+          if (Array.isArray(b2bCart)) {
+            b2bCart.forEach(item => {
+              item.wineId = normalizeWineId(item.wineId);
+            });
+          }
         }
       } catch (e) {
         window.location.href = 'login-b2b.html';
@@ -1605,6 +1679,28 @@
       if (desktopGrapes) desktopGrapes.innerHTML = grapesHtml;
       if (mobileGrapes) mobileGrapes.innerHTML = grapesHtml;
 
+      // Update Desktop Static Spans
+      const dtTinto = document.getElementById('desktop-count-tinto');
+      if (dtTinto) dtTinto.textContent = `(${typeCounts.tinto})`;
+      const dtBranco = document.getElementById('desktop-count-branco');
+      if (dtBranco) dtBranco.textContent = `(${typeCounts.branco})`;
+      const dtRose = document.getElementById('desktop-count-rose');
+      if (dtRose) dtRose.textContent = `(${typeCounts.rose})`;
+      const dtEspumante = document.getElementById('desktop-count-espumante');
+      if (dtEspumante) dtEspumante.textContent = `(${typeCounts.espumante})`;
+
+      const dtChile = document.getElementById('desktop-count-chile');
+      if (dtChile) dtChile.textContent = `(${countryCounts.chile})`;
+      const dtArg = document.getElementById('desktop-count-argentina');
+      if (dtArg) dtArg.textContent = `(${countryCounts.argentina})`;
+
+      const dtP1 = document.getElementById('desktop-count-price-ate35');
+      if (dtP1) dtP1.textContent = `(${priceCounts['ate-35']})`;
+      const dtP2 = document.getElementById('desktop-count-price-3540');
+      if (dtP2) dtP2.textContent = `(${priceCounts['35-40']})`;
+      const dtP3 = document.getElementById('desktop-count-price-acima40');
+      if (dtP3) dtP3.textContent = `(${priceCounts['acima-40']})`;
+
       // Update Mobile Types
       const typesBox = document.getElementById('mobile-filter-types');
       if (typesBox) {
@@ -1622,7 +1718,7 @@
             <span class="text-stone-400 font-mono text-[11px]">(${typeCounts.rose})</span>
           </label>
           <label class="flex items-center justify-between py-1 cursor-pointer">
-            <span class="flex items-center gap-2"><input type="checkbox" value="espumante" onchange="toggleFilter('type', 'espumante', this.checked)" class="filter-type-checkbox rounded text-burgundy-900" ${filterState.types.has('espumante') ? 'checked' : ''}/> Espumante Brut</span>
+            <span class="flex items-center gap-2"><input type="checkbox" value="espumante" onchange="toggleFilter('type', 'espumante', this.checked)" class="filter-type-checkbox rounded text-burgundy-900" ${filterState.types.has('espumante') ? 'checked' : ''}/> Espumantes</span>
             <span class="text-stone-400 font-mono text-[11px]">(${typeCounts.espumante})</span>
           </label>
         `;
@@ -2564,10 +2660,79 @@
     // =========================================================================
     // 11. SINCRONIZAÇÃO DINÂMICA COM BACKEND & PAINEL ADMINISTRATIVO
     // =========================================================================
+    function convertAdminProductToB2b(apiP, existingWine = null) {
+      const normId = normalizeWineId(apiP.id);
+      const typeKey = (apiP.tipo || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const countryKey = (apiP.pais || '').toLowerCase();
+      const isEspumante = typeKey.includes('espumante');
+
+      let wineType = 'tinto';
+      if (isEspumante) wineType = 'espumante';
+      else if (typeKey.includes('branco')) wineType = 'branco';
+      else if (typeKey.includes('rose')) wineType = 'rose';
+
+      const isArgentina = countryKey.includes('arg') || (apiP.regiao || '').toLowerCase().includes('mendoza');
+      const country = isArgentina ? 'argentina' : 'chile';
+      const defaultFlag = isArgentina ? './assets/flag-argentina.png' : './assets/flag-chile.png';
+      const defaultOrigin = isArgentina ? 'Mendoza • Argentina' : 'Valle Central • Chile';
+
+      // Badge logic
+      let badge = existingWine?.badge || (apiP.destaque ? 'DESTAQUE' : 'B2B EXCLUSIVO');
+      if (isEspumante) {
+        if (normId.includes('rose')) badge = 'ELEGANTE';
+        else if (normId.includes('sweet')) badge = 'DOCE EQUILIBRADO';
+        else badge = 'CELEBRAÇÃO';
+      }
+
+      // Safe image selection
+      let image = apiP.imagem_url;
+      if (!image || (normId === 'tn-suave-sweet' && image.includes('toro-negro-sweet.png'))) {
+        if (normId === 'tn-suave-sweet') {
+          image = './assets/bottles/web/toro-negro-suave.png';
+        } else if (normId === 'tn-sweet-sparkling') {
+          image = './assets/bottles/web/toro-negro-sweet.png';
+        } else if (normId === 'tn-brut-sparkling') {
+          image = './assets/bottles/web/toro-negro-brut.png';
+        } else if (normId === 'tn-brut-rose-sparkling') {
+          image = './assets/bottles/web/toro-negro-brut-rose.png';
+        } else {
+          image = existingWine?.image || './assets/bottles/web/toro-negro-carmenere.png';
+        }
+      }
+
+      const unitPrice = Number(apiP.preco_unitario) || existingWine?.unitPrice || 38.90;
+      const boxPrice = Number(apiP.preco_caixa) || Number((unitPrice * 6).toFixed(2));
+      const retailPrice = Number(apiP.preco_varejo_ref) || existingWine?.retailPrice || 59.90;
+
+      return {
+        id: normId,
+        apiId: apiP.id,
+        name: apiP.nome || existingWine?.name || 'Vinho Toro Negro',
+        shortName: existingWine?.shortName || (apiP.uva ? `${apiP.uva} ${apiP.safra || ''}`.trim() : apiP.nome),
+        type: wineType,
+        category: (apiP.linha || existingWine?.category || (isEspumante ? 'especiais' : 'reservado chile')).toLowerCase(),
+        country: country,
+        origin: apiP.regiao ? `${apiP.regiao} • ${apiP.pais || (isArgentina ? 'Argentina' : 'Chile')}` : defaultOrigin,
+        flag: defaultFlag,
+        grape: apiP.uva || existingWine?.grape || 'Casta Nobre',
+        alcohol: apiP.teor_alcoolico ? `${apiP.teor_alcoolico}%` : (existingWine?.alcohol || '13.0%'),
+        retailPrice: retailPrice,
+        unitPrice: unitPrice,
+        boxPrice: boxPrice,
+        rating: existingWine?.rating || 4.8,
+        reviewsCount: existingWine?.reviewsCount || 45,
+        badge: badge,
+        image: image,
+        notes: apiP.descricao || existingWine?.notes || '',
+        stock: Number(apiP.estoque_caixas ?? (existingWine?.stock ?? 50)),
+        active: apiP.ativo !== 0
+      };
+    }
+
     async function syncCatalogWithApi() {
       let apiProducts = [];
       try {
-        const res = await fetch('/api/products');
+        const res = await fetch('/api/products?includeInactive=0');
         if (res.ok) {
           const data = await res.json();
           apiProducts = data.products || [];
@@ -2579,7 +2744,7 @@
         // Modo offline / GitHub Pages
       }
 
-      // Se a API não respondeu ou estamos no GitHub Pages, carrega as alterações salvas pelo painel admin
+      // Se a API não respondeu ou estamos no GitHub Pages, carrega do localStorage
       if (!apiProducts.length) {
         const savedOffline = localStorage.getItem('tn_offline_products');
         if (savedOffline) {
@@ -2591,93 +2756,55 @@
 
       if (!apiProducts || !apiProducts.length) return;
 
+      // Desduplicação estrita baseada 1:1 no cadastro do painel admin
+      const dedupedMap = new Map();
+      const espumanteSignatureMap = new Map();
+
       apiProducts.forEach(apiP => {
-        const cleanApiName = (apiP.nome || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-        const cleanApiUva = (apiP.uva || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        // Pula produtos inativos
+        if (apiP.ativo === 0) return;
 
-        let match = WINES_DATABASE.find(w => {
-          if (w.id === apiP.id || w.apiId === apiP.id) return true;
-          if (apiP.id === 'tn-brut-sparkling' && w.id === 'brut') return true;
-          if (apiP.id === 'tn-brut-rose-sparkling' && w.id === 'brut-rose') return true;
-          if ((apiP.id === 'tn-sweet-sparkling' || apiP.id === 'tn-sweet-tinto') && (w.id === 'sweet-sparkling' || w.id === 'sweet-tinto')) return true;
-          if (apiP.id === 'tn-suave-sweet' && w.id === 'suave-sweet') return true;
-          if (apiP.id === 'tn-el-secreto' && w.id === 'el-secreto') return true;
-          if (apiP.id === 'tn-verano-pedro-jimenez' && w.id === 'verano') return true;
-          if (apiP.id === 'tn-carmenere-reservado' && w.id === 'carmenere') return true;
-          if (apiP.id === 'tn-cabernet-reservado' && w.id === 'cabernet') return true;
-          if (apiP.id === 'tn-merlot-reservado' && w.id === 'merlot') return true;
-          if (apiP.id === 'tn-sauvignon-reservado' && w.id === 'sauvignon') return true;
-          if (apiP.id === 'tn-chardonnay-reservado' && w.id === 'chardonnay') return true;
-          if (apiP.id === 'tn-rose-reservado' && w.id === 'rose') return true;
-          if (apiP.id === 'tn-malbec-mendoza' && w.id === 'malbec') return true;
-          if (apiP.id === 'tn-bonarda-mendoza' && w.id === 'bonarda') return true;
-          if (apiP.id === 'tn-torrontes-mendoza' && w.id === 'torrontes') return true;
+        const normalizedId = normalizeWineId(apiP.id);
+        const tipoNorm = (apiP.tipo || '').toLowerCase();
+        const isEspumante = tipoNorm.includes('espumante');
 
-          // Valida se o tipo do vinho bate antes de comparar por uva/nome
-          const apiType = (apiP.tipo || '').toLowerCase();
-          const wType = (w.type || '').toLowerCase();
-          if (apiType.includes('espumante') !== wType.includes('espumante')) return false;
-
-          const cleanWName = (w.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-          const cleanWShort = (w.shortName || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-          const cleanWId = (w.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-          return (cleanApiUva && cleanWName.includes(cleanApiUva)) ||
-                 (cleanWId && cleanApiName.includes(cleanWId)) ||
-                 (cleanApiUva && cleanWShort.includes(cleanApiUva)) ||
-                 cleanWName === cleanApiName;
-        });
-
-        if (match) {
-          match.unitPrice = Number(apiP.preco_unitario);
-          match.boxPrice = Number(apiP.preco_caixa) || Number((apiP.preco_unitario * 6).toFixed(2));
-          match.retailPrice = Number(apiP.preco_varejo_ref);
-          match.stock = Number(apiP.estoque_caixas);
-          if (apiP.descricao) match.notes = apiP.descricao;
-          // Preserva imagens oficiais corretas para evitar que garrafa de espumante sobrescreva vinho tinto
-          if (match.id === 'suave-sweet') {
-            match.image = (apiP.imagem_url && !apiP.imagem_url.includes('toro-negro-sweet.png'))
-              ? apiP.imagem_url
-              : './assets/bottles/web/toro-negro-suave.png';
-          } else if (match.id === 'sweet-sparkling') {
-            match.image = apiP.imagem_url || './assets/bottles/web/toro-negro-sweet.png';
-          } else if (apiP.imagem_url) {
-            match.image = apiP.imagem_url;
+        // Se for espumante, deduplica para garantir exatamente 1 Brut, 1 Brut Rosé e 1 Sweet Sparkling
+        if (isEspumante) {
+          const nameLower = (apiP.nome || '').toLowerCase();
+          const uvaLower = (apiP.uva || '').toLowerCase();
+          let espKey = 'brut';
+          if (normalizedId.includes('rose') || nameLower.includes('rose') || uvaLower.includes('rose')) {
+            espKey = 'rose';
+          } else if (normalizedId.includes('sweet') || nameLower.includes('sweet') || uvaLower.includes('sweet')) {
+            espKey = 'sweet';
           }
-          match.active = apiP.ativo === 1;
-          match.apiId = apiP.id;
-        } else if (apiP.ativo === 1) {
-          const typeKey = (apiP.tipo || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-          const countryKey = (apiP.pais || '').toLowerCase();
-          WINES_DATABASE.push({
-            id: apiP.id,
-            apiId: apiP.id,
-            name: apiP.nome,
-            shortName: apiP.uva ? `${apiP.uva} ${apiP.safra || ''}`.trim() : apiP.nome,
-            type: typeKey.includes('espumante') ? 'espumante' : (typeKey.includes('branco') ? 'branco' : (typeKey.includes('rose') ? 'rose' : 'tinto')),
-            category: (apiP.linha || 'reservado').toLowerCase(),
-            country: countryKey.includes('arg') ? 'argentina' : 'chile',
-            origin: `${apiP.regiao || 'Valle Central'} • ${apiP.pais || 'Chile'}`,
-            flag: countryKey.includes('arg') ? './assets/flag-argentina.png' : './assets/flag-chile.png',
-            grape: apiP.uva || 'Casta Nobre',
-            alcohol: apiP.teor_alcoolico ? `${apiP.teor_alcoolico}%` : '13.0%',
-            retailPrice: Number(apiP.preco_varejo_ref) || 59.9,
-            unitPrice: Number(apiP.preco_unitario) || 38.9,
-            boxPrice: Number(apiP.preco_caixa) || Number((apiP.preco_unitario * 6).toFixed(2)),
-            rating: 4.8,
-            reviewsCount: 35,
-            badge: apiP.destaque ? 'NOVIDADE' : 'B2B EXCLUSIVO',
-            image: apiP.imagem_url || './assets/bottles/web/toro-negro-carmenere.png',
-            notes: apiP.descricao || '',
-            stock: Number(apiP.estoque_caixas),
-            active: true
-          });
+
+          if (espumanteSignatureMap.has(espKey)) {
+            // Ignora réplica/duplicata já existente no catálogo
+            return;
+          }
+          espumanteSignatureMap.set(espKey, normalizedId);
         }
+
+        // Se já foi registrado esse ID, pula para não duplicar cards
+        if (dedupedMap.has(normalizedId)) return;
+
+        const existing = WINES_DATABASE.find(w => w.id === normalizedId || w.id === apiP.id || w.apiId === apiP.id);
+        const mapped = convertAdminProductToB2b(apiP, existing);
+        dedupedMap.set(normalizedId, mapped);
       });
+
+      if (dedupedMap.size > 0) {
+        // Substitui a lista de vinhos diretamente com a base higienizada do Admin
+        WINES_DATABASE = Array.from(dedupedMap.values());
+      }
 
       // Atualiza valores do carrinho caso o administrador tenha modificado preços
       if (Array.isArray(b2bCart) && b2bCart.length) {
         b2bCart.forEach(item => {
-          const fresh = WINES_DATABASE.find(w => w.id === item.wineId || w.apiId === item.wineId);
+          const normId = normalizeWineId(item.wineId);
+          item.wineId = normId;
+          const fresh = WINES_DATABASE.find(w => w.id === normId || w.apiId === normId);
           if (fresh) {
             item.unitPrice = fresh.unitPrice;
             item.boxPrice = fresh.boxPrice;

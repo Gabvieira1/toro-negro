@@ -1444,7 +1444,20 @@ A Lenda • O Nome • A Origem
 
       if (!apiProducts || !apiProducts.length) return;
 
-      const activeProds = apiProducts.filter(p => p.ativo !== 0);
+      // Desduplica rigorosamente os produtos ativos por ID
+      const dedupedActiveMap = new Map();
+      (apiProducts || []).forEach(p => {
+        if (p.ativo === 0) return;
+        let cleanId = p.id;
+        if (cleanId === 'tn-sweet-tinto' || cleanId === 'sweet-sparkling') cleanId = 'tn-sweet-sparkling';
+        if (cleanId === 'brut') cleanId = 'tn-brut-sparkling';
+        if (cleanId === 'brut-rose') cleanId = 'tn-brut-rose-sparkling';
+        p.id = cleanId;
+        if (!dedupedActiveMap.has(cleanId)) {
+          dedupedActiveMap.set(cleanId, p);
+        }
+      });
+      const activeProds = Array.from(dedupedActiveMap.values());
 
       // Linha Reservado Chile:
       const reservadoProds = activeProds.filter(p => {

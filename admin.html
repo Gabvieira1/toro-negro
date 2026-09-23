@@ -1794,16 +1794,36 @@
         allProducts = saved ? JSON.parse(saved) : DEFAULT_PRODUCTS;
       }
 
-      if (!allProducts || allProducts.length < DEFAULT_PRODUCTS.length) {
-        const existingIds = new Set((allProducts || []).map(p => p.id));
+      // Sanitiza e desduplica IDs legados para evitar repetições
+      const cleanMap = new Map();
+      (allProducts || []).forEach(p => {
+        let cleanId = p.id;
+        if (cleanId === 'tn-sweet-tinto' || cleanId === 'sweet-sparkling') {
+          cleanId = 'tn-sweet-sparkling';
+          p.id = cleanId;
+          p.tipo = 'Espumante';
+          p.imagem_url = './assets/bottles/web/toro-negro-sweet.png';
+        }
+        if (cleanId === 'brut') cleanId = 'tn-brut-sparkling';
+        if (cleanId === 'brut-rose') cleanId = 'tn-brut-rose-sparkling';
+        p.id = cleanId;
+
+        if (!cleanMap.has(cleanId)) {
+          cleanMap.set(cleanId, p);
+        }
+      });
+      allProducts = Array.from(cleanMap.values());
+
+      if (allProducts.length < DEFAULT_PRODUCTS.length) {
+        const existingIds = new Set(allProducts.map(p => p.id));
         DEFAULT_PRODUCTS.forEach(dp => {
           if (!existingIds.has(dp.id)) {
             allProducts.push(dp);
           }
         });
-        localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
-        broadcastCatalogUpdate();
       }
+      localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
+      broadcastCatalogUpdate();
 
       const bProd = document.getElementById('nav-badge-products');
       if (bProd) bProd.textContent = allProducts.length;
