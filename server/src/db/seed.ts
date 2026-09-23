@@ -113,7 +113,7 @@ export async function runSeed() {
     console.log('✅ Usuário Administrador criado (login: admin@toronegro.com.br / admin123).');
   }
 
-  // 3. Catálogo Oficial dos 14 Vinhos Toro Negro
+  // 3. Catálogo Oficial dos 15 Vinhos Toro Negro
   const wines = [
     {
       id: 'tn-carmenere-reservado',
@@ -309,7 +309,7 @@ export async function runSeed() {
       nome: 'Toro Negro Suave Sweet',
       linha: 'Especiais',
       tipo: 'Tinto',
-      uva: 'Vitis Vinifera',
+      uva: 'Vitis Vinifera Suave',
       pais: 'Chile',
       regiao: 'Valle Central',
       safra: '2023',
@@ -336,7 +336,7 @@ export async function runSeed() {
       safra: '2024',
       teor_alcoolico: 12.0,
       volume_ml: 750,
-      preco_varejo_ref: 52.90,
+      preco_varejo_ref: 54.90,
       preco_unitario: 34.90,
       preco_caixa: 209.40,
       estoque_caixas: 95,
@@ -344,6 +344,27 @@ export async function runSeed() {
       harmonizacao: 'Aperitivos, frutos do mar e saladas frescas.',
       temperatura_servico: '12° à 14°C',
       imagem_url: './assets/bottles/web/toro-negro-verano.png',
+      destaque: 1
+    },
+    {
+      id: 'tn-el-secreto',
+      nome: 'Toro Negro El Secreto Gran Seleção',
+      linha: 'Especiais',
+      tipo: 'Tinto',
+      uva: 'Blend Nobre Ícone',
+      pais: 'Chile',
+      regiao: 'Valle Central',
+      safra: '2022',
+      teor_alcoolico: 13.5,
+      volume_ml: 750,
+      preco_varejo_ref: 89.90,
+      preco_unitario: 49.90,
+      preco_caixa: 299.40,
+      estoque_caixas: 80,
+      descricao: 'Edição especial de vinhedos selecionados. Encorpado, nobre, com notas complexas de cassis, cedro e baunilha.',
+      harmonizacao: 'Cortes nobres, cordeiro grelhado e queijos curados.',
+      temperatura_servico: '16° à 18°C',
+      imagem_url: './assets/bottles/web/toro-negro-el-secreto.png',
       destaque: 1
     },
     {

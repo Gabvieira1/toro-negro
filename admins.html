@@ -523,6 +523,10 @@
               <option value="Espumante">Espumante</option>
             </select>
 
+            <select id="product-filter-grape" onchange="renderProductsTable()" class="px-3 py-2 rounded-xl bg-neutral-50 border border-neutral-200 text-xs font-semibold text-neutral-800">
+              <option value="">Todas as Uvas (14 Variedades)</option>
+            </select>
+
             <select id="product-filter-status" onchange="renderProductsTable()" class="px-3 py-2 rounded-xl bg-neutral-50 border border-neutral-200 text-xs font-semibold text-neutral-800">
               <option value="active">Somente Ativos</option>
               <option value="all">Todos os Status</option>
@@ -859,7 +863,23 @@
         <div class="grid grid-cols-3 gap-3">
           <div>
             <label class="block font-bold text-black mb-1">Uva *</label>
-            <input type="text" id="new-uva" required placeholder="Ex: Carménère" class="w-full px-3 py-2 rounded-xl bg-neutral-50 border border-neutral-200 focus:ring-1 focus:ring-black"/>
+            <input type="text" id="new-uva" list="grape-list" required placeholder="Ex: Carménère" class="w-full px-3 py-2 rounded-xl bg-neutral-50 border border-neutral-200 focus:ring-1 focus:ring-black"/>
+            <datalist id="grape-list">
+              <option value="Carménère">
+              <option value="Cabernet Sauvignon">
+              <option value="Malbec">
+              <option value="Merlot">
+              <option value="Bonarda">
+              <option value="Sauvignon Blanc">
+              <option value="Chardonnay">
+              <option value="Torrontés">
+              <option value="Pedro Jimenez">
+              <option value="Blend Nobre Ícone">
+              <option value="Vitis Vinifera Suave">
+              <option value="Sweet Tinto">
+              <option value="Brut Charmat">
+              <option value="Brut Rosé Charmat">
+            </datalist>
           </div>
           <div>
             <label class="block font-bold text-black mb-1">País *</label>
@@ -1287,6 +1307,69 @@
         imagem_url: './assets/bottles/web/toro-negro-torrontes.png',
         destaque: 0,
         ativo: 1
+      },
+      {
+        id: 'tn-verano-pedro-jimenez',
+        nome: 'Pedro Jimenez Verano',
+        linha: 'Especiais',
+        tipo: 'Branco',
+        uva: 'Pedro Jimenez',
+        pais: 'Chile',
+        regiao: 'Valle del Limarí',
+        safra: '2024',
+        teor_alcoolico: 12,
+        unidades_por_caixa: 6,
+        preco_varejo_ref: 54.90,
+        preco_unitario: 34.90,
+        preco_caixa: 209.40,
+        estoque_caixas: 95,
+        descricao: 'Amarelo-palha com reflexos esverdeados. Notas de mel e florais com frescor marcante do Vale do Limarí.',
+        harmonizacao: 'Aperitivos, frutos do mar e saladas frescas.',
+        imagem_url: './assets/bottles/web/toro-negro-verano.png',
+        destaque: 1,
+        ativo: 1
+      },
+      {
+        id: 'tn-el-secreto',
+        nome: 'Toro Negro El Secreto Gran Seleção',
+        linha: 'Especiais',
+        tipo: 'Tinto',
+        uva: 'Blend Nobre Ícone',
+        pais: 'Chile',
+        regiao: 'Valle Central',
+        safra: '2022',
+        teor_alcoolico: 13.5,
+        unidades_por_caixa: 6,
+        preco_varejo_ref: 89.90,
+        preco_unitario: 49.90,
+        preco_caixa: 299.40,
+        estoque_caixas: 80,
+        descricao: 'Edição especial de vinhedos selecionados. Encorpado, nobre, com notas complexas de cassis, cedro e baunilha.',
+        harmonizacao: 'Cortes nobres, cordeiro grelhado e queijos curados.',
+        imagem_url: './assets/bottles/web/toro-negro-el-secreto.png',
+        destaque: 1,
+        ativo: 1
+      },
+      {
+        id: 'tn-suave-sweet',
+        nome: 'Toro Negro Suave Sweet',
+        linha: 'Especiais',
+        tipo: 'Tinto',
+        uva: 'Vitis Vinifera Suave',
+        pais: 'Chile',
+        regiao: 'Valle Central',
+        safra: '2023',
+        teor_alcoolico: 12.5,
+        unidades_por_caixa: 6,
+        preco_varejo_ref: 49.90,
+        preco_unitario: 32.90,
+        preco_caixa: 197.40,
+        estoque_caixas: 110,
+        descricao: 'Tinto rubi com notas de frutas vermelhas. No paladar é doce e persistente, sem perder os taninos nobres.',
+        harmonizacao: 'Sobremesas finas, chocolates amargos e bolos.',
+        imagem_url: './assets/bottles/web/toro-negro-suave.png',
+        destaque: 1,
+        ativo: 1
       }
     ];
 
@@ -1554,13 +1637,20 @@
         allProducts = saved ? JSON.parse(saved) : DEFAULT_PRODUCTS;
       }
 
-      if (!allProducts || allProducts.length === 0) {
-        allProducts = DEFAULT_PRODUCTS;
+      if (!allProducts || allProducts.length < DEFAULT_PRODUCTS.length) {
+        const existingIds = new Set((allProducts || []).map(p => p.id));
+        DEFAULT_PRODUCTS.forEach(dp => {
+          if (!existingIds.has(dp.id)) {
+            allProducts.push(dp);
+          }
+        });
+        localStorage.setItem('tn_offline_products', JSON.stringify(allProducts));
       }
 
       const bProd = document.getElementById('nav-badge-products');
       if (bProd) bProd.textContent = allProducts.length;
 
+      populateGrapeDropdown();
       renderProductsTable();
       renderTopWinesCarousel();
       renderInventorySummary();
@@ -1638,6 +1728,22 @@
       }
     }
 
+    // Popula o dropdown de filtro por Uva com todas as castas presentes no catálogo
+    function populateGrapeDropdown() {
+      const select = document.getElementById('product-filter-grape');
+      if (!select) return;
+
+      const currentVal = select.value;
+      const grapes = Array.from(new Set(allProducts.map(p => p.uva).filter(Boolean))).sort();
+
+      select.innerHTML = `<option value="">Todas as Uvas (${grapes.length} Castas)</option>` +
+        grapes.map(g => `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join('');
+
+      if (currentVal && grapes.includes(currentVal)) {
+        select.value = currentVal;
+      }
+    }
+
     // Renderização da Tabela de Produtos (Aba Products)
     function renderProductsTable() {
       const tbody = document.getElementById('products-table-body');
@@ -1645,10 +1751,12 @@
 
       const q = (document.getElementById('product-search-input')?.value || '').toLowerCase();
       const typeFilter = document.getElementById('product-filter-type')?.value || '';
+      const grapeFilter = document.getElementById('product-filter-grape')?.value || '';
       const statusFilter = document.getElementById('product-filter-status')?.value || 'active';
 
       const filtered = allProducts.filter(p => {
         if (typeFilter && p.tipo !== typeFilter) return false;
+        if (grapeFilter && p.uva !== grapeFilter) return false;
         if (statusFilter === 'active' && p.ativo !== 1) return false;
         if (statusFilter === 'inactive' && p.ativo === 1) return false;
         if (q) {
