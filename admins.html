@@ -733,6 +733,60 @@
       <form id="product-edit-form" onsubmit="handleSaveProduct(event)" class="space-y-4">
         <input type="hidden" id="edit-product-id"/>
 
+        <!-- Imagem do Produto no Modal de Edição -->
+        <div class="p-3.5 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <label class="block font-bold text-black text-xs">Imagem do Produto</label>
+            <span id="edit-image-source-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-200 text-neutral-700">Imagem Cadastrada</span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center gap-3.5">
+            <div class="w-16 h-24 rounded-xl bg-white border border-neutral-200 flex items-center justify-center p-1.5 shrink-0 shadow-xs">
+              <img id="edit-bottle-preview-img" src="./assets/bottles/web/toro-negro-carmenere.png" alt="Preview da Imagem" class="h-20 w-auto object-contain"/>
+            </div>
+
+            <div class="flex-1 w-full space-y-2">
+              <div>
+                <label class="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5">Substituir por Garrafa 3D Oficial</label>
+                <select id="edit-garrafa-select" onchange="handleEditSelectOfficialBottle(this.value)" class="w-full px-2.5 py-1.5 rounded-xl bg-white border border-neutral-200 font-semibold text-xs text-black">
+                  <option value="">-- Manter imagem atual --</option>
+                  <option value="./assets/bottles/web/toro-negro-carmenere.png">Toro Negro Carménère Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-cabernet.png">Toro Negro Cabernet Sauvignon Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-merlot.png">Toro Negro Merlot Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-sauvignon-blanc.png">Toro Negro Sauvignon Blanc Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-chardonnay.png">Toro Negro Chardonnay Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-rose.png">Toro Negro Rosé Syrah Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-malbec.png">Toro Negro Malbec Mendoza</option>
+                  <option value="./assets/bottles/web/toro-negro-bonarda.png">Toro Negro Bonarda Mendoza</option>
+                  <option value="./assets/bottles/web/toro-negro-torrontes.png">Toro Negro Torrontés Mendoza</option>
+                  <option value="./assets/bottles/web/toro-negro-verano.png">Pedro Jimenez Verano Limarí</option>
+                  <option value="./assets/bottles/web/toro-negro-el-secreto.png">Toro Negro El Secreto Gran Seleção</option>
+                  <option value="./assets/bottles/web/toro-negro-suave.png">Toro Negro Suave Sweet</option>
+                  <option value="./assets/bottles/web/toro-negro-sweet.png">Toro Negro Sweet Tinto</option>
+                  <option value="./assets/bottles/web/toro-negro-brut.png">Espumante Brut Sparkling</option>
+                  <option value="./assets/bottles/web/toro-negro-brut-rose.png">Espumante Brut Rosé Sparkling</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5">Upload de Nova Foto</label>
+                  <input type="file" id="edit-image-file" accept="image/png, image/jpeg, image/webp" onchange="handleEditImageFileUpload(event)" class="hidden"/>
+                  <button type="button" onclick="document.getElementById('edit-image-file').click()" class="w-full px-2.5 py-1.5 rounded-xl bg-neutral-200 hover:bg-black text-neutral-800 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>Trocar Foto...</span>
+                  </button>
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-0.5">Ou URL da Imagem</label>
+                  <input type="text" id="edit-imagem-url-input" oninput="handleEditImageUrlInput(this.value)" placeholder="https://... ou caminho" class="w-full px-2.5 py-1.5 rounded-xl bg-white border border-neutral-200 text-xs text-neutral-800"/>
+                </div>
+              </div>
+              <input type="hidden" id="edit-imagem-url-final"/>
+            </div>
+          </div>
+        </div>
+
         <!-- Bloco de Preços -->
         <div class="grid grid-cols-2 gap-4 p-4 rounded-2xl bg-neutral-50 border border-neutral-200">
           
@@ -841,30 +895,56 @@
       <div id="new-wine-error" class="p-3 rounded-2xl bg-neutral-100 border border-neutral-300 text-black text-xs font-bold hidden"></div>
 
       <form id="new-wine-form" onsubmit="handleCreateProduct(event)" class="space-y-4 text-xs">
-        <!-- Seletor de Garrafa com Preview Visual 3D -->
-        <div class="p-3.5 rounded-2xl bg-neutral-50 border border-neutral-200 flex items-center gap-4">
-          <div class="w-12 h-16 rounded-xl bg-white border border-neutral-200 flex items-center justify-center p-1 shrink-0">
-            <img id="new-bottle-preview-img" src="./assets/bottles/web/toro-negro-carmenere.png" alt="Preview da Garrafa" class="h-14 w-auto object-contain"/>
+        <!-- Imagem do Produto com Preview Visual 3D e Upload -->
+        <div class="p-3.5 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="block font-bold text-black text-xs">Imagem do Produto *</label>
+            <span id="new-image-source-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-200 text-neutral-700">Garrafa Oficial Toro Negro</span>
           </div>
-          <div class="flex-1 min-w-0">
-            <label class="block font-bold text-black mb-1">Garrafa / Render 3D *</label>
-            <select id="new-garrafa" onchange="updateNewWineBottlePreview(this.value)" class="w-full px-3 py-2 rounded-xl bg-white border border-neutral-200 font-semibold text-xs">
-              <option value="./assets/bottles/web/toro-negro-carmenere.png">Toro Negro Carménère</option>
-              <option value="./assets/bottles/web/toro-negro-cabernet.png">Toro Negro Cabernet Sauvignon</option>
-              <option value="./assets/bottles/web/toro-negro-merlot.png">Toro Negro Merlot</option>
-              <option value="./assets/bottles/web/toro-negro-sauvignon-blanc.png">Toro Negro Sauvignon Blanc</option>
-              <option value="./assets/bottles/web/toro-negro-chardonnay.png">Toro Negro Chardonnay</option>
-              <option value="./assets/bottles/web/toro-negro-rose.png">Toro Negro Rosé Syrah</option>
-              <option value="./assets/bottles/web/toro-negro-malbec.png">Toro Negro Malbec Mendoza</option>
-              <option value="./assets/bottles/web/toro-negro-bonarda.png">Toro Negro Bonarda Mendoza</option>
-              <option value="./assets/bottles/web/toro-negro-torrontes.png">Toro Negro Torrontés Mendoza</option>
-              <option value="./assets/bottles/web/toro-negro-verano.png">Pedro Jimenez Verano Limarí</option>
-              <option value="./assets/bottles/web/toro-negro-el-secreto.png">Toro Negro El Secreto Ícone</option>
-              <option value="./assets/bottles/web/toro-negro-suave.png">Toro Negro Suave Sweet</option>
-              <option value="./assets/bottles/web/toro-negro-sweet.png">Toro Negro Sweet Tinto</option>
-              <option value="./assets/bottles/web/toro-negro-brut.png">Espumante Brut Sparkling</option>
-              <option value="./assets/bottles/web/toro-negro-brut-rose.png">Espumante Brut Rosé Sparkling</option>
-            </select>
+
+          <div class="flex flex-col sm:flex-row items-center gap-4">
+            <div class="w-16 h-24 rounded-xl bg-white border border-neutral-200 flex items-center justify-center p-1.5 shrink-0 shadow-xs relative group">
+              <img id="new-bottle-preview-img" src="./assets/bottles/web/toro-negro-carmenere.png" alt="Preview da Imagem do Produto" class="h-20 w-auto object-contain transition-transform group-hover:scale-105"/>
+            </div>
+
+            <div class="flex-1 w-full space-y-2">
+              <div>
+                <label class="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">Escolher Garrafa Oficial (Render 3D)</label>
+                <select id="new-garrafa" onchange="handleSelectOfficialBottle(this.value)" class="w-full px-3 py-1.5 rounded-xl bg-white border border-neutral-200 font-semibold text-xs text-black">
+                  <option value="./assets/bottles/web/toro-negro-carmenere.png">Toro Negro Carménère Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-cabernet.png">Toro Negro Cabernet Sauvignon Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-merlot.png">Toro Negro Merlot Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-sauvignon-blanc.png">Toro Negro Sauvignon Blanc Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-chardonnay.png">Toro Negro Chardonnay Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-rose.png">Toro Negro Rosé Syrah Reservado</option>
+                  <option value="./assets/bottles/web/toro-negro-malbec.png">Toro Negro Malbec Mendoza</option>
+                  <option value="./assets/bottles/web/toro-negro-bonarda.png">Toro Negro Bonarda Mendoza</option>
+                  <option value="./assets/bottles/web/toro-negro-torrontes.png">Toro Negro Torrontés Mendoza</option>
+                  <option value="./assets/bottles/web/toro-negro-verano.png">Pedro Jimenez Verano Limarí</option>
+                  <option value="./assets/bottles/web/toro-negro-el-secreto.png">Toro Negro El Secreto Gran Seleção</option>
+                  <option value="./assets/bottles/web/toro-negro-suave.png">Toro Negro Suave Sweet</option>
+                  <option value="./assets/bottles/web/toro-negro-sweet.png">Toro Negro Sweet Tinto</option>
+                  <option value="./assets/bottles/web/toro-negro-brut.png">Espumante Brut Sparkling</option>
+                  <option value="./assets/bottles/web/toro-negro-brut-rose.png">Espumante Brut Rosé Sparkling</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">Carregar Imagem Local</label>
+                  <input type="file" id="new-image-file" accept="image/png, image/jpeg, image/webp" onchange="handleNewImageFileUpload(event)" class="hidden"/>
+                  <button type="button" onclick="document.getElementById('new-image-file').click()" class="w-full px-2.5 py-1.5 rounded-xl bg-neutral-200 hover:bg-black text-neutral-800 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>Upload de Foto...</span>
+                  </button>
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1">Ou Link Direto (URL)</label>
+                  <input type="text" id="new-imagem-url-input" oninput="handleNewImageUrlInput(this.value)" placeholder="https://... ou caminho" class="w-full px-2.5 py-1.5 rounded-xl bg-white border border-neutral-200 text-xs text-neutral-800"/>
+                </div>
+              </div>
+              <input type="hidden" id="new-imagem-url-final" value="./assets/bottles/web/toro-negro-carmenere.png"/>
+            </div>
           </div>
         </div>
 
@@ -1911,7 +1991,7 @@
       }).join('');
     }
 
-    // Modal de Edição de Produtos (Preço e Estoque)
+    // Modal de Edição de Produtos (Preço, Estoque e Imagem)
     function openProductEditModal(productId) {
       const p = allProducts.find(item => item.id === productId);
       if (!p) return;
@@ -1919,6 +1999,23 @@
       document.getElementById('edit-product-id').value = p.id;
       document.getElementById('modal-product-title').textContent = p.nome;
       document.getElementById('modal-product-subtitle').textContent = `${p.uva} • ${p.regiao}, ${p.pais}`;
+      
+      // Imagem do Produto
+      const currentImg = p.imagem_url || './assets/bottles/web/toro-negro-carmenere.png';
+      const editPreview = document.getElementById('edit-bottle-preview-img');
+      if (editPreview) editPreview.src = currentImg;
+      const editFinal = document.getElementById('edit-imagem-url-final');
+      if (editFinal) editFinal.value = currentImg;
+      const editInput = document.getElementById('edit-imagem-url-input');
+      if (editInput) editInput.value = currentImg.startsWith('data:') ? 'Imagem Local' : currentImg;
+      const editSelect = document.getElementById('edit-garrafa-select');
+      if (editSelect) editSelect.value = '';
+      const editBadge = document.getElementById('edit-image-source-badge');
+      if (editBadge) {
+        editBadge.textContent = 'Imagem Cadastrada';
+        editBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-200 text-neutral-700';
+      }
+
       document.getElementById('edit-preco-unitario').value = p.preco_unitario;
       document.getElementById('edit-preco-caixa').value = (p.preco_unitario * (p.unidades_por_caixa || 6)).toFixed(2);
       document.getElementById('edit-preco-varejo').value = p.preco_varejo_ref || '';
@@ -1953,6 +2050,7 @@
       const estoqueCaixas = parseInt(document.getElementById('edit-estoque-caixas').value) || 0;
       const descricao = document.getElementById('edit-descricao').value.trim();
       const harmonizacao = document.getElementById('edit-harmonizacao').value.trim();
+      const imagem_url = document.getElementById('edit-imagem-url-final')?.value || undefined;
       const ativo = document.getElementById('edit-ativo').checked ? 1 : 0;
       const destaque = document.getElementById('edit-destaque').checked ? 1 : 0;
 
@@ -1970,6 +2068,7 @@
             estoque_caixas: estoqueCaixas,
             descricao,
             harmonizacao,
+            imagem_url,
             ativo,
             destaque
           })
@@ -1999,6 +2098,7 @@
           estoque_caixas: estoqueCaixas,
           descricao,
           harmonizacao,
+          imagem_url: imagem_url || allProducts[pIdx].imagem_url,
           ativo,
           destaque
         };
@@ -2040,10 +2140,167 @@
       }
     }
 
+    // ==========================================
+    // Funções de Gestão de Imagem (Upload, 3D e URL)
+    // ==========================================
+    function handleSelectOfficialBottle(url) {
+      if (!url) return;
+      const preview = document.getElementById('new-bottle-preview-img');
+      if (preview) preview.src = url;
+      const finalInput = document.getElementById('new-imagem-url-final');
+      if (finalInput) finalInput.value = url;
+      const urlInput = document.getElementById('new-imagem-url-input');
+      if (urlInput) urlInput.value = url;
+      const badge = document.getElementById('new-image-source-badge');
+      if (badge) {
+        badge.textContent = 'Garrafa Oficial Toro Negro';
+        badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-200 text-neutral-700';
+      }
+    }
+
+    function handleNewImageUrlInput(url) {
+      const clean = url.trim();
+      if (!clean) return;
+      const preview = document.getElementById('new-bottle-preview-img');
+      if (preview) preview.src = clean;
+      const finalInput = document.getElementById('new-imagem-url-final');
+      if (finalInput) finalInput.value = clean;
+      const badge = document.getElementById('new-image-source-badge');
+      if (badge) {
+        badge.textContent = 'Link Web da Imagem';
+        badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-800 text-white';
+      }
+    }
+
+    async function handleNewImageFileUpload(event) {
+      const file = event.target?.files?.[0];
+      if (!file) return;
+
+      const badge = document.getElementById('new-image-source-badge');
+      if (badge) {
+        badge.textContent = 'Processando foto...';
+        badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-400 text-white animate-pulse';
+      }
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const base64Data = e.target?.result;
+        const preview = document.getElementById('new-bottle-preview-img');
+        if (preview) preview.src = base64Data;
+
+        try {
+          const res = await fetch('/api/products/upload-image', {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ imageBase64: base64Data, filename: file.name })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            document.getElementById('new-imagem-url-final').value = data.url;
+            document.getElementById('new-imagem-url-input').value = data.url;
+            if (badge) {
+              badge.textContent = 'Foto Salva no Servidor';
+              badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-black text-white';
+            }
+            showToast('Foto do produto enviada com sucesso!');
+            return;
+          }
+        } catch (err) {
+          console.warn('Upload API offline, mantendo base64:', err);
+        }
+
+        document.getElementById('new-imagem-url-final').value = base64Data;
+        document.getElementById('new-imagem-url-input').value = file.name;
+        if (badge) {
+          badge.textContent = 'Foto Local (Carregada)';
+          badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-black text-white';
+        }
+        showToast('Foto selecionada com sucesso!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Edição de imagem no produto existente
+    function handleEditSelectOfficialBottle(url) {
+      if (!url) return;
+      const preview = document.getElementById('edit-bottle-preview-img');
+      if (preview) preview.src = url;
+      const finalInput = document.getElementById('edit-imagem-url-final');
+      if (finalInput) finalInput.value = url;
+      const urlInput = document.getElementById('edit-imagem-url-input');
+      if (urlInput) urlInput.value = url;
+      const badge = document.getElementById('edit-image-source-badge');
+      if (badge) {
+        badge.textContent = 'Garrafa Oficial Toro Negro';
+        badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-200 text-neutral-700';
+      }
+    }
+
+    function handleEditImageUrlInput(url) {
+      const clean = url.trim();
+      if (!clean) return;
+      const preview = document.getElementById('edit-bottle-preview-img');
+      if (preview) preview.src = clean;
+      const finalInput = document.getElementById('edit-imagem-url-final');
+      if (finalInput) finalInput.value = clean;
+      const badge = document.getElementById('edit-image-source-badge');
+      if (badge) {
+        badge.textContent = 'Link Web da Imagem';
+        badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-800 text-white';
+      }
+    }
+
+    async function handleEditImageFileUpload(event) {
+      const file = event.target?.files?.[0];
+      if (!file) return;
+
+      const badge = document.getElementById('edit-image-source-badge');
+      if (badge) {
+        badge.textContent = 'Processando foto...';
+        badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-400 text-white animate-pulse';
+      }
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const base64Data = e.target?.result;
+        const preview = document.getElementById('edit-bottle-preview-img');
+        if (preview) preview.src = base64Data;
+
+        try {
+          const res = await fetch('/api/products/upload-image', {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ imageBase64: base64Data, filename: file.name })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            document.getElementById('edit-imagem-url-final').value = data.url;
+            document.getElementById('edit-imagem-url-input').value = data.url;
+            if (badge) {
+              badge.textContent = 'Foto Salva no Servidor';
+              badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-black text-white';
+            }
+            showToast('Foto do produto alterada com sucesso!');
+            return;
+          }
+        } catch (err) {
+          console.warn('Upload API offline, mantendo base64:', err);
+        }
+
+        document.getElementById('edit-imagem-url-final').value = base64Data;
+        document.getElementById('edit-imagem-url-input').value = file.name;
+        if (badge) {
+          badge.textContent = 'Foto Local (Carregada)';
+          badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-black text-white';
+        }
+        showToast('Foto selecionada com sucesso!');
+      };
+      reader.readAsDataURL(file);
+    }
+
     // Modal de Novo Vinho
     function updateNewWineBottlePreview(url) {
-      const img = document.getElementById('new-bottle-preview-img');
-      if (img && url) img.src = url;
+      handleSelectOfficialBottle(url);
     }
 
     function updateNewWineBoxPrice() {
@@ -2058,6 +2315,7 @@
       const errBox = document.getElementById('new-wine-error');
       if (errBox) errBox.classList.add('hidden');
       updateNewWineBoxPrice();
+      handleSelectOfficialBottle('./assets/bottles/web/toro-negro-carmenere.png');
       document.getElementById('new-wine-modal').classList.remove('hidden');
     }
 
@@ -2087,7 +2345,7 @@
       const precoUnitVal = parseFloat(document.getElementById('new-preco-unitario')?.value);
       const precoVarejoVal = parseFloat(document.getElementById('new-preco-varejo')?.value) || Number((precoUnitVal * 1.5).toFixed(2));
       const estoqueVal = parseInt(document.getElementById('new-estoque')?.value) || 50;
-      const garrafaVal = document.getElementById('new-garrafa')?.value || './assets/bottles/web/toro-negro-carmenere.png';
+      const garrafaVal = document.getElementById('new-imagem-url-final')?.value || document.getElementById('new-garrafa')?.value || './assets/bottles/web/toro-negro-carmenere.png';
       const descVal = document.getElementById('new-descricao')?.value.trim() || '';
 
       if (!nomeVal) {
